@@ -29,9 +29,25 @@ namespace Firma_kurierska
         {
             string login = txtLogin.Text;
             string password = txtPassword.Password;
+            OpenApplication();
 
 
 
+
+
+        }
+
+
+
+
+        public void OpenApplication() 
+        {
+
+            WindowFirma windowFirma = new WindowFirma();
+            windowFirma.Show();
+            this.Close();
+        
+        
         }
     }
 }

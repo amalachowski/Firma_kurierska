@@ -20,3 +20,5 @@ C:\Users\Adam\Desktop\ADO.NET\Projekt\Firma_kurierska\Firma_kurierska\Firma_kuri
 C:\Users\Adam\Desktop\ADO.NET\Projekt\Firma_kurierska\Firma_kurierska\Firma_kurierska\obj\Debug\Firma_kurierska.csproj.CopyComplete
 C:\Users\Adam\Desktop\ADO.NET\Projekt\Firma_kurierska\Firma_kurierska\Firma_kurierska\obj\Debug\Firma_kurierska.exe
 C:\Users\Adam\Desktop\ADO.NET\Projekt\Firma_kurierska\Firma_kurierska\Firma_kurierska\obj\Debug\Firma_kurierska.pdb
+C:\Users\Adam\Desktop\ADO.NET\Projekt\Firma_kurierska\Firma_kurierska\Firma_kurierska\obj\Debug\WindowFirma.g.cs
+C:\Users\Adam\Desktop\ADO.NET\Projekt\Firma_kurierska\Firma_kurierska\Firma_kurierska\obj\Debug\WindowFirma.baml

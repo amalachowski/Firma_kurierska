@@ -25,5 +25,7 @@ namespace Firma_kurierska
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
             this.MaxWidth = SystemParameters.MaximizedPrimaryScreenWidth;
         }
+
+       
     }
 }

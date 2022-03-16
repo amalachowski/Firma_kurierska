@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Firma_kurierska.Class;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,7 +30,18 @@ namespace Firma_kurierska
         {
             string login = txtLogin.Text;
             string password = txtPassword.Password;
-            OpenApplication();
+            SQLconnection lacz = new SQLconnection();
+            int id = lacz.Sprawdz_uzytkownika(login, password);
+            if (id == 0)
+            {
+                MessageBox.Show("Błąd danych");
+
+            }
+            else
+            {
+                OpenApplication();
+            }
+
 
 
 

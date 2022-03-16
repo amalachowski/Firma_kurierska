@@ -59,3 +59,15 @@ D:\Firma_kurierska\Firma_kurierska\Firma_kurierska\bin\Debug\K4os.Hash.xxHash.dl
 D:\Firma_kurierska\Firma_kurierska\Firma_kurierska\bin\Debug\System.Numerics.Vectors.dll
 D:\Firma_kurierska\Firma_kurierska\Firma_kurierska\bin\Debug\MySql.Data.xml
 D:\Firma_kurierska\Firma_kurierska\Firma_kurierska\obj\Debug\Firma_kurierska.exe.config
+C:\Users\Adam\Desktop\ADO.NET\Projekt\Firma_kurierska\Firma_kurierska\Firma_kurierska\bin\Debug\Google.Protobuf.dll
+C:\Users\Adam\Desktop\ADO.NET\Projekt\Firma_kurierska\Firma_kurierska\Firma_kurierska\bin\Debug\ZstdNet.dll
+C:\Users\Adam\Desktop\ADO.NET\Projekt\Firma_kurierska\Firma_kurierska\Firma_kurierska\bin\Debug\K4os.Compression.LZ4.Streams.dll
+C:\Users\Adam\Desktop\ADO.NET\Projekt\Firma_kurierska\Firma_kurierska\Firma_kurierska\bin\Debug\BouncyCastle.Crypto.dll
+C:\Users\Adam\Desktop\ADO.NET\Projekt\Firma_kurierska\Firma_kurierska\Firma_kurierska\bin\Debug\Ubiety.Dns.Core.dll
+C:\Users\Adam\Desktop\ADO.NET\Projekt\Firma_kurierska\Firma_kurierska\Firma_kurierska\bin\Debug\System.Memory.dll
+C:\Users\Adam\Desktop\ADO.NET\Projekt\Firma_kurierska\Firma_kurierska\Firma_kurierska\bin\Debug\System.Buffers.dll
+C:\Users\Adam\Desktop\ADO.NET\Projekt\Firma_kurierska\Firma_kurierska\Firma_kurierska\bin\Debug\K4os.Compression.LZ4.dll
+C:\Users\Adam\Desktop\ADO.NET\Projekt\Firma_kurierska\Firma_kurierska\Firma_kurierska\bin\Debug\K4os.Hash.xxHash.dll
+C:\Users\Adam\Desktop\ADO.NET\Projekt\Firma_kurierska\Firma_kurierska\Firma_kurierska\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\Adam\Desktop\ADO.NET\Projekt\Firma_kurierska\Firma_kurierska\Firma_kurierska\bin\Debug\MySql.Data.xml
+C:\Users\Adam\Desktop\ADO.NET\Projekt\Firma_kurierska\Firma_kurierska\Firma_kurierska\obj\Debug\Firma_kurierska.exe.config

@@ -5,13 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 using MySql.Data.MySqlClient;
+using System.Data;
+using System.Windows.Forms;
+using System.Windows;
 
 namespace Firma_kurierska.Class
 {
     class SQLconnection
     {
 
-        private const string conect = "";
+        private const string conect = "datasource=sql11.freesqldatabase.com ; port=3306; username=sql11479040; password=TFWPBFQEvA; database=sql11479040";
         private MySqlConnection connection;
         private string server;
         private string database;
@@ -85,6 +88,39 @@ namespace Firma_kurierska.Class
             dd.Close();
             CloseConnection();
             return id;
+        }
+
+
+        public void WyswietlKlientow(System.Windows.Controls.DataGrid dataGrid)
+        {
+            MySqlConnection myconnection = new MySqlConnection(conect);
+            MySqlCommand cmd = new MySqlCommand("SELECT * FROM sql11479040.Klienci;",myconnection);
+            
+            try 
+            {
+                myconnection.Open();
+                MySqlDataAdapter adapter = new MySqlDataAdapter();
+                adapter.SelectCommand = cmd;
+                DataTable dataTable = new DataTable();
+                adapter.Fill(dataTable);
+                BindingSource zrodlo = new BindingSource();
+                zrodlo.DataSource = dataTable;
+                dataGrid.ItemsSource = zrodlo;
+                myconnection.Close();
+
+                
+                
+            }
+            
+            catch (Exception e)
+            {
+                System.Windows.MessageBox.Show(e.Message);
+            
+            }
+           
+
+
+
         }
     }
 }

@@ -39,14 +39,14 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0" Width="500" Grid.RowSpan="2" Margin="0,20,0,20" Background="{DynamicResource MaterialDesignLightBackground}" >
+                        <StackPanel Grid.Column="0" Width="650" Grid.RowSpan="2" Margin="0,20,0,20" Background="{DynamicResource MaterialDesignLightBackground}" >
                             <StackPanel.Effect>
                                 <DropShadowEffect BlurRadius="20" ShadowDepth="20" RenderingBias="Performance" Opacity="0.65"/>
                             </StackPanel.Effect>
                             <materialDesign:ColorZone Padding="15"  Mode="PrimaryMid" Effect="{DynamicResource MaterialDesignShadowDepth2}"  >
                                 <TextBlock Text="Lista Klientów" HorizontalAlignment="Center"    FontSize="30" ></TextBlock>
                             </materialDesign:ColorZone>
-                            <DataGrid Height="600">
+                            <DataGrid Height="600" x:Name="DGKlienci">
 
                             </DataGrid>
 

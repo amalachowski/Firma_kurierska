@@ -24,6 +24,7 @@ namespace Firma_kurierska
         public MainWindow()
         {
             InitializeComponent();
+            
         }
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)

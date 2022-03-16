@@ -20,6 +20,8 @@ namespace Firma_kurierska
     /// </summary>
     public partial class WindowFirma : Window
     {
+        
+
         public WindowFirma()
         {
             InitializeComponent();
@@ -31,6 +33,48 @@ namespace Firma_kurierska
             
         }
 
-       
+        private void BtinKlienciWyszukaj_Click(object sender, RoutedEventArgs e)
+        {
+            TextBox[] textBoxesKlienci = new TextBox[8];
+            textBoxesKlienci[0] = TxtKlienciImie;
+            textBoxesKlienci[1] = TxtKlienciNazwisko;
+            textBoxesKlienci[2] = TxtKlienciMiasto;
+            textBoxesKlienci[3] = TxtKlieciUlica;
+            textBoxesKlienci[4] = TxtKlienciNRUlica;
+            textBoxesKlienci[5] = TxtKlienciLokal;
+            textBoxesKlienci[6] = TxtKlienciTelefon;
+            textBoxesKlienci[7] = TxtKlienciEmail;
+
+
+
+            SQLconnection sQLconnection = new SQLconnection();
+            sQLconnection.WyszukajKlienci(textBoxesKlienci,DGKlienci);
+
+
+
+
+
+
+        }
+
+        private void BtnKlienciDodaj_Click(object sender, RoutedEventArgs e)
+        {
+            TextBox[] textBoxesKlienci = new TextBox[8];
+            textBoxesKlienci[0] = TxtKlienciImie;
+            textBoxesKlienci[1] = TxtKlienciNazwisko;
+            textBoxesKlienci[2] = TxtKlienciMiasto;
+            textBoxesKlienci[3] = TxtKlieciUlica;
+            textBoxesKlienci[4] = TxtKlienciNRUlica;
+            textBoxesKlienci[5] = TxtKlienciLokal;
+            textBoxesKlienci[6] = TxtKlienciTelefon;
+            textBoxesKlienci[7] = TxtKlienciEmail;
+
+            SQLconnection sQLconnection = new SQLconnection();
+            sQLconnection.DodajKlienci(textBoxesKlienci,CBKlinetVIP);
+            sQLconnection.WyswietlKlientow(DGKlienci);
+
+
+
+        }
     }
 }

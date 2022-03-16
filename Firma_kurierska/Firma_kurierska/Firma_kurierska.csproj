@@ -68,6 +68,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Class\Helper.cs" />
     <Compile Include="WindowFirma.xaml.cs">
       <DependentUpon>WindowFirma.xaml</DependentUpon>
     </Compile>

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Firma_kurierska"
         mc:Ignorable="d"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:materialDesign1="http://schemas.microsoft.com/netfx/2009/xaml/presentation"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="13"
@@ -39,14 +39,30 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0" Width="650" Grid.RowSpan="2" Margin="0,20,0,20" Background="{DynamicResource MaterialDesignLightBackground}" >
+                        <StackPanel Grid.Column="0" Width="830" Grid.RowSpan="2" Margin="0,20,0,20" Background="{DynamicResource MaterialDesignLightBackground}" >
                             <StackPanel.Effect>
                                 <DropShadowEffect BlurRadius="20" ShadowDepth="20" RenderingBias="Performance" Opacity="0.65"/>
                             </StackPanel.Effect>
                             <materialDesign:ColorZone Padding="15"  Mode="PrimaryMid" Effect="{DynamicResource MaterialDesignShadowDepth2}"  >
                                 <TextBlock Text="Lista Klientów" HorizontalAlignment="Center"    FontSize="30" ></TextBlock>
                             </materialDesign:ColorZone>
-                            <DataGrid Height="600" x:Name="DGKlienci">
+                            <DataGrid CanUserAddRows="False"  Height="600" x:Name="DGKlienci" AutoGenerateColumns="False"  IsSynchronizedWithCurrentItem="False">
+                                <DataGrid.BindingGroup>
+                                    <BindingGroup/>
+                                </DataGrid.BindingGroup>
+                                <DataGrid.Columns>
+                                    <materialDesign:DataGridTextColumn Header="ID" Binding="{Binding KL_id}"  IsReadOnly="True"/>
+                                    <materialDesign:DataGridTextColumn Header="Imie" Binding="{Binding KL_imie}" IsReadOnly="True"/>
+                                    <materialDesign:DataGridTextColumn Header="Nazwisko" Binding="{Binding KL_nazwisko}" IsReadOnly="True"/>
+                                    <materialDesign:DataGridTextColumn Header="Miasto" Binding="{Binding ADR_miasto}" IsReadOnly="True"/>
+                                    <materialDesign:DataGridTextColumn Header="ulica" Binding="{Binding ADR_ulica}" IsReadOnly="True"/>
+                                    <materialDesign:DataGridTextColumn Header="NR ulicy" Binding="{Binding ADR_nr_ulicy}" IsReadOnly="True"/>
+                                    <materialDesign:DataGridTextColumn Header="nr lokalu" Binding="{Binding ADR_nr_lok}" IsReadOnly="True"/>
+                                    <materialDesign:DataGridTextColumn Header="Telefon" Binding="{Binding KL_telefon}" IsReadOnly="True"/>
+                                    <materialDesign:DataGridTextColumn Header="Email" Binding="{Binding KL_email}" IsReadOnly="True"/>
+                                    <materialDesign1:DataGridCheckBoxColumn Header="VIP" Binding="{Binding KL_VIP}"   IsReadOnly="True"/>
+
+                                </DataGrid.Columns>
 
                             </DataGrid>
 

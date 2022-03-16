@@ -27,6 +27,8 @@ namespace Firma_kurierska
             this.MaxWidth = SystemParameters.MaximizedPrimaryScreenWidth;
             SQLconnection sQLconnection = new SQLconnection();
             sQLconnection.WyswietlKlientow(DGKlienci);
+
+            
         }
 
        

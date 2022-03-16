@@ -94,7 +94,7 @@ namespace Firma_kurierska.Class
         public void WyswietlKlientow(System.Windows.Controls.DataGrid dataGrid)
         {
             MySqlConnection myconnection = new MySqlConnection(conect);
-            MySqlCommand cmd = new MySqlCommand("SELECT * FROM sql11479040.Klienci;",myconnection);
+            MySqlCommand cmd = new MySqlCommand("SELECT KL_id , KL_imie , KL_nazwisko , ADR_miasto , ADR_ulica, ADR_nr_ulicy , ADR_nr_lok, KL_telefon , KL_email , KL_VIP FROM Klienci INNER JOIN Adres ON Klienci.KL_adres_id = Adres.ADR_id;", myconnection);
             
             try 
             {
@@ -117,7 +117,8 @@ namespace Firma_kurierska.Class
                 System.Windows.MessageBox.Show(e.Message);
             
             }
-           
+
+            dataGrid.Columns[0].Visibility = Visibility.Hidden;
 
 
 

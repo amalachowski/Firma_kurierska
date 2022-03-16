@@ -40,6 +40,9 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0" Width="500" Grid.RowSpan="2" Margin="0,20,0,20" Background="{DynamicResource MaterialDesignLightBackground}" >
+                            <StackPanel.Effect>
+                                <DropShadowEffect BlurRadius="20" ShadowDepth="20" RenderingBias="Performance" Opacity="0.65"/>
+                            </StackPanel.Effect>
                             <materialDesign:ColorZone Padding="15"  Mode="PrimaryMid" Effect="{DynamicResource MaterialDesignShadowDepth2}"  >
                                 <TextBlock Text="Lista Klientów" HorizontalAlignment="Center"    FontSize="30" ></TextBlock>
                             </materialDesign:ColorZone>
@@ -50,6 +53,9 @@
                             <!--Drugi Panel-->
                         </StackPanel>
                         <StackPanel Margin="30,20,0,20" Grid.Column="1" Width="500" Background="{DynamicResource MaterialDesignLightBackground}" Grid.RowSpan="2" HorizontalAlignment="Left" >
+                            <StackPanel.Effect>
+                                <DropShadowEffect BlurRadius="20" ShadowDepth="20" Opacity="0.65"/>
+                            </StackPanel.Effect>
                             <materialDesign:ColorZone Padding="15"  Mode="PrimaryMid" Effect="{DynamicResource MaterialDesignShadowDepth2}" >
                                 <TextBlock Text="Opcje" HorizontalAlignment="Center"    FontSize="30" ></TextBlock>
                             </materialDesign:ColorZone>
@@ -254,6 +260,9 @@
                         </StackPanel>
                     </TabItem.Header>
                     <StackPanel Width="500" Height="400" Background="{DynamicResource MaterialDesignLightBackground}">
+                        <StackPanel.Effect>
+                            <DropShadowEffect BlurRadius="20" Opacity="0.65" ShadowDepth="21"/>
+                        </StackPanel.Effect>
                         <materialDesign:ColorZone Padding="15"  Mode="PrimaryMid" Effect="{DynamicResource MaterialDesignShadowDepth2}" >
                             <TextBlock Text="Zmień dane" HorizontalAlignment="Center"    FontSize="30" ></TextBlock>
                         </materialDesign:ColorZone>
@@ -294,7 +303,10 @@
                     </TabItem.Header>
 
                     <StackPanel Background="{DynamicResource MaterialDesignLightBackground}" Width="400" Height="300" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <materialDesign:ColorZone Padding="15"  Mode="PrimaryMid" Effect="{DynamicResource MaterialDesignShadowDepth2}" >
+                        <StackPanel.Effect>
+                            <DropShadowEffect ShadowDepth="20" BlurRadius="20" RenderingBias="Performance" Opacity="0.65" Direction="316"/>
+                        </StackPanel.Effect>
+                        <materialDesign:ColorZone Padding="15"  Mode="PrimaryMid" Effect="{DynamicResource MaterialDesignShadowDepth2}" >
                                 <TextBlock Text="Wyjście" HorizontalAlignment="Center"    FontSize="30" ></TextBlock>
                             </materialDesign:ColorZone>
                             

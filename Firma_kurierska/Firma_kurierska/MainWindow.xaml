@@ -40,7 +40,11 @@
                 <Button x:Name="btnExit" Content="Exit" Width="100" Height="40" Margin="15,0,0,0"></Button>
             </StackPanel>
         </StackPanel>
-        <Image Source="images/logo_login.png" Width="300" Margin="75,234,417,131"/>
+        <Image Source="images/logo_login.png" Width="300" Margin="75,234,417,131">
+            <Image.Effect>
+                <DropShadowEffect BlurRadius="20" Opacity="0.65" ShadowDepth="20" Direction="230"/>
+            </Image.Effect>
+        </Image>
         <Image Source="images/SpeedEX.png" Width="350" Margin="52,158,398,237" />
 
 

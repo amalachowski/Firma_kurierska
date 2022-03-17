@@ -72,7 +72,7 @@ namespace Firma_kurierska.Class
                 return false;
             }
         }
-
+        #region Klienci
         public int Sprawdz_uzytkownika(string login, string haslo)
         {
             MySqlCommand nowe = new MySqlCommand("SELECT PRC_id FROM sql11479040.Pracownicy WHERE PRC_login='" + login + "' AND PRC_haslo='" + haslo + "';", connection);
@@ -227,14 +227,54 @@ namespace Firma_kurierska.Class
 
 
         }
-   
-    
-    
-    
-        
+
+        public void EdytujKlienci(int id_rekordKlienci,int id_rekordAdress, System.Windows.Controls.TextBox[] textBoxes, System.Windows.Controls.CheckBox VIP) 
+        {
+            MySqlConnection myconnection = new MySqlConnection(conect);
+            MySqlCommand cmd = myconnection.CreateCommand();
+            MySqlTransaction transaction;   
+            cmd.Parameters.AddWithValue("@KlImie", textBoxes[0].Text);
+            cmd.Parameters.AddWithValue("@KlNazwisko", textBoxes[1].Text.ToString());
+            cmd.Parameters.AddWithValue("@ADRMiasto", textBoxes[2].Text.ToString());
+            cmd.Parameters.AddWithValue("@ADRUlica", textBoxes[3].Text.ToString());
+            cmd.Parameters.AddWithValue("@ADRNrUlica", textBoxes[4].Text.ToString());            
+            cmd.Parameters.AddWithValue("@ADRLokal", textBoxes[5].Text.ToString());           
+            cmd.Parameters.AddWithValue("@KlTelefon", textBoxes[6].Text.ToString());
+            cmd.Parameters.AddWithValue("@KlEmail", textBoxes[7].Text.ToString());
+            cmd.Parameters.AddWithValue("@KLVIP", (bool)VIP.IsChecked ? 1 : 0);
+
+            myconnection.Open();
+            transaction = myconnection.BeginTransaction(IsolationLevel.ReadCommitted);
+            cmd.Connection = myconnection;
+            cmd.Transaction = transaction;
+            try
+            {
+                
+                cmd.CommandText = "Update Adres set ADR_miasto=@ADRMiasto , ADR_ulica=@ADRUlica , ADR_nr_ulicy=@ADRNrUlica , ADR_nr_lok=@ADRLokal where ADR_id='"+id_rekordAdress+"'; ";
+                cmd.ExecuteNonQuery();
+                cmd.CommandText = "Update Klienci set KL_imie=@klImie , KL_nazwisko=@KlNazwisko , KL_telefon=@KlTelefon , KL_email=@KlEmail , KL_VIP=@KLVIP where KL_id='"+id_rekordKlienci+"';";
+                cmd.ExecuteNonQuery();
+                
+                transaction.Commit();
+            }
+            catch (Exception e)
+            {
+                System.Windows.MessageBox.Show(e.Message);
+                transaction.Rollback();
+            }
+            myconnection.Close();
+
+
+
+        }
+
+        #endregion
+
+
+
     }
 
 
 
-   
+
 }

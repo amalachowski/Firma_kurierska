@@ -31,6 +31,13 @@ namespace Firma_kurierska.Class
 
             return true;
         }
+        public void WyczyscFormatke(System.Windows.Controls.TextBox[] textBoxes) 
+        {
+            foreach (var item in textBoxes) 
+            {
+                item.Text = "";
+            }
+        }
 
     }
 }

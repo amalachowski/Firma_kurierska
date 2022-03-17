@@ -24,6 +24,7 @@ namespace Firma_kurierska
         private int id_rekoruKlienta;
         private int id_rekordAdres;
 
+        
 
         public WindowFirma()
         {
@@ -35,9 +36,10 @@ namespace Firma_kurierska
 
             
         }
-
+        #region KlienciBTN
         private void BtinKlienciWyszukaj_Click(object sender, RoutedEventArgs e)
         {
+
             TextBox[] textBoxesKlienci = new TextBox[8];
             textBoxesKlienci[0] = TxtKlienciImie;
             textBoxesKlienci[1] = TxtKlienciNazwisko;
@@ -47,7 +49,6 @@ namespace Firma_kurierska
             textBoxesKlienci[5] = TxtKlienciLokal;
             textBoxesKlienci[6] = TxtKlienciTelefon;
             textBoxesKlienci[7] = TxtKlienciEmail;
-
 
 
             SQLconnection sQLconnection = new SQLconnection();
@@ -62,6 +63,7 @@ namespace Firma_kurierska
 
         private void BtnKlienciDodaj_Click(object sender, RoutedEventArgs e)
         {
+            Helper helper = new Helper();
             TextBox[] textBoxesKlienci = new TextBox[8];
             textBoxesKlienci[0] = TxtKlienciImie;
             textBoxesKlienci[1] = TxtKlienciNazwisko;
@@ -71,12 +73,11 @@ namespace Firma_kurierska
             textBoxesKlienci[5] = TxtKlienciLokal;
             textBoxesKlienci[6] = TxtKlienciTelefon;
             textBoxesKlienci[7] = TxtKlienciEmail;
-
             SQLconnection sQLconnection = new SQLconnection();
             sQLconnection.DodajKlienci(textBoxesKlienci,CBKlinetVIP);
             sQLconnection.WyswietlKlientow(DGKlienci);
 
-
+            helper.WyczyscFormatke(textBoxesKlienci);
 
         }
 
@@ -100,26 +101,59 @@ namespace Firma_kurierska
                     TxtKlienciTelefon.Text = rowView.Row[8].ToString();
                     TxtKlienciEmail.Text = rowView.Row[9].ToString();
                     CBKlinetVIP.IsChecked = (bool)rowView.Row[10];
-                    MessageBox.Show("" + id_rekoruKlienta );
+                    
                 }
             }
             catch (Exception kom) 
             {
-                MessageBox.Show(kom.Message + id_rekordAdres.ToString());   
+                MessageBox.Show(kom.Message );
             }
         }
 
         private void BtnKlienciUsun_Click(object sender, RoutedEventArgs e)
         {
+            TextBox[] textBoxesKlienci = new TextBox[8];
+            textBoxesKlienci[0] = TxtKlienciImie;
+            textBoxesKlienci[1] = TxtKlienciNazwisko;
+            textBoxesKlienci[2] = TxtKlienciMiasto;
+            textBoxesKlienci[3] = TxtKlieciUlica;
+            textBoxesKlienci[4] = TxtKlienciNRUlica;
+            textBoxesKlienci[5] = TxtKlienciLokal;
+            textBoxesKlienci[6] = TxtKlienciTelefon;
+            textBoxesKlienci[7] = TxtKlienciEmail;
+            Helper helper = new Helper();
             SQLconnection sql = new SQLconnection();
             sql.UsunKlienci(id_rekordAdres,id_rekoruKlienta);
             sql.WyswietlKlientow(DGKlienci);
-            
+            helper.WyczyscFormatke(textBoxesKlienci);
 
-            
+
+
 
 
 
         }
+
+        private void BtnKlienciEdytuj_Click(object sender, RoutedEventArgs e)
+        {
+            Helper helper = new Helper();
+            SQLconnection sql = new SQLconnection();
+            TextBox[] textBoxesKlienci = new TextBox[8];
+            textBoxesKlienci[0] = TxtKlienciImie;
+            textBoxesKlienci[1] = TxtKlienciNazwisko;
+            textBoxesKlienci[2] = TxtKlienciMiasto;
+            textBoxesKlienci[3] = TxtKlieciUlica;
+            textBoxesKlienci[4] = TxtKlienciNRUlica;
+            textBoxesKlienci[5] = TxtKlienciLokal;
+            textBoxesKlienci[6] = TxtKlienciTelefon;
+            textBoxesKlienci[7] = TxtKlienciEmail;
+            sql.EdytujKlienci(id_rekoruKlienta,id_rekordAdres,textBoxesKlienci,CBKlinetVIP);
+            sql.WyswietlKlientow(DGKlienci);
+            helper.WyczyscFormatke(textBoxesKlienci);
+
+
+
+        }
+        #endregion
     }
 }

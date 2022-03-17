@@ -125,7 +125,7 @@
                                 </Grid.ColumnDefinitions>
                                 <Button Content="Dodaj" Name="BtnKlienciDodaj" Grid.Column="0" Width="130" Click="BtnKlienciDodaj_Click"></Button>
                                 <Button Content="Usuń" Name="BtnKlienciUsun" Grid.Column="1" Width="130" Click="BtnKlienciUsun_Click"></Button>
-                                <Button Content="Edytuj" Name="BtnKlienciEdytuj" Grid.Column="2" Width="130"></Button>
+                                <Button Content="Edytuj" Name="BtnKlienciEdytuj" Grid.Column="2" Width="130" Click="BtnKlienciEdytuj_Click"></Button>
 
                             </Grid>
                         </StackPanel>

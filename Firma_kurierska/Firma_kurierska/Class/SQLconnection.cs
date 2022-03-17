@@ -97,8 +97,8 @@ namespace Firma_kurierska.Class
         public void WyswietlKlientow(System.Windows.Controls.DataGrid dataGrid)
         {
             MySqlConnection myconnection = new MySqlConnection(conect);
-            MySqlCommand cmd = new MySqlCommand("SELECT KL_id , KL_imie , KL_nazwisko , ADR_miasto , ADR_ulica, ADR_nr_ulicy , ADR_nr_lok, KL_telefon , KL_email ," +
-                " KL_VIP FROM Klienci INNER JOIN Adres ON Klienci.KL_adres_id = Adres.ADR_id;", myconnection);      
+            MySqlCommand cmd = new MySqlCommand("SELECT KL_id , KL_imie, ADR_id , KL_nazwisko , ADR_miasto , ADR_ulica, ADR_nr_ulicy , ADR_nr_lok, KL_telefon , KL_email ," +
+                " KL_VIP FROM Klienci INNER JOIN Adres ON Klienci.KL_adres_id = Adres.ADR_id;", myconnection); 
             try
             {
                 myconnection.Open();
@@ -121,7 +121,7 @@ namespace Firma_kurierska.Class
         public void WyszukajKlienci(System.Windows.Controls.TextBox[] textBoxes, System.Windows.Controls.DataGrid dataGrid)
         {
             MySqlConnection myconnection = new MySqlConnection(conect);
-            MySqlCommand cmd = new MySqlCommand("SELECT KL_id , KL_imie , KL_nazwisko , ADR_miasto , ADR_ulica, ADR_nr_ulicy , ADR_nr_lok, KL_telefon , KL_email ," +
+            MySqlCommand cmd = new MySqlCommand("SELECT KL_id , KL_imie, ADR_id , KL_nazwisko , ADR_miasto , ADR_ulica, ADR_nr_ulicy , ADR_nr_lok, KL_telefon , KL_email ," +
                 " KL_VIP FROM Klienci INNER JOIN Adres ON Klienci.KL_adres_id = Adres.ADR_id where KL_imie like '%" + textBoxes[0].Text.ToString() + "%'" +
                 " and KL_nazwisko like '%" + textBoxes[1].Text.ToString() + "%' and ADR_miasto like '%" + textBoxes[2].Text.ToString() + "%' and ADR_ulica like '%" + textBoxes[3].Text.ToString() + "%'" +
                 "and ADR_nr_ulicy like '%" + textBoxes[4].Text + "%' and ADR_nr_lok like '%" + textBoxes[5].Text + "%' and KL_telefon like '%" + textBoxes[6].Text.ToString() + "%' and KL_email like '%" + textBoxes[7].Text.ToString() + "%';", myconnection);
@@ -153,12 +153,15 @@ namespace Firma_kurierska.Class
 
         public void DodajKlienci(System.Windows.Controls.TextBox[] textBoxes, System.Windows.Controls.CheckBox VIP)
         {
+
+
             MySqlConnection myconnection = new MySqlConnection(conect);
             MySqlDataAdapter adapter = new MySqlDataAdapter();
             MySqlDataAdapter adapter1 = new MySqlDataAdapter();
             MySqlCommand cmd1 = new MySqlCommand("Insert into Adres set ADR_miasto=@ADRMiasto , ADR_ulica=@ADRUlica , ADR_nr_ulicy=@ADRNrUlica , ADR_nr_lok=@ADRLokal ");
             MySqlCommand cmd = new MySqlCommand("insert into Klienci set KL_imie=@klImie , KL_nazwisko=@KlNazwisko , KL_adres_id=(Select ADR_id from Adres where ADR_miasto=@ADRMiasto and ADR_ulica=@ADRUlica and ADR_nr_ulicy=@ADRNrUlica and ADR_nr_lok=@ADRLokal) , KL_telefon=@KlTelefon , KL_email=@KlEmail , KL_VIP=@KLVIP;");
             cmd.Parameters.AddWithValue("@KlImie",textBoxes[0].Text);
+            
             cmd.Parameters.AddWithValue("@KlNazwisko", textBoxes[1].Text.ToString());
             cmd.Parameters.AddWithValue("@ADRMiasto", textBoxes[2].Text.ToString());
             cmd1.Parameters.AddWithValue("@ADRMiasto", textBoxes[2].Text.ToString());
@@ -183,10 +186,45 @@ namespace Firma_kurierska.Class
                 adapter1.InsertCommand.ExecuteNonQuery();
                 myconnection.Close();
             }
-            catch (Exception e) 
+            catch (Exception e)
             {
                 System.Windows.MessageBox.Show(e.Message);
             }
+
+        }
+
+        public void UsunKlienci(int id_rekordAdres,int id_rekordKlient)
+        {
+
+            MySqlConnection myconnection = new MySqlConnection(conect);
+            MySqlCommand zapytanie = myconnection.CreateCommand();
+            MySqlTransaction transaction;
+
+            myconnection.Open();
+            transaction = myconnection.BeginTransaction(IsolationLevel.ReadCommitted);
+            zapytanie.Connection = myconnection;
+            zapytanie.Transaction = transaction;
+            
+
+            try
+            {
+
+                zapytanie.CommandText = "Delete from Adres where ADR_id=" + id_rekordAdres + "; ";
+                zapytanie.ExecuteNonQuery();
+                zapytanie.CommandText = "Delete from Klienci where KL_id=" + id_rekordKlient + ";";
+                zapytanie.ExecuteNonQuery();
+                
+                transaction.Commit();
+
+
+            }
+            catch (Exception e)
+            {
+                System.Windows.Forms.MessageBox.Show(e.Message);
+                transaction.Rollback();
+            }
+            myconnection.Close();
+
 
         }
    

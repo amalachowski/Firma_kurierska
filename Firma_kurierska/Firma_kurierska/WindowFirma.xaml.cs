@@ -22,7 +22,8 @@ namespace Firma_kurierska
     public partial class WindowFirma : Window
     {
         private int id_rekoruKlienta;
-        
+        private int id_rekordAdres;
+
 
         public WindowFirma()
         {
@@ -84,19 +85,41 @@ namespace Firma_kurierska
 
             DataGrid dataGrid = sender as DataGrid;
             DataRowView rowView = dataGrid.SelectedItem as DataRowView;
-            if (rowView != null)
+            try
             {
-                id_rekoruKlienta = (int)rowView.Row[0];
-                TxtKlienciImie.Text = rowView.Row[1].ToString(); /* 1st Column on selected Row */
-                TxtKlienciNazwisko.Text = rowView.Row[2].ToString();
-                TxtKlienciMiasto.Text = rowView.Row[3].ToString();
-                TxtKlieciUlica.Text = rowView.Row[4].ToString();
-                TxtKlienciNRUlica.Text = rowView.Row[5].ToString();
-                TxtKlienciLokal.Text = rowView.Row[6].ToString();
-                TxtKlienciTelefon.Text = rowView.Row[7].ToString();
-                TxtKlienciEmail.Text = rowView.Row[8].ToString();
-                CBKlinetVIP.IsChecked = (bool)rowView.Row[9];
+                if (rowView != null)
+                {
+                    id_rekoruKlienta = (int)rowView.Row[0]; // zapisywanie wybranego id klienta
+                    TxtKlienciImie.Text = rowView.Row[1].ToString(); /* 1st Column on selected Row */
+                    id_rekordAdres = (int)rowView.Row[2]; // zapisywanie wybranego id Adresu
+                    TxtKlienciNazwisko.Text = rowView.Row[3].ToString();
+                    TxtKlienciMiasto.Text = rowView.Row[4].ToString();
+                    TxtKlieciUlica.Text = rowView.Row[5].ToString();
+                    TxtKlienciNRUlica.Text = rowView.Row[6].ToString();
+                    TxtKlienciLokal.Text = rowView.Row[7].ToString();
+                    TxtKlienciTelefon.Text = rowView.Row[8].ToString();
+                    TxtKlienciEmail.Text = rowView.Row[9].ToString();
+                    CBKlinetVIP.IsChecked = (bool)rowView.Row[10];
+                    MessageBox.Show("" + id_rekoruKlienta );
+                }
             }
+            catch (Exception kom) 
+            {
+                MessageBox.Show(kom.Message + id_rekordAdres.ToString());   
+            }
+        }
+
+        private void BtnKlienciUsun_Click(object sender, RoutedEventArgs e)
+        {
+            SQLconnection sql = new SQLconnection();
+            sql.UsunKlienci(id_rekordAdres,id_rekoruKlienta);
+            sql.WyswietlKlientow(DGKlienci);
+            
+
+            
+
+
+
         }
     }
 }

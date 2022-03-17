@@ -1,6 +1,7 @@
 ﻿using Firma_kurierska.Class;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,7 @@ namespace Firma_kurierska
     /// </summary>
     public partial class WindowFirma : Window
     {
+        private int id_rekoruKlienta;
         
 
         public WindowFirma()
@@ -75,6 +77,26 @@ namespace Firma_kurierska
 
 
 
+        }
+
+        private void DGKlienci_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            DataGrid dataGrid = sender as DataGrid;
+            DataRowView rowView = dataGrid.SelectedItem as DataRowView;
+            if (rowView != null)
+            {
+                id_rekoruKlienta = (int)rowView.Row[0];
+                TxtKlienciImie.Text = rowView.Row[1].ToString(); /* 1st Column on selected Row */
+                TxtKlienciNazwisko.Text = rowView.Row[2].ToString();
+                TxtKlienciMiasto.Text = rowView.Row[3].ToString();
+                TxtKlieciUlica.Text = rowView.Row[4].ToString();
+                TxtKlienciNRUlica.Text = rowView.Row[5].ToString();
+                TxtKlienciLokal.Text = rowView.Row[6].ToString();
+                TxtKlienciTelefon.Text = rowView.Row[7].ToString();
+                TxtKlienciEmail.Text = rowView.Row[8].ToString();
+                CBKlinetVIP.IsChecked = (bool)rowView.Row[9];
+            }
         }
     }
 }

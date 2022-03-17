@@ -3,11 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:encoding="UTF-8"
+        RenderOptions.BitmapScalingMode ="HighQuality"
         xmlns:local="clr-namespace:Firma_kurierska"
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:materialDesign1="http://schemas.microsoft.com/netfx/2009/xaml/presentation"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
+        xml:lang="pl"
         TextElement.FontSize="13"
         TextOptions.TextFormattingMode="Ideal" 
         TextOptions.TextRenderingMode="Auto"        
@@ -46,7 +49,7 @@
                             <materialDesign:ColorZone Padding="15"  Mode="PrimaryMid" Effect="{DynamicResource MaterialDesignShadowDepth2}"  >
                                 <TextBlock Text="Lista Klientów" HorizontalAlignment="Center"    FontSize="30" ></TextBlock>
                             </materialDesign:ColorZone>
-                            <DataGrid CanUserAddRows="False"  Height="600" x:Name="DGKlienci" AutoGenerateColumns="False"  IsSynchronizedWithCurrentItem="False">
+                            <DataGrid CanUserAddRows="False"  Height="600" x:Name="DGKlienci" AutoGenerateColumns="False"  IsSynchronizedWithCurrentItem="False" SelectionChanged="DGKlienci_SelectionChanged" SelectionMode="Single"  >
                                 <DataGrid.BindingGroup>
                                     <BindingGroup/>
                                 </DataGrid.BindingGroup>
@@ -95,9 +98,10 @@
 
                                 </Grid.RowDefinitions>
                                 <Label Content="Imię: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom"  Width="56"></Label>
-                                <TextBox x:Name="TxtKlienciImie" Grid.Column="1" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" ></TextBox>
+                                <TextBox Text="{Binding KL_imie }"  Language="pl" x:Name="TxtKlienciImie" Grid.Column="1" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" >
+                                </TextBox>
                                 <Label Grid.Row="1" Content="Nazwisko: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" ></Label>
-                                <TextBox x:Name="TxtKlienciNazwisko" Grid.Column="1" Grid.Row="1" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" ></TextBox>
+                                <TextBox  x:Name="TxtKlienciNazwisko" Grid.Column="1" Grid.Row="1" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" ></TextBox>
                                 <Label Grid.Row="2" Content="Miasto: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" ></Label>
                                 <TextBox x:Name="TxtKlienciMiasto" Grid.Column="1" Grid.Row="2" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" ></TextBox>
                                 <Label Grid.Row="3" Content="ulica: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" ></Label>

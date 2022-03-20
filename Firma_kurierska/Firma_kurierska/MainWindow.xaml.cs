@@ -21,7 +21,6 @@ namespace Firma_kurierska
     /// </summary>
     public partial class MainWindow : Window
     {
-        int id_uzytkownika;
         public MainWindow()
         {
             InitializeComponent();
@@ -33,8 +32,8 @@ namespace Firma_kurierska
             string login = txtLogin.Text;
             string password = txtPassword.Password;
             SQLconnection lacz = new SQLconnection();
-            id_uzytkownika = lacz.Sprawdz_uzytkownika(login, password);
-            if (id_uzytkownika == 0)
+            int id = lacz.Sprawdz_uzytkownika(login, password);
+            if (id == 0)
             {
                 MessageBox.Show("Błąd danych");
 
@@ -57,7 +56,7 @@ namespace Firma_kurierska
         public void OpenApplication() 
         {
 
-            WindowFirma windowFirma = new WindowFirma(id_uzytkownika);
+            WindowFirma windowFirma = new WindowFirma();
             windowFirma.Show();
             this.Close();
         

@@ -21,20 +21,18 @@ namespace Firma_kurierska
     /// </summary>
     public partial class WindowFirma : Window
     {
-        private int id_uzytkownika;
         private int id_rekoruKlienta;
         private int id_rekordAdres;
 
         
 
-        public WindowFirma(int id_uzytkownika)
+        public WindowFirma()
         {
             InitializeComponent();
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
             this.MaxWidth = SystemParameters.MaximizedPrimaryScreenWidth;
             SQLconnection sQLconnection = new SQLconnection();
             sQLconnection.WyswietlKlientow(DGKlienci);
-            this.id_uzytkownika = id_uzytkownika;
 
             
         }
@@ -155,26 +153,6 @@ namespace Firma_kurierska
 
 
 
-        }
-        #endregion
-        #region ZmianaHasla
-        private void BtnZmienDaneZmien_Click(object sender, RoutedEventArgs e)
-        {
-            SQLconnection sQLconnection = new SQLconnection();
-            Helper helper = new Helper();
-            if (sQLconnection.SprawdzPoprzednieHaslo(TxtZmienDaneStareHaslo.Text, id_uzytkownika))
-            {
-                if (helper.PoprawnoscHaslaStaregoINowego(TxtZamienDaneNoweHaslo, TxtZmienDaneNoweHaslo2))
-                {
-                    sQLconnection.ZmienHasloUzytkownika(TxtZamienDaneNoweHaslo.Text, id_uzytkownika);
-                    MessageBox.Show("Haslo zostało zmienione");
-                }
-            }
-            else 
-            {
-                MessageBox.Show("Stare haslo jest błędne");
-
-            }
         }
         #endregion
     }

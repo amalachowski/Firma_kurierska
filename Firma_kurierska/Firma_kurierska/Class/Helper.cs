@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Firma_kurierska.Class
@@ -36,6 +37,20 @@ namespace Firma_kurierska.Class
             foreach (var item in textBoxes) 
             {
                 item.Text = "";
+            }
+        }
+
+        public bool PoprawnoscHaslaStaregoINowego(System.Windows.Controls.TextBox nowe1, System.Windows.Controls.TextBox nowe2) 
+        {
+            if (nowe1.Text.Equals(nowe2.Text))
+            {
+
+                return true;
+            }
+            else
+            {
+                MessageBox.Show("Hasla nie sa takie same");
+                return false;
             }
         }
 

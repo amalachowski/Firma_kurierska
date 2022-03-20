@@ -72,7 +72,7 @@ namespace Firma_kurierska.Class
                 return false;
             }
         }
-        #region Klienci
+        
         public int Sprawdz_uzytkownika(string login, string haslo)
         {
             MySqlCommand nowe = new MySqlCommand("SELECT PRC_id FROM sql11479040.Pracownicy WHERE PRC_login='" + login + "' AND PRC_haslo='" + haslo + "';", connection);
@@ -93,7 +93,7 @@ namespace Firma_kurierska.Class
             return id;
         }
 
-
+        #region Klienci
         public void WyswietlKlientow(System.Windows.Controls.DataGrid dataGrid)
         {
             MySqlConnection myconnection = new MySqlConnection(conect);
@@ -269,7 +269,73 @@ namespace Firma_kurierska.Class
         }
 
         #endregion
+        #region ZmianaHasla
 
+        public bool SprawdzPoprzednieHaslo(string stareHaslo, int id_pracownika)
+        {
+            MySqlConnection mySqlConnection = new MySqlConnection(conect);
+            MySqlCommand cmd = new MySqlCommand();
+            cmd.Parameters.AddWithValue("@stareHaslo",stareHaslo);
+            cmd.Parameters.AddWithValue("@id_pracownika", id_pracownika);
+            cmd.CommandText = "Select * from Pracownicy where PRC_id=@id_pracownika and PRC_haslo=@stareHaslo;  ";
+            cmd.Connection = mySqlConnection;
+            mySqlConnection.Open();
+            try
+            {
+                
+                MySqlDataReader reader;
+                reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    
+                    return true;
+                }
+                else 
+                {
+                    
+                    return false;
+                } 
+            }
+            catch (Exception ex) 
+            {
+                System.Windows.MessageBox.Show(ex.Message);
+                
+            }
+            mySqlConnection.Close();
+            return false;
+            
+        }
+
+        public void ZmienHasloUzytkownika(string noweHaslo, int id_pracownika)
+        {
+            MySqlConnection mySqlConnection = new MySqlConnection(conect);
+            MySqlCommand cmd = new MySqlCommand();
+            cmd.Parameters.AddWithValue("@noweHaslo", noweHaslo);
+            cmd.Parameters.AddWithValue("@id_pracownika", id_pracownika);
+            cmd.CommandText = "Update Pracownicy set PRC_haslo=@noweHaslo where PRC_id=@id_pracownika;";
+            mySqlConnection.Open();
+            try
+            {
+                MySqlDataAdapter adapter = new MySqlDataAdapter();
+                adapter.UpdateCommand = cmd;
+                adapter.UpdateCommand.Connection = mySqlConnection;
+                cmd.ExecuteNonQuery();
+
+                
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message);
+
+            }
+            mySqlConnection.Close();
+
+        }
+
+
+
+
+        #endregion
 
 
     }

@@ -223,14 +223,54 @@
                         </StackPanel>
                     </Grid>
                 </TabItem>
-                <TabItem Style="{StaticResource MaterialDesignNavigationRailTabItem}" Width="100">
+                <!--Panel Kuriera-->
+                <TabItem Style="{StaticResource MaterialDesignNavigationRailTabItem}" Width="100" HorizontalAlignment="Left" >
                     <TabItem.Header >
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                             <materialDesign:PackIcon Kind="Truck" Height="40" Width="40" HorizontalAlignment="Center" />
                             <TextBlock Text="Kurierzy"/>
                         </StackPanel>
                     </TabItem.Header>
+                    <StackPanel Width="500" Height="800" Background="{DynamicResource MaterialDesignLightBackground}">
+                        <StackPanel.Effect>
+                            <DropShadowEffect BlurRadius="20" Opacity="0.65" ShadowDepth="21"/>
+                        </StackPanel.Effect>
+                        <materialDesign:ColorZone Padding="15"  Mode="PrimaryMid" Effect="{DynamicResource MaterialDesignShadowDepth2}" >
+                            <TextBlock Text="Kurierzy" HorizontalAlignment="Center"    FontSize="30" ></TextBlock>
+                        </materialDesign:ColorZone>
+                        <DataGrid CanUserAddRows="False"  Height="550" x:Name="DGKureirzy" AutoGenerateColumns="False"  IsSynchronizedWithCurrentItem="False"  SelectionMode="Single"  >
+                            <DataGrid.BindingGroup>
+                                <BindingGroup/>
+                            </DataGrid.BindingGroup>
+                            <DataGrid.Columns>
+                                <materialDesign:DataGridTextColumn Header="ID" Binding="{Binding KR_id}"  IsReadOnly="True"/>
+                                <materialDesign:DataGridTextColumn Header="Imie" Binding="{Binding KR_imie}" IsReadOnly="True"/>
+                                <materialDesign:DataGridTextColumn Header="Nazwisko" Binding="{Binding KR_nazwisko}" IsReadOnly="True"/>
+                                <materialDesign:DataGridTextColumn Header="Miasto" Binding="{Binding KR_miasto}" IsReadOnly="True"/>
+                                <materialDesign:DataGridTextColumn Header="Telefon" Binding="{Binding KR_telefon}" IsReadOnly="True"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Button Name="BtnKuerirzyWyszukaj" Content="Wyszukaj" Width="150" Margin="0,30,0,0" Click="BtnKuerirzyWyszukaj_Click"/>
+                        <Grid Margin="0,50,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Column="0" Width="150" Content="Dodaj" Click="BtnKurierzyDodaj_Click" />
+                            <Button Grid.Column="1" Width="150" Content="Usuń" Background="#FFB73A3A" BorderBrush="#FFB73A3A"/>
+                            <Button Grid.Column="2" Width="150" Content="Edytuj" />
+                        </Grid>
+
+
+
+
+
+                    </StackPanel>
+
                 </TabItem>
+                
+                        <!--Panel dodawania paczek-->
                 <TabItem Style="{StaticResource MaterialDesignNavigationRailTabItem}" Width="100">
                     <TabItem.Header >
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -272,12 +312,14 @@
                         </StackPanel>
                     </Grid>
                 </TabItem>
+                <!--Panel Zmien Dane-->
                 <TabItem Style="{StaticResource MaterialDesignNavigationRailTabItem}" Width="100">
                     <TabItem.Header >
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                             <materialDesign:PackIcon Kind="Settings" Height="40" Width="40" HorizontalAlignment="Center" />
                             <TextBlock Text="Zmień hasło"/>
                         </StackPanel>
+                        
                     </TabItem.Header>
                     <StackPanel Width="500" Height="400" Background="{DynamicResource MaterialDesignLightBackground}">
                         <StackPanel.Effect>
@@ -313,7 +355,10 @@
                             <Button Grid.Column="1" Name="BtnZmienDaneWyczysc" Content="Wyczyść" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="150"></Button>
                         </Grid>
                     </StackPanel>
+                    
                 </TabItem>
+                
+                <!--Panel Wyloguj-->
                 <TabItem Style="{StaticResource MaterialDesignNavigationRailTabItem}" Width="100">
                     <TabItem.Header >
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">

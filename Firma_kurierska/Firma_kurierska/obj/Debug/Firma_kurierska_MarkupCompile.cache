@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Adam\Desktop\ADO.NET\Projekt\Firma_kurierska\Firma_kurierska\Firma_kurierska\App.xaml
-21335484565
+4-1400365313
 
-8942796320
+10-1056217057
 1211344173330
-MainWindow.xaml;WindowFirma.xaml;
+ExtraWindows\KurierzyDodaj.xaml;ExtraWindows\KurierzyWyszukaj.xaml;MainWindow.xaml;WindowFirma.xaml;
 
 False
 

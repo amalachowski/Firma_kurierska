@@ -209,11 +209,12 @@ namespace Firma_kurierska.Class
             try
             {
 
-                zapytanie.CommandText = "Delete from Adres where ADR_id=" + id_rekordAdres + "; ";
-                zapytanie.ExecuteNonQuery();
+                
                 zapytanie.CommandText = "Delete from Klienci where KL_id=" + id_rekordKlient + ";";
                 zapytanie.ExecuteNonQuery();
-                
+                zapytanie.CommandText = "Delete from Adres where ADR_id=" + id_rekordAdres + "; ";
+                zapytanie.ExecuteNonQuery();
+
                 transaction.Commit();
 
 
@@ -269,6 +270,103 @@ namespace Firma_kurierska.Class
         }
 
         #endregion
+
+        #region Kurierzy
+
+
+        public void WyswietlKuerierow(System.Windows.Controls.DataGrid dataGrid) 
+        {
+            MySqlConnection myconnection = new MySqlConnection(conect);
+            MySqlCommand cmd = new MySqlCommand("SELECT KR_id , KR_imie, KR_nazwisko, KR_telefon , KR_miasto" +
+                " FROM Kurier ;", myconnection);
+            try
+            {
+                myconnection.Open();
+                MySqlDataAdapter adapter = new MySqlDataAdapter();
+                adapter.SelectCommand = cmd;
+                DataTable dataTable = new DataTable();
+                adapter.Fill(dataTable);
+                BindingSource zrodlo = new BindingSource();
+                zrodlo.DataSource = dataTable;
+                dataGrid.ItemsSource = zrodlo;
+                myconnection.Close();
+
+            }
+            catch (Exception e)
+            {
+                System.Windows.MessageBox.Show(e.Message);
+            }
+            dataGrid.Columns[0].Visibility = Visibility.Hidden;
+
+
+
+        }
+
+
+        public void WyszukajKurierow(System.Windows.Controls.TextBox[] textBoxes, System.Windows.Controls.DataGrid dataGrid) 
+        {
+            MySqlConnection myconnection = new MySqlConnection(conect);
+            MySqlCommand cmd = new MySqlCommand("Select KR_id, KR_imie, KR_nazwisko, KR_miasto, KR_telefon from Kurier where KR_imie like '%"+textBoxes[0].Text+ "%' and KR_nazwisko like '%" + textBoxes[1].Text + "%' and KR_miasto like '%" + textBoxes[2].Text + "%' and KR_telefon like '%" + textBoxes[3].Text + "%';", myconnection);
+
+            try
+            {
+                myconnection.Open();
+                MySqlDataAdapter adapter = new MySqlDataAdapter();
+                adapter.SelectCommand = cmd;
+                DataTable dataTable = new DataTable();
+                adapter.Fill(dataTable);
+                BindingSource zrodlo = new BindingSource();
+                zrodlo.DataSource = dataTable;
+                dataGrid.ItemsSource = zrodlo;
+                myconnection.Close();
+
+            }
+            catch (Exception e)
+            {
+                System.Windows.MessageBox.Show(e.Message);
+            }
+            dataGrid.Columns[0].Visibility = Visibility.Hidden;
+
+        }
+
+
+        public void DodajKurierow(System.Windows.Controls.TextBox[] textBoxes) 
+        {
+
+            MySqlConnection myconnection = new MySqlConnection(conect);
+            MySqlDataAdapter adapter = new MySqlDataAdapter();
+            
+            
+            MySqlCommand cmd = new MySqlCommand("insert into Kurier set KR_imie=@KRImie , KR_nazwisko=@KRNazwisko,KR_miasto=@KRMiasto ,KR_telefon=@KRTelefon ;");
+            cmd.Parameters.AddWithValue("@KRImie", textBoxes[0].Text);
+            cmd.Parameters.AddWithValue("@KRNazwisko", textBoxes[1].Text.ToString());
+            cmd.Parameters.AddWithValue("@KRMiasto", textBoxes[2].Text.ToString());
+            cmd.Parameters.AddWithValue("@KRTelefon", textBoxes[3].Text.ToString());
+            
+            
+
+            try
+            {
+                myconnection.Open();
+                
+                adapter.InsertCommand = cmd;
+                adapter.InsertCommand.Connection = myconnection;
+                
+                adapter.InsertCommand.ExecuteNonQuery();
+                
+                myconnection.Close();
+            }
+            catch (Exception e)
+            {
+                System.Windows.MessageBox.Show(e.Message);
+            }
+        }
+
+        #endregion
+
+
+
+
         #region ZmianaHasla
 
         public bool SprawdzPoprzednieHaslo(string stareHaslo, int id_pracownika)

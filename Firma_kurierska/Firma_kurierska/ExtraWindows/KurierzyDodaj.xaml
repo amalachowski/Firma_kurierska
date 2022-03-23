@@ -1,0 +1,65 @@
+﻿<Window x:Class="Firma_kurierska.ExtraWindows.KurierzyDodaj"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Firma_kurierska.ExtraWindows"
+        mc:Ignorable="d"
+         WindowStyle="None"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        WindowStartupLocation="CenterScreen"
+        Title="KurierzyDodaj" Height="400" Width="500">
+    <Grid>
+        <StackPanel>
+            <materialDesign:ColorZone Padding="15"  Mode="PrimaryMid" Effect="{DynamicResource MaterialDesignShadowDepth2}" >
+                <TextBlock Text="Dodaj" HorizontalAlignment="Center"    FontSize="30" ></TextBlock>
+            </materialDesign:ColorZone>
+
+            <Grid Margin="0,30,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="19*"/>
+                    <ColumnDefinition Width="63*"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Imię: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom"  Width="56" Height="26"></Label>
+                <TextBox Text="{Binding KR_imie }"  Language="pl" x:Name="TxtKurierzyDImie" Grid.Column="1" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" Height="27" >
+                </TextBox>
+                <Label Grid.Row="1" Content="Nazwisko: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="26" Width="78" ></Label>
+                <TextBox  x:Name="TxtKurierzyDNazwisko" Grid.Column="1" Grid.Row="1" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" Height="27" ></TextBox>
+                <Label Grid.Row="2" Content="Miasto: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="26" Width="60" ></Label>
+                <TextBox x:Name="TxtKurierzyDMiasto" Grid.Column="1" Grid.Row="2" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" Height="27" ></TextBox>
+                <Label Grid.Row="3" Content="telefon: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="26" Width="60" ></Label>
+                <TextBox x:Name="TxtKurierzyDTelefon" Grid.Column="1" Grid.Row="3" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" Height="27" ></TextBox>
+            </Grid>
+            <Grid Margin="0,50,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="BtnKuerierzyDDodaj" Grid.Column="0" Width="130" Content="Dodaj" Margin="58,0" VerticalAlignment="Top" Click="BtnKurierzyWWyszukaj_Click" ></Button>
+                <Button x:Name="BtnKuerierzyDWyjdz" Grid.Column="1" Width="130" Content="Wyjdź" Margin="58,0" Click="BtnKurierzyWWyjdz_Click" Height="Auto"/>
+            </Grid>
+        </StackPanel>
+
+
+
+
+
+
+
+
+    </Grid>
+</Window>

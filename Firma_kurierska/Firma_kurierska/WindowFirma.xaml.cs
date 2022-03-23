@@ -12,6 +12,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Firma_kurierska.ExtraWindows;
 using System.Windows.Shapes;
 
 namespace Firma_kurierska
@@ -34,6 +35,7 @@ namespace Firma_kurierska
             this.MaxWidth = SystemParameters.MaximizedPrimaryScreenWidth;
             SQLconnection sQLconnection = new SQLconnection();
             sQLconnection.WyswietlKlientow(DGKlienci);
+            sQLconnection.WyswietlKuerierow(DGKureirzy);
             this.id_uzytkownika = id_uzytkownika;
 
             
@@ -176,6 +178,21 @@ namespace Firma_kurierska
 
             }
         }
+
         #endregion
+
+        private void BtnKuerirzyWyszukaj_Click(object sender, RoutedEventArgs e)
+        {
+            ExtraWindows.KurierzyWyszukaj kurierzyWyszukaj = new KurierzyWyszukaj(DGKureirzy);
+            kurierzyWyszukaj.ShowDialog();
+            
+            
+        }
+
+        private void BtnKurierzyDodaj_Click(object sender, RoutedEventArgs e)
+        {
+            KurierzyDodaj kurierzyDodaj = new KurierzyDodaj(DGKureirzy);
+            kurierzyDodaj.ShowDialog();
+        }
     }
 }

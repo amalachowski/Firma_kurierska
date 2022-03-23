@@ -69,9 +69,23 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Class\Helper.cs" />
+    <Compile Include="ExtraWindows\KurierzyDodaj.xaml.cs">
+      <DependentUpon>KurierzyDodaj.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ExtraWindows\KurierzyWyszukaj.xaml.cs">
+      <DependentUpon>KurierzyWyszukaj.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WindowFirma.xaml.cs">
       <DependentUpon>WindowFirma.xaml</DependentUpon>
     </Compile>
+    <Page Include="ExtraWindows\KurierzyDodaj.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ExtraWindows\KurierzyWyszukaj.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

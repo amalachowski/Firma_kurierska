@@ -43,6 +43,12 @@ namespace Firma_kurierska
             sQLconnection.WyswietlKlientow(DGKlienci);
             sQLconnection.WyswietlKuerierow(DGKureirzy);
             this.id_uzytkownika = id_uzytkownika;
+           /* if (id_uzytkownika==2) 
+            {
+                TabItemPracownicy.Visibility = Visibility.Hidden;               // Ukrywanie Pracownikow i kurierow
+                TabItemKurierzy.Visibility = Visibility.Hidden;
+            
+            }*/
 
             
         }
@@ -233,10 +239,7 @@ namespace Firma_kurierska
                     kurierTelefonKuriera = (string)rowView.Row[4];
 
                 }
-                else 
-                {
-                    MessageBox.Show("Nie wybrano Kuriera ");
-                }
+               
             }
             catch (Exception kom)
             {
@@ -248,15 +251,26 @@ namespace Firma_kurierska
         }
         private void BtnKurierzyEdytujClick(object sender, RoutedEventArgs e)
         {
-            string[] daneKuriera = new string[4];
-            daneKuriera[0] = kurierImieKuriera.ToString();
-            daneKuriera[1] = kurierNazwiskoKuriera.ToString();
-            daneKuriera[2] = kurierMiastoKuriera.ToString();
-            daneKuriera[3] = kurierTelefonKuriera.ToString();
-            KurierzyEdytuj kurierzyEdytuj = new KurierzyEdytuj(id_KurierKuriera,daneKuriera,DGKureirzy);
-            
-            
-            kurierzyEdytuj.ShowDialog();
+            if (id_KurierKuriera != 0) 
+            {
+                string[] daneKuriera = new string[4];
+                daneKuriera[0] = kurierImieKuriera.ToString();
+                daneKuriera[1] = kurierNazwiskoKuriera.ToString();
+                daneKuriera[2] = kurierMiastoKuriera.ToString();
+                daneKuriera[3] = kurierTelefonKuriera.ToString();
+                KurierzyEdytuj kurierzyEdytuj = new KurierzyEdytuj(id_KurierKuriera, daneKuriera, DGKureirzy);
+
+
+            kurierzyEdytuj.ShowDialog(); 
+            }
+            else
+            {
+
+                MessageBox.Show("Nie wybrano Kuriera do edytowania");
+            }
+
+
+
         }
 
         #endregion
@@ -278,8 +292,13 @@ namespace Firma_kurierska
 
         }
 
+
         #endregion
 
-        
+        private void BtnKurierzyOdswierz_Click(object sender, RoutedEventArgs e)
+        {
+            SQLconnection sQLconnection = new SQLconnection();
+            sQLconnection.WyswietlKuerierow(DGKureirzy);
+        }
     }
 }

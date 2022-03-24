@@ -141,7 +141,7 @@
                         </StackPanel>
 
                     </TabItem.Header>
-                    <StackPanel Width="900" Height="800" Background="{DynamicResource MaterialDesignLightBackground}">
+                    <StackPanel Width="700" Height="800" Background="{DynamicResource MaterialDesignLightBackground}">
                         <StackPanel.Effect>
                             <DropShadowEffect BlurRadius="20" Opacity="0.65" ShadowDepth="21"/>
                         </StackPanel.Effect>
@@ -149,19 +149,63 @@
                             <TextBlock Text="Zamówienia" HorizontalAlignment="Center"    FontSize="30" ></TextBlock>
                         </materialDesign:ColorZone>
                         <Grid>
-                            
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="83*"/>
+                                <ColumnDefinition Width="57*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Row="0" Margin="0,0,15,0" >
+                                <DataGrid x:Name="DGZamowienia" Height="600" Width="400" CanUserAddRows="False" >
+                                    <DataGrid.Columns>
+                                        <materialDesign:DataGridTextColumn Header="ID"  IsReadOnly="True"/>
+                                        <materialDesign:DataGridTextColumn Header="Nadawca"  IsReadOnly="True"/>
+                                        <materialDesign:DataGridTextColumn Header="Status"  IsReadOnly="True"/>
+                                        <materialDesign:DataGridTextColumn Header="Zniżka"  IsReadOnly="True"/>
+                                        <materialDesign:DataGridTextColumn Header="Wartość Końcowa"  IsReadOnly="True"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+
+                            </StackPanel>
+                            <StackPanel Grid.Column="1">
+                                <Grid Margin="0,50,0,0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Label Content="Zmień status zamówienia :" HorizontalAlignment="Center"/>
+                                    <ComboBox x:Name="CBZamowienieStatus" Grid.Row="1" Margin="10,7,0,0" Width="250" HorizontalAlignment="Center"></ComboBox>
+                                    <Label Content="Zmień stawke zniżki :" Grid.Row="2" Margin="0,15,0,0" HorizontalAlignment="Center" />
+                                    <ComboBox x:Name="CBZamowienieZnizka" Grid.Row="3" Margin="10,7,0,0" Width="250" HorizontalAlignment="Center"></ComboBox>
+                                    <Button x:Name="BtnZamowienieZatwierdz" Grid.Row="4" Width="130" Content="Zatwierdź" HorizontalAlignment="Center" Margin="0,50,0,0"></Button>
+                                </Grid>
+                                <Button x:Name="BtnZamowienieSzczegoly" Grid.Row="4" Width="130" Content="Szczegóły" HorizontalAlignment="Left" Margin="30,250,0,0"></Button>
+                            </StackPanel>
+
+
+                        </Grid>
+                        <Grid Margin="0,30,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Button x:Name="BtnZamowienieDodaj" Grid.Column="0" Content="Dodaj" Width="150"></Button>
+                            <Button x:Name="BtnZamowienieUsun" Grid.Column="1" Content="Usuń" Width="150"></Button>
+                            <Button x:Name="BtnZamowienieEdytuj" Grid.Column="2" Content="Edytuj" Width="150"></Button>
                         </Grid>
                     </StackPanel>
 
-                   
+
                 </TabItem>
-                <TabItem Style="{StaticResource MaterialDesignNavigationRailTabItem}" Width="100">
+                <TabItem x:Name="TabItemPracownicy" Style="{StaticResource MaterialDesignNavigationRailTabItem}" Width="100">
                     <TabItem.Header >
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                             <materialDesign:PackIcon Kind="Worker" Height="40" Width="40" HorizontalAlignment="Center" />
                             <TextBlock Text="Pracwonicy"/>
                         </StackPanel>
-                      </TabItem.Header>
+                    </TabItem.Header>
                     <Grid HorizontalAlignment="Center">
 
                         <Grid.ColumnDefinitions>
@@ -218,7 +262,7 @@
                                 <Label Grid.Row="7" Content="Email: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" ></Label>
                                 <TextBox Grid.Column="1" Grid.Row="7" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" ></TextBox>
                             </Grid>
-                            
+
                             <Button Name="BtinPracownicyWyszukaj" Content="Wyszukaj" Width="130" Margin="0,30,0,0"></Button>
                             <Grid Margin="0,60,0,0">
                                 <Grid.ColumnDefinitions>
@@ -235,7 +279,7 @@
                     </Grid>
                 </TabItem>
                 <!--Panel Kuriera-->
-                <TabItem Style="{StaticResource MaterialDesignNavigationRailTabItem}" Width="100" HorizontalAlignment="Left" >
+                <TabItem x:Name="TabItemKurierzy" Style="{StaticResource MaterialDesignNavigationRailTabItem}" Width="100" HorizontalAlignment="Left" >
                     <TabItem.Header >
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                             <materialDesign:PackIcon Kind="Truck" Height="40" Width="40" HorizontalAlignment="Center" />
@@ -261,7 +305,16 @@
                                 <materialDesign:DataGridTextColumn Header="Telefon" Binding="{Binding KR_telefon}" IsReadOnly="True"/>
                             </DataGrid.Columns>
                         </DataGrid>
-                        <Button Name="BtnKuerirzyWyszukaj" Content="Wyszukaj" Width="150" Margin="0,30,0,0" Click="BtnKuerirzyWyszukaj_Click"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Button x:Name="BtnKurierzyOdswierz" Margin="30,30,0,0"  HorizontalAlignment="Left" Width="60" Background="#FFFAFAFA" Click="BtnKurierzyOdswierz_Click"  >
+                                <materialDesign:PackIcon Kind="Refresh" Foreground="#FF673AB7"  Width="30" Height="25"/>
+                            </Button>
+                            <Button Name="BtnKuerirzyWyszukaj" Grid.Column="1"  Content="Wyszukaj" Width="150" Margin="0,30,0,0" Click="BtnKuerirzyWyszukaj_Click"/>
+                        </Grid>
                         <Grid Margin="0,50,0,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -280,8 +333,8 @@
                     </StackPanel>
 
                 </TabItem>
-                
-                        <!--Panel dodawania paczek-->
+
+                <!--Panel dodawania paczek-->
                 <TabItem Style="{StaticResource MaterialDesignNavigationRailTabItem}" Width="100">
                     <TabItem.Header >
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -289,7 +342,7 @@
                             <TextBlock Text="Paczki"/>
                         </StackPanel>
                     </TabItem.Header>
-                    
+
                 </TabItem>
                 <!--Panel Zmien Dane-->
                 <TabItem Style="{StaticResource MaterialDesignNavigationRailTabItem}" Width="100">
@@ -298,7 +351,7 @@
                             <materialDesign:PackIcon Kind="Settings" Height="40" Width="40" HorizontalAlignment="Center" />
                             <TextBlock Text="Zmień hasło"/>
                         </StackPanel>
-                        
+
                     </TabItem.Header>
                     <StackPanel Width="500" Height="400" Background="{DynamicResource MaterialDesignLightBackground}">
                         <StackPanel.Effect>
@@ -334,9 +387,9 @@
                             <Button Grid.Column="1" Name="BtnZmienDaneWyczysc" Content="Wyczyść" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="150"></Button>
                         </Grid>
                     </StackPanel>
-                    
+
                 </TabItem>
-                
+
                 <!--Panel Wyloguj-->
                 <TabItem Style="{StaticResource MaterialDesignNavigationRailTabItem}" Width="100">
                     <TabItem.Header >
@@ -351,24 +404,24 @@
                             <DropShadowEffect ShadowDepth="20" BlurRadius="20" RenderingBias="Performance" Opacity="0.65" Direction="316"/>
                         </StackPanel.Effect>
                         <materialDesign:ColorZone Padding="15"  Mode="PrimaryMid" Effect="{DynamicResource MaterialDesignShadowDepth2}" >
-                                <TextBlock Text="Wyjście" HorizontalAlignment="Center"    FontSize="30" ></TextBlock>
-                            </materialDesign:ColorZone>
-                            
-                            <Label Content="Co chcesz zrobić" FontSize="30" Margin="0,20,0,0" HorizontalAlignment="Center" FontWeight="Bold"></Label>
-                            <Grid Margin="0,60,0,0">
+                            <TextBlock Text="Wyjście" HorizontalAlignment="Center"    FontSize="30" ></TextBlock>
+                        </materialDesign:ColorZone>
+
+                        <Label Content="Co chcesz zrobić" FontSize="30" Margin="0,20,0,0" HorizontalAlignment="Center" FontWeight="Bold"></Label>
+                        <Grid Margin="0,60,0,0">
                             <Grid.ColumnDefinitions>
-                                  <ColumnDefinition Width="*"></ColumnDefinition>
-                                   <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                                <Button x:Name="BtnWyjscieWyjdz" Grid.Column="0" HorizontalAlignment="Center" Width="100" Content="Wyjscie" Margin="50,0" VerticalAlignment="Top" Click="BtnWyjscieWyjdz_Click" ></Button>
-                                <Button x:Name="BtnWyjscieWyloguj" Grid.Column="1" HorizontalAlignment="Center" Width="100" Content="Wyloguj" Click="BtnWyjscieWyloguj_Click" ></Button>
+                            <Button x:Name="BtnWyjscieWyjdz" Grid.Column="0" HorizontalAlignment="Center" Width="100" Content="Wyjscie" Margin="50,0" VerticalAlignment="Top" Click="BtnWyjscieWyjdz_Click" ></Button>
+                            <Button x:Name="BtnWyjscieWyloguj" Grid.Column="1" HorizontalAlignment="Center" Width="100" Content="Wyloguj" Click="BtnWyjscieWyloguj_Click" ></Button>
                         </Grid>
-                            
-                        </StackPanel>
+
+                    </StackPanel>
 
 
 
-                    
+
 
                 </TabItem>
 

@@ -14,7 +14,8 @@
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        WindowStartupLocation="CenterScreen"
+        WindowStartupLocation="Manual"
+        Localization.Attributes="500,500"
         Title="KurierzyDodaj" Height="400" Width="500">
     <Grid>
         <StackPanel>

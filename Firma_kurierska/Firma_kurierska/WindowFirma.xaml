@@ -345,7 +345,7 @@
 
                 </TabItem>
                 <!--Panel Zmien Dane-->
-                <TabItem Style="{StaticResource MaterialDesignNavigationRailTabItem}" Width="100">
+                <TabItem Style="{StaticResource MaterialDesignNavigationRailTabItem}" Width="100" HorizontalAlignment="Right">
                     <TabItem.Header >
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                             <materialDesign:PackIcon Kind="Settings" Height="40" Width="40" HorizontalAlignment="Center" />
@@ -391,7 +391,7 @@
                 </TabItem>
 
                 <!--Panel Wyloguj-->
-                <TabItem Style="{StaticResource MaterialDesignNavigationRailTabItem}" Width="100">
+                <TabItem Style="{StaticResource MaterialDesignNavigationRailTabItem}" Width="100" HorizontalAlignment="Right">
                     <TabItem.Header >
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                             <materialDesign:PackIcon Kind="ExitRun" Height="40" Width="40" HorizontalAlignment="Center" />

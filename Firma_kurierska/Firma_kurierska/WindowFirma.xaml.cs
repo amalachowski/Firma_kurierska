@@ -34,7 +34,7 @@ namespace Firma_kurierska
 
         
 
-        public WindowFirma(int id_uzytkownika)
+        public WindowFirma(int id_uzytkownika, int idStanowiska)
         {
             InitializeComponent();
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
@@ -43,18 +43,19 @@ namespace Firma_kurierska
             sQLconnection.WyswietlKlientow(DGKlienci);
             sQLconnection.WyswietlKuerierow(DGKureirzy);
             this.id_uzytkownika = id_uzytkownika;
-           /* if (id_uzytkownika==2) 
+            if (idStanowiska > 2)
             {
-                TabItemPracownicy.Visibility = Visibility.Hidden;               // Ukrywanie Pracownikow i kurierow
-                TabItemKurierzy.Visibility = Visibility.Hidden;
+               TabItemPracownicy.Width = 0;               // Ukrywanie Pracownikow i kurierow
+               TabItemKurierzy.Width = 0;
             
-            }*/
+            }
 
             
         }
         #region KlienciBTN
         private void BtinKlienciWyszukaj_Click(object sender, RoutedEventArgs e)
         {
+            MessageBox.Show(TxtKlienciImie.Text);
 
             TextBox[] textBoxesKlienci = new TextBox[8];
             textBoxesKlienci[0] = TxtKlienciImie;

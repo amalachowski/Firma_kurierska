@@ -73,25 +73,35 @@ namespace Firma_kurierska.Class
             }
         }
         
-        public int Sprawdz_uzytkownika(string login, string haslo)
+        public int[] Sprawdz_uzytkownika(string login, string haslo)
         {
-            MySqlCommand nowe = new MySqlCommand("SELECT PRC_id FROM sql11479040.Pracownicy WHERE PRC_login='" + login + "' AND PRC_haslo='" + haslo + "';", connection);
+            int[] dane = new int[2];
+            MySqlCommand nowe = new MySqlCommand("SELECT PRC_id ,PRC_STN_id  FROM sql11479040.Pracownicy WHERE PRC_login='" + login + "' AND PRC_haslo='" + haslo + "';", connection);
             MySqlDataReader dd;
             int id;
-            OpenConnection();
-            dd = nowe.ExecuteReader();
-            if (dd.Read())
+            try
             {
-                id = dd.GetInt32(0);
+                OpenConnection();
+                dd = nowe.ExecuteReader();
+                if (dd.Read())
+                {
+                    dane[0] = dd.GetInt32(0);
+                    dane[1] = dd.GetInt32(0);
+                }
+                else
+                {
+                    id = 0;
+                }
+                dd.Close();
+                CloseConnection();
             }
-            else
+            catch (Exception e)
             {
-                id = 0;
+                System.Windows.MessageBox.Show(e.Message);
             }
-            dd.Close();
-            CloseConnection();
-            return id;
+            return dane;
         }
+        
 
         #region Klienci
         public void WyswietlKlientow(System.Windows.Controls.DataGrid dataGrid)

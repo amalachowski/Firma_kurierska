@@ -102,8 +102,10 @@ namespace Firma_kurierska.Class
             try
             {
                 myconnection.Open();
-                MySqlDataAdapter adapter = new MySqlDataAdapter();
-                adapter.SelectCommand = cmd;
+                MySqlDataAdapter adapter = new MySqlDataAdapter
+                {
+                    SelectCommand = cmd
+                };
                 DataTable dataTable = new DataTable();
                 adapter.Fill(dataTable);
                 BindingSource zrodlo = new BindingSource();
@@ -360,6 +362,73 @@ namespace Firma_kurierska.Class
             {
                 System.Windows.MessageBox.Show(e.Message);
             }
+        }
+
+        public void UsunKuriera(int idKuriera) 
+        {
+            MySqlConnection myconnection = new MySqlConnection(conect);
+            MySqlCommand zapytanie = myconnection.CreateCommand();
+            MySqlTransaction transaction;
+
+            myconnection.Open();
+                
+                
+                
+            transaction = myconnection.BeginTransaction(IsolationLevel.ReadCommitted);
+            zapytanie.Transaction = transaction;
+            zapytanie.Connection = myconnection;
+            try
+            {
+                
+                zapytanie.CommandText = "Delete from Kurier where KR_id=" + idKuriera + ";";
+                zapytanie.ExecuteNonQuery();
+                
+
+                transaction.Commit();
+
+
+            }
+            catch (Exception e)
+            {
+                System.Windows.Forms.MessageBox.Show(e.Message);
+                transaction.Rollback();
+            }
+            myconnection.Close();
+
+
+        }
+
+        public void EdytujKuriera(System.Windows.Controls.TextBox[] textBoxes, int idKuriera) 
+        {
+            MySqlConnection myconnection = new MySqlConnection(conect);
+            MySqlCommand cmd = myconnection.CreateCommand();
+            MySqlTransaction transaction;
+            cmd.Parameters.AddWithValue("@KRImie", textBoxes[0].Text);
+            cmd.Parameters.AddWithValue("@KRNazwisko", textBoxes[1].Text.ToString());
+            cmd.Parameters.AddWithValue("@KRMiasto", textBoxes[2].Text.ToString());
+            cmd.Parameters.AddWithValue("@KRTelefon", textBoxes[3].Text.ToString());
+            
+            
+
+            myconnection.Open();
+            transaction = myconnection.BeginTransaction(IsolationLevel.ReadCommitted);
+            cmd.Connection = myconnection;
+            cmd.Transaction = transaction;
+            try
+            {
+
+                cmd.CommandText = "Update Kurier set KR_imie=@KRImie, KR_nazwisko=@KRNazwisko, KR_miasto=@KRMiasto,KR_telefon=@KRTelefon where KR_id='" + idKuriera + "'; ";
+                cmd.ExecuteNonQuery();
+                
+
+                transaction.Commit();
+            }
+            catch (Exception e)
+            {
+                System.Windows.MessageBox.Show(e.Message);
+                transaction.Rollback();
+            }
+            myconnection.Close();
         }
 
         #endregion

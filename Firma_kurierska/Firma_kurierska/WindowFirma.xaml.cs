@@ -25,6 +25,12 @@ namespace Firma_kurierska
         private int id_uzytkownika;
         private int id_rekoruKlienta;
         private int id_rekordAdres;
+        private int id_KurierKuriera;
+        private string kurierImieKuriera;
+        private string kurierNazwiskoKuriera;
+        private string kurierMiastoKuriera;
+        private string kurierTelefonKuriera;
+
 
         
 
@@ -181,6 +187,8 @@ namespace Firma_kurierska
 
         #endregion
 
+
+        #region Kurierzy
         private void BtnKuerirzyWyszukaj_Click(object sender, RoutedEventArgs e)
         {
             ExtraWindows.KurierzyWyszukaj kurierzyWyszukaj = new KurierzyWyszukaj(DGKureirzy);
@@ -194,5 +202,84 @@ namespace Firma_kurierska
             KurierzyDodaj kurierzyDodaj = new KurierzyDodaj(DGKureirzy);
             kurierzyDodaj.ShowDialog();
         }
+
+        private void BtnKurierzyUsun_Click(object sender, RoutedEventArgs e)
+        {
+            if (id_KurierKuriera != 0)
+            {
+                SQLconnection sQLconnection = new SQLconnection();
+                sQLconnection.UsunKuriera(id_KurierKuriera);
+                sQLconnection.WyswietlKuerierow(DGKureirzy);
+            }
+            else 
+            {
+
+                MessageBox.Show("Nie wybrano Kuriera do usnięcia");
+            }
+        }
+
+        private void DGKureirzy_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DataGrid dataGrid = sender as DataGrid;
+            DataRowView rowView = dataGrid.SelectedItem as DataRowView;
+            try
+            {
+                if (rowView != null)
+                {
+                    id_KurierKuriera = (int)rowView.Row[0]; // zapisywanie wybranego id Kuriera
+                    kurierImieKuriera = (string)rowView.Row[1];
+                    kurierNazwiskoKuriera = (string)rowView.Row[2];
+                    kurierMiastoKuriera = (string)rowView.Row[3];
+                    kurierTelefonKuriera = (string)rowView.Row[4];
+
+                }
+                else 
+                {
+                    MessageBox.Show("Nie wybrano Kuriera ");
+                }
+            }
+            catch (Exception kom)
+            {
+                MessageBox.Show(kom.Message);
+            }
+            
+
+
+        }
+        private void BtnKurierzyEdytujClick(object sender, RoutedEventArgs e)
+        {
+            string[] daneKuriera = new string[4];
+            daneKuriera[0] = kurierImieKuriera.ToString();
+            daneKuriera[1] = kurierNazwiskoKuriera.ToString();
+            daneKuriera[2] = kurierMiastoKuriera.ToString();
+            daneKuriera[3] = kurierTelefonKuriera.ToString();
+            KurierzyEdytuj kurierzyEdytuj = new KurierzyEdytuj(id_KurierKuriera,daneKuriera,DGKureirzy);
+            
+            
+            kurierzyEdytuj.ShowDialog();
+        }
+
+        #endregion
+
+
+        #region Wyjscie
+        private void BtnWyjscieWyjdz_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+        
+        
+        private void BtnWyjscieWyloguj_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainWindow = new MainWindow();
+
+            this.Close();
+            mainWindow.Show();
+
+        }
+
+        #endregion
+
+        
     }
 }

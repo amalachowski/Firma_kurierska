@@ -141,6 +141,17 @@
                         </StackPanel>
 
                     </TabItem.Header>
+                    <StackPanel Width="900" Height="800" Background="{DynamicResource MaterialDesignLightBackground}">
+                        <StackPanel.Effect>
+                            <DropShadowEffect BlurRadius="20" Opacity="0.65" ShadowDepth="21"/>
+                        </StackPanel.Effect>
+                        <materialDesign:ColorZone Padding="15"  Mode="PrimaryMid" Effect="{DynamicResource MaterialDesignShadowDepth2}" >
+                            <TextBlock Text="Zamówienia" HorizontalAlignment="Center"    FontSize="30" ></TextBlock>
+                        </materialDesign:ColorZone>
+                        <Grid>
+                            
+                        </Grid>
+                    </StackPanel>
 
                    
                 </TabItem>
@@ -238,7 +249,7 @@
                         <materialDesign:ColorZone Padding="15"  Mode="PrimaryMid" Effect="{DynamicResource MaterialDesignShadowDepth2}" >
                             <TextBlock Text="Kurierzy" HorizontalAlignment="Center"    FontSize="30" ></TextBlock>
                         </materialDesign:ColorZone>
-                        <DataGrid CanUserAddRows="False"  Height="550" x:Name="DGKureirzy" AutoGenerateColumns="False"  IsSynchronizedWithCurrentItem="False"  SelectionMode="Single"  >
+                        <DataGrid CanUserAddRows="False"  Height="550" x:Name="DGKureirzy" AutoGenerateColumns="False"  IsSynchronizedWithCurrentItem="False"  SelectionMode="Single" SelectionChanged="DGKureirzy_SelectionChanged"  >
                             <DataGrid.BindingGroup>
                                 <BindingGroup/>
                             </DataGrid.BindingGroup>
@@ -258,8 +269,8 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Button Grid.Column="0" Width="150" Content="Dodaj" Click="BtnKurierzyDodaj_Click" />
-                            <Button Grid.Column="1" Width="150" Content="Usuń" Background="#FFB73A3A" BorderBrush="#FFB73A3A"/>
-                            <Button Grid.Column="2" Width="150" Content="Edytuj" />
+                            <Button x:Name="BtnKurierzyUsun" Grid.Column="1" Width="150" Content="Usuń" Background="#FFB73A3A" BorderBrush="#FFB73A3A" Click="BtnKurierzyUsun_Click"/>
+                            <Button x:Name="BtnKurierzyEdytuj" Grid.Column="2" Width="150" Content="Edytuj" Click="BtnKurierzyEdytujClick" />
                         </Grid>
 
 
@@ -278,39 +289,7 @@
                             <TextBlock Text="Paczki"/>
                         </StackPanel>
                     </TabItem.Header>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0" Background="{DynamicResource MaterialDesignLightBackground}" Margin="10">
-                            <materialDesign:ColorZone Padding="15"  Mode="PrimaryMid" Effect="{DynamicResource MaterialDesignShadowDepth2}" >
-                                <TextBlock Text="Klienci" HorizontalAlignment="Center"    FontSize="30" ></TextBlock>
-                            </materialDesign:ColorZone>
-                            
-                        </StackPanel>
-                        <StackPanel Grid.Column="1" Background="{DynamicResource MaterialDesignLightBackground}" Margin="10" >
-                            <materialDesign:ColorZone Padding="15"  Mode="PrimaryMid" Effect="{DynamicResource MaterialDesignShadowDepth2}" >
-                                <TextBlock Text="Kurierzy" HorizontalAlignment="Center"    FontSize="30" ></TextBlock>
-                            </materialDesign:ColorZone>
-                            
-                        </StackPanel>
-                        <StackPanel Grid.Column="2" Background="{DynamicResource MaterialDesignLightBackground}" Margin="10">
-                            <materialDesign:ColorZone Padding="15"  Mode="PrimaryMid" Effect="{DynamicResource MaterialDesignShadowDepth2}" >
-                                <TextBlock Text="Paczki" HorizontalAlignment="Center"    FontSize="30" ></TextBlock>
-                            </materialDesign:ColorZone>
-                            
-                        </StackPanel>
-                        <StackPanel Grid.Column="3" Background="{DynamicResource MaterialDesignLightBackground}" Margin="10"  >
-                            <materialDesign:ColorZone Padding="15"  Mode="PrimaryMid" Effect="{DynamicResource MaterialDesignShadowDepth2}" >
-                                <TextBlock Text="Dodaj zamówienie" HorizontalAlignment="Center"    FontSize="30" ></TextBlock>
-                            </materialDesign:ColorZone>
-                            
-                        </StackPanel>
-                    </Grid>
+                    
                 </TabItem>
                 <!--Panel Zmien Dane-->
                 <TabItem Style="{StaticResource MaterialDesignNavigationRailTabItem}" Width="100">
@@ -381,8 +360,8 @@
                                   <ColumnDefinition Width="*"></ColumnDefinition>
                                    <ColumnDefinition Width="*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                                <Button x:Name="BtnWyjscieWyjdz" Grid.Column="0" HorizontalAlignment="Center" Width="100" Content="Wyjscie" ></Button>
-                                <Button x:Name="BtnWyjscieWyloguj" Grid.Column="1" HorizontalAlignment="Center" Width="100" Content="Wyloguj" ></Button>
+                                <Button x:Name="BtnWyjscieWyjdz" Grid.Column="0" HorizontalAlignment="Center" Width="100" Content="Wyjscie" Margin="50,0" VerticalAlignment="Top" Click="BtnWyjscieWyjdz_Click" ></Button>
+                                <Button x:Name="BtnWyjscieWyloguj" Grid.Column="1" HorizontalAlignment="Center" Width="100" Content="Wyloguj" Click="BtnWyjscieWyloguj_Click" ></Button>
                         </Grid>
                             
                         </StackPanel>

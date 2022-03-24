@@ -72,6 +72,9 @@
     <Compile Include="ExtraWindows\KurierzyDodaj.xaml.cs">
       <DependentUpon>KurierzyDodaj.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ExtraWindows\KurierzyEdytuj.xaml.cs">
+      <DependentUpon>KurierzyEdytuj.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ExtraWindows\KurierzyWyszukaj.xaml.cs">
       <DependentUpon>KurierzyWyszukaj.xaml</DependentUpon>
     </Compile>
@@ -79,6 +82,10 @@
       <DependentUpon>WindowFirma.xaml</DependentUpon>
     </Compile>
     <Page Include="ExtraWindows\KurierzyDodaj.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ExtraWindows\KurierzyEdytuj.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

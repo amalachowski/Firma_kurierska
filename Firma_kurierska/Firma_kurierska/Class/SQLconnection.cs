@@ -514,6 +514,174 @@ namespace Firma_kurierska.Class
 
         #endregion
 
+        #region Pracownicy
+        public void WyswietlPracownikow(System.Windows.Controls.DataGrid dataGrid)
+        {
+            MySqlConnection myconnection = new MySqlConnection(conect);
+
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand("SELECT PRC_id, PRC_imie, PRC_nazwisko, PRC_login, STN_stanowisko, PRC_haslo FROM Pracownicy INNER JOIN Stanowisko ON PRC_STN_id = STN_id;", myconnection);
+                DataTable dt = new DataTable();
+                myconnection.Open();
+                MySqlDataReader sdr = cmd.ExecuteReader();
+                dt.Load(sdr);
+                myconnection.Close();
+                dataGrid.ItemsSource = dt.DefaultView;
+
+            }
+            catch (Exception e)
+            {
+                System.Windows.MessageBox.Show(e.Message);
+            }
+
+        }
+        public void WyszukajPracownicy(string[] dane, System.Windows.Controls.DataGrid dataGrid)
+        {
+            if (dane is null)
+            {
+                throw new ArgumentNullException(nameof(dane));
+            }
+
+            if (dataGrid is null)
+            {
+                throw new ArgumentNullException(nameof(dataGrid));
+            }
+
+            MySqlConnection myconnection = new MySqlConnection(conect);
+            MySqlCommand cmd = new MySqlCommand("SELECT PRC_id, PRC_imie, PRC_nazwisko, PRC_login, STN_stanowisko, PRC_haslo  FROM Pracownicy INNER JOIN Stanowisko ON PRC_STN_id = STN_id where PRC_imie like '%" + dane[0] + "%' and PRC_nazwisko like '%" + dane[1] + "%' and PRC_login like '%" + dane[2] + "%' and STN_stanowisko like '%" + dane[3] + "%';", myconnection);
+
+            try
+            {
+                myconnection.Open();
+                MySqlDataAdapter adapter = new MySqlDataAdapter();
+                adapter.SelectCommand = cmd;
+                DataTable dataTable = new DataTable();
+                adapter.Fill(dataTable);
+                BindingSource zrodlo = new BindingSource();
+                zrodlo.DataSource = dataTable;
+                dataGrid.ItemsSource = zrodlo;
+                myconnection.Close();
+
+            }
+            catch (Exception e)
+            {
+                System.Windows.MessageBox.Show(e.Message);
+            }
+
+
+
+        }
+        public void DodajPracownika(string[] dane)
+        {
+
+
+            MySqlConnection myconnection = new MySqlConnection(conect);
+            MySqlDataAdapter adapter = new MySqlDataAdapter();
+            MySqlCommand cmd = new MySqlCommand("insert into Pracownicy set PRC_imie=@PRC_imie , PRC_nazwisko=@PRC_nazwisko , PRC_login=@PRC_login , PRC_STN_id=@PRC_stanowisko , PRC_haslo=@PRC_haslo;");
+            cmd.Parameters.AddWithValue("@PRC_imie", dane[0]);
+            cmd.Parameters.AddWithValue("@PRC_nazwisko", dane[1]);
+            cmd.Parameters.AddWithValue("@PRC_login", dane[2]);
+            cmd.Parameters.AddWithValue("@PRC_haslo", dane[3]);
+            cmd.Parameters.AddWithValue("@PRC_stanowisko", dane[4]);
+
+
+            try
+            {
+                myconnection.Open();
+                adapter.InsertCommand = cmd;
+                adapter.InsertCommand.Connection = myconnection;
+                adapter.InsertCommand.ExecuteNonQuery();
+                myconnection.Close();
+            }
+            catch (Exception e)
+            {
+                System.Windows.MessageBox.Show(e.Message);
+            }
+
+        }
+        public void ZaladujStanowiskaDoCBX(System.Windows.Controls.ComboBox comboBox)
+        {
+            MySqlConnection myconnection = new MySqlConnection(conect);
+            MySqlCommand cmd = new MySqlCommand("SELECT * FROM Stanowisko", myconnection);
+            try
+            {
+                myconnection.Open();
+                MySqlDataAdapter adapter = new MySqlDataAdapter();
+                adapter.SelectCommand = cmd;
+                DataTable dataTable = new DataTable();
+                adapter.Fill(dataTable);
+                BindingSource zrodlo = new BindingSource();
+                zrodlo.DataSource = dataTable;
+                comboBox.ItemsSource = zrodlo;
+                myconnection.Close();
+
+            }
+            catch (Exception e)
+            {
+                System.Windows.MessageBox.Show(e.Message);
+            }
+
+        }
+
+        public void UsunPracownika(int id_pracownika)
+        {
+
+            MySqlConnection myconnection = new MySqlConnection(conect);
+            MySqlCommand zapytanie = myconnection.CreateCommand();
+            MySqlTransaction transaction;
+
+            myconnection.Open();
+            transaction = myconnection.BeginTransaction(IsolationLevel.ReadCommitted);
+            zapytanie.Connection = myconnection;
+            zapytanie.Transaction = transaction;
+
+            try
+            {
+
+                zapytanie.CommandText = "Delete from Pracownicy where PRC_id=" + id_pracownika + "; ";
+                zapytanie.ExecuteNonQuery();
+                transaction.Commit();
+
+
+            }
+            catch (Exception e)
+            {
+                System.Windows.Forms.MessageBox.Show(e.Message);
+                transaction.Rollback();
+            }
+            myconnection.Close();
+
+
+        }
+
+        public void EdytujPracownika(int id_pracownika, string[] dane)
+        {
+            MySqlConnection myconnection = new MySqlConnection(conect);
+            MySqlDataAdapter adapter = new MySqlDataAdapter();
+            MySqlCommand cmd = new MySqlCommand("Update Pracownicy set PRC_imie=@PRC_imie , PRC_nazwisko=@PRC_nazwisko , PRC_login=@PRC_login , PRC_STN_id=@PRC_stanowisko , PRC_haslo=@PRC_haslo where PRC_id=@id;");
+            cmd.Parameters.AddWithValue("@PRC_imie", dane[0]);
+            cmd.Parameters.AddWithValue("@PRC_nazwisko", dane[1]);
+            cmd.Parameters.AddWithValue("@PRC_login", dane[2]);
+            cmd.Parameters.AddWithValue("@PRC_haslo", dane[3]);
+            cmd.Parameters.AddWithValue("@PRC_stanowisko", dane[4]);
+            cmd.Parameters.AddWithValue("@id", id_pracownika);
+
+
+            try
+            {
+                myconnection.Open();
+                adapter.InsertCommand = cmd;
+                adapter.InsertCommand.Connection = myconnection;
+                adapter.InsertCommand.ExecuteNonQuery();
+                myconnection.Close();
+            }
+            catch (Exception e)
+            {
+                System.Windows.MessageBox.Show(e.Message);
+            }
+        }
+        #endregion
 
     }
 

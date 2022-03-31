@@ -23,6 +23,7 @@ namespace Firma_kurierska
     public partial class WindowFirma : Window
     {
         private int id_uzytkownika;
+        private int id_pracownika;
         private int id_rekoruKlienta;
         private int id_rekordAdres;
         private int id_KurierKuriera;
@@ -301,5 +302,166 @@ namespace Firma_kurierska
             SQLconnection sQLconnection = new SQLconnection();
             sQLconnection.WyswietlKuerierow(DGKureirzy);
         }
+
+        #region Pracownicy
+        private void TabItem_Loaded(object sender, RoutedEventArgs e)
+        {
+            SQLconnection sQLconnection = new SQLconnection();
+            sQLconnection.WyswietlPracownikow(dgv_pracownicy);
+            sQLconnection.ZaladujStanowiskaDoCBX(cbx_stanowisko);
+            tbx_prac_haslo.Visibility = Visibility.Hidden;
+            tbx_prac_haslo2.Visibility = Visibility.Hidden;
+            lbxHaslo.Visibility = Visibility.Hidden;
+            lbxHaslo2.Visibility = Visibility.Hidden;
+
+        }
+
+        private void BtinPracownicyWyszukaj_Click(object sender, RoutedEventArgs e)
+        {
+            string[] danePracownicy = new string[4];
+            danePracownicy[0] = tbx_prac_imie.Text;
+            danePracownicy[1] = tbx_prac_nazwisko.Text;
+            danePracownicy[2] = tbx_prac_login.Text;
+            danePracownicy[3] = cbx_stanowisko.Text;
+
+            SQLconnection sQLconnection = new SQLconnection();
+            sQLconnection.WyszukajPracownicy(danePracownicy, dgv_pracownicy);
+        }
+
+        private void Dgv_pracownicy_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DataGrid dataGrid = sender as DataGrid;
+            DataRowView rowView = dataGrid.SelectedItem as DataRowView;
+            try
+            {
+                if (rowView != null)
+                {
+                    id_pracownika = (int)rowView.Row[0]; // zapisywanie wybranego id pracownika
+                    tbx_prac_imie.Text = rowView.Row[1].ToString(); /* 1st Column on selected Row */
+                    tbx_prac_nazwisko.Text = rowView.Row[2].ToString();
+                    tbx_prac_login.Text = rowView.Row[3].ToString();
+                    cbx_stanowisko.Text = rowView.Row[4].ToString();
+                    tbx_prac_haslo.Text = rowView.Row[5].ToString();
+                    tbx_prac_haslo.Text = "";
+                    tbx_prac_haslo2.Text = "";
+                    lbxHaslo.Content = "Podaj nowe hasło:";
+
+
+                }
+            }
+            catch (Exception kom)
+            {
+                MessageBox.Show(kom.Message);
+            }
+        }
+
+        private void Btn_czysc_Click(object sender, RoutedEventArgs e)
+        {
+            Helper helper = new Helper();
+            TextBox[] textBoxes = new TextBox[5];
+            textBoxes[0] = tbx_prac_imie;
+            textBoxes[1] = tbx_prac_nazwisko;
+            textBoxes[2] = tbx_prac_login;
+            textBoxes[3] = tbx_prac_haslo;
+            textBoxes[4] = tbx_prac_haslo2;
+            helper.WyczyscFormatke(textBoxes);
+            cbx_stanowisko.Text = "";
+            lbxHaslo.Content = "Hasło:";
+        }
+
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            tbx_prac_haslo.Visibility = Visibility.Visible;
+            tbx_prac_haslo2.Visibility = Visibility.Visible;
+            lbxHaslo.Visibility = Visibility.Visible;
+            lbxHaslo2.Visibility = Visibility.Visible;
+            if (tbx_prac_haslo.Text.Length > 0)
+            {
+                tbx_prac_haslo.Text = "";
+                tbx_prac_haslo2.Text = "";
+                lbxHaslo.Content = "Podaj nowe hasło:";
+            }
+        }
+
+        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            tbx_prac_haslo.Visibility = Visibility.Hidden;
+            tbx_prac_haslo2.Visibility = Visibility.Hidden;
+            lbxHaslo.Visibility = Visibility.Hidden;
+            lbxHaslo2.Visibility = Visibility.Hidden;
+            lbxHaslo.Content = "Hasło:";
+        }
+
+        private void BtnPracownicyDodaj_Click(object sender, RoutedEventArgs e)
+        {
+            Helper helper = new Helper();
+            string[] pracownik = new string[5];
+            pracownik[0] = tbx_prac_imie.Text;
+            pracownik[1] = tbx_prac_nazwisko.Text;
+            pracownik[2] = tbx_prac_login.Text;
+            pracownik[3] = tbx_prac_haslo.Text;
+            pracownik[4] = cbx_stanowisko.SelectedValue.ToString();
+            SQLconnection sQLconnection = new SQLconnection();
+            sQLconnection.DodajPracownika(pracownik);
+            sQLconnection.WyswietlPracownikow(dgv_pracownicy);
+
+            TextBox[] textBoxes = new TextBox[5];
+            textBoxes[0] = tbx_prac_imie;
+            textBoxes[1] = tbx_prac_nazwisko;
+            textBoxes[2] = tbx_prac_login;
+            textBoxes[3] = tbx_prac_haslo;
+            textBoxes[4] = tbx_prac_haslo2;
+            helper.WyczyscFormatke(textBoxes);
+            cbx_stanowisko.Text = "";
+            lbxHaslo.Content = "Hasło:";
+
+        }
+
+        private void BtnPracownicyUsun_Click(object sender, RoutedEventArgs e)
+        {
+
+            Helper helper = new Helper();
+            SQLconnection sql = new SQLconnection();
+            sql.UsunPracownika(id_pracownika);
+            sql.WyswietlPracownikow(dgv_pracownicy);
+            TextBox[] textBoxes = new TextBox[5];
+            textBoxes[0] = tbx_prac_imie;
+            textBoxes[1] = tbx_prac_nazwisko;
+            textBoxes[2] = tbx_prac_login;
+            textBoxes[3] = tbx_prac_haslo;
+            textBoxes[4] = tbx_prac_haslo2;
+            helper.WyczyscFormatke(textBoxes);
+            cbx_stanowisko.Text = "";
+            lbxHaslo.Content = "Hasło:";
+
+
+        }
+        #endregion
+
+        private void BtnPracownicyEdytuj_Click(object sender, RoutedEventArgs e)
+        {
+            Helper helper = new Helper();
+            string[] pracownik = new string[5];
+            pracownik[0] = tbx_prac_imie.Text;
+            pracownik[1] = tbx_prac_nazwisko.Text;
+            pracownik[2] = tbx_prac_login.Text;
+            pracownik[3] = tbx_prac_haslo.Text;
+            pracownik[4] = cbx_stanowisko.SelectedValue.ToString();
+            SQLconnection sQLconnection = new SQLconnection();
+            sQLconnection.EdytujPracownika(id_pracownika, pracownik);
+            sQLconnection.WyswietlPracownikow(dgv_pracownicy);
+
+            TextBox[] textBoxes = new TextBox[5];
+            textBoxes[0] = tbx_prac_imie;
+            textBoxes[1] = tbx_prac_nazwisko;
+            textBoxes[2] = tbx_prac_login;
+            textBoxes[3] = tbx_prac_haslo;
+            textBoxes[4] = tbx_prac_haslo2;
+            helper.WyczyscFormatke(textBoxes);
+            cbx_stanowisko.Text = "";
+            lbxHaslo.Content = "Hasło:";
+        }
+
     }
 }

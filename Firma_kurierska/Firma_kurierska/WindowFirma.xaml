@@ -216,9 +216,23 @@
                             <materialDesign:ColorZone Padding="15"  Mode="PrimaryMid" Effect="{DynamicResource MaterialDesignShadowDepth2}"  >
                                 <TextBlock Text="Lista Pracowników" HorizontalAlignment="Center"    FontSize="30" ></TextBlock>
                             </materialDesign:ColorZone>
-                            <DataGrid Height="600">
+                            <DataGrid x:Name="dgv_pracownicy" AutoGenerateColumns="False" Height="600" IsReadOnly="True" SelectionChanged="Dgv_pracownicy_SelectionChanged" >
+                                <DataGrid.BindingGroup>
+                                    <BindingGroup/>
+                                </DataGrid.BindingGroup>
+                                <DataGrid.Columns>
+                                    <materialDesign:DataGridTextColumn Header="ID" Binding="{Binding PRC_id}"  IsReadOnly="True"/>
+                                    <materialDesign:DataGridTextColumn Header="Imie" Binding="{Binding PRC_imie}" IsReadOnly="True"/>
+                                    <materialDesign:DataGridTextColumn Header="Nazwisko" Binding="{Binding PRC_nazwisko}" IsReadOnly="True"/>
+                                    <materialDesign:DataGridTextColumn Header="Login" Binding="{Binding PRC_login}" IsReadOnly="True"/>
+                                    <materialDesign:DataGridTextColumn Header="Stanowisko" Binding="{Binding STN_stanowisko}" IsReadOnly="True"/>
+                                    <materialDesign:DataGridTextColumn Header="Haslo" Binding="{Binding PRC_haslo}" IsReadOnly="True"/>
+
+
+                                </DataGrid.Columns>
 
                             </DataGrid>
+
 
                             <!--Drugi Panel-->
                         </StackPanel>
@@ -246,33 +260,31 @@
 
                                 </Grid.RowDefinitions>
                                 <Label Content="Imię: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom"  Width="56"></Label>
-                                <TextBox Grid.Column="1" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" ></TextBox>
+                                <TextBox x:Name="tbx_prac_imie" Grid.Column="1" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" ></TextBox>
                                 <Label Grid.Row="1" Content="Nazwisko: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" ></Label>
-                                <TextBox Grid.Column="1" Grid.Row="1" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" ></TextBox>
-                                <Label Grid.Row="2" Content="Miasto: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" ></Label>
-                                <TextBox Grid.Column="1" Grid.Row="2" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" ></TextBox>
-                                <Label Grid.Row="3" Content="ulica: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" ></Label>
-                                <TextBox Grid.Column="1" Grid.Row="3" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" ></TextBox>
-                                <Label Grid.Row="4" Content="nr lokalu: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" ></Label>
-                                <TextBox Grid.Column="1" Grid.Row="4" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" ></TextBox>
-                                <Label Grid.Row="5" Content="numer ulicy: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" ></Label>
-                                <TextBox Grid.Column="1" Grid.Row="5" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" ></TextBox>
-                                <Label Grid.Row="6" Content="Telefon: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" ></Label>
-                                <TextBox Grid.Column="1" Grid.Row="6" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" ></TextBox>
-                                <Label Grid.Row="7" Content="Email: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" ></Label>
-                                <TextBox Grid.Column="1" Grid.Row="7" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" ></TextBox>
+                                <TextBox x:Name="tbx_prac_nazwisko" Grid.Column="1" Grid.Row="1" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" ></TextBox>
+                                <Label Grid.Row="2" Content="Login: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" ></Label>
+                                <TextBox x:Name="tbx_prac_login" Grid.Column="1" Grid.Row="2" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" ></TextBox>
+                                <Label Grid.Row="3" Content="Stanowisko: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" ></Label>
+                                <Label   Grid.Row="6" Content="Hasło: " Name="lbxHaslo" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,10" ></Label>
+                                <TextBox x:Name="tbx_prac_haslo"  Grid.Row="6" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" Margin="136,0,10,13" Grid.ColumnSpan="2" />
+                                <Label   Grid.Row="7" Name="lbxHaslo2" Content="Powtórz hasło: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,10" ></Label>
+                                <TextBox x:Name="tbx_prac_haslo2"  Grid.Row="7" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Margin="136,0,10,10" />
+                                <ComboBox x:Name="cbx_stanowisko" Grid.Column="1" DisplayMemberPath="STN_stanowisko" SelectedValuePath="STN_id" HorizontalAlignment="Left" Margin="55,13,0,0" Grid.Row="3" VerticalAlignment="Top" Width="250" RenderTransformOrigin="0.504,0.32" Height="27"/>
+                                <Button x:Name="btn_czysc" Content="Wyczyść" Height="32" Margin="186,21,39,27" Grid.Row="4" Width="130" Click="Btn_czysc_Click" Grid.Column="1" Grid.RowSpan="2"/>
+                                <Button x:Name="BtinPracownicyWyszukaj" Content="Wyszukaj" Width="130" Margin="32,21,193,27" Click="BtinPracownicyWyszukaj_Click" Grid.Column="1" Height="Auto" Grid.Row="4" Grid.RowSpan="2"/>
+                                <CheckBox Content="Dodaj lub edytuj hasło" Margin="37,13,301,9" Grid.ColumnSpan="2" Grid.Row="5" RenderTransformOrigin="0.369,0.667" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
                             </Grid>
-
-                            <Button Name="BtinPracownicyWyszukaj" Content="Wyszukaj" Width="130" Margin="0,30,0,0"></Button>
                             <Grid Margin="0,60,0,0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Button Content="Dodaj" Name="BtnPracownicyDodaj" Grid.Column="0" Width="130"></Button>
-                                <Button Content="Usuń" Name="BtnPracownicyUsun" Grid.Column="1" Width="130"></Button>
-                                <Button Content="Edytuj" Name="BtnPracownicyEdytuj" Grid.Column="2" Width="130"></Button>
+                                <Button Content="Dodaj" Name="BtnPracownicyDodaj" Grid.Column="0" Width="130" Click="BtnPracownicyDodaj_Click"></Button>
+                                <Button Content="Usuń" Name="BtnPracownicyUsun" Grid.Column="1" Width="130" Click="BtnPracownicyUsun_Click"></Button>
+                                <Button Content="Edytuj" Name="BtnPracownicyEdytuj" Grid.Column="2" Width="130" Click="BtnPracownicyEdytuj_Click"></Button>
+
 
                             </Grid>
                         </StackPanel>

@@ -304,17 +304,6 @@ namespace Firma_kurierska
         }
 
         #region Pracownicy
-        private void TabItem_Loaded(object sender, RoutedEventArgs e)
-        {
-            SQLconnection sQLconnection = new SQLconnection();
-            sQLconnection.WyswietlPracownikow(dgv_pracownicy);
-            sQLconnection.ZaladujStanowiskaDoCBX(cbx_stanowisko);
-            tbx_prac_haslo.Visibility = Visibility.Hidden;
-            tbx_prac_haslo2.Visibility = Visibility.Hidden;
-            lbxHaslo.Visibility = Visibility.Hidden;
-            lbxHaslo2.Visibility = Visibility.Hidden;
-
-        }
 
         private void BtinPracownicyWyszukaj_Click(object sender, RoutedEventArgs e)
         {
@@ -463,5 +452,15 @@ namespace Firma_kurierska
             lbxHaslo.Content = "Hasło:";
         }
 
+        private void TabItemPracownicy_Loaded(object sender, RoutedEventArgs e)
+        {
+            SQLconnection sQLconnection = new SQLconnection();
+            sQLconnection.WyswietlPracownikow(dgv_pracownicy);
+            sQLconnection.ZaladujStanowiskaDoCBX(cbx_stanowisko);
+            tbx_prac_haslo.Visibility = Visibility.Hidden;
+            tbx_prac_haslo2.Visibility = Visibility.Hidden;
+            lbxHaslo.Visibility = Visibility.Hidden;
+            lbxHaslo2.Visibility = Visibility.Hidden;
+        }
     }
 }

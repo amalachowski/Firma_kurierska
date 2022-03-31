@@ -199,7 +199,7 @@
 
 
                 </TabItem>
-                <TabItem x:Name="TabItemPracownicy" Style="{StaticResource MaterialDesignNavigationRailTabItem}" Width="100">
+                <TabItem x:Name="TabItemPracownicy" Style="{StaticResource MaterialDesignNavigationRailTabItem}" Width="100" Loaded="TabItemPracownicy_Loaded">
                     <TabItem.Header >
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                             <materialDesign:PackIcon Kind="Worker" Height="40" Width="40" HorizontalAlignment="Center" />

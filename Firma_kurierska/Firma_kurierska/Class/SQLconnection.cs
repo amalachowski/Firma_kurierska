@@ -483,10 +483,11 @@ namespace Firma_kurierska.Class
             
         }
 
-        public void ZmienHasloUzytkownika(string noweHaslo, int id_pracownika)
+        public void ZmienHasloUzytkownika(string haslo, int id_pracownika)
         {
             MySqlConnection mySqlConnection = new MySqlConnection(conect);
             MySqlCommand cmd = new MySqlCommand();
+            string noweHaslo = Szyfruj(haslo);
             cmd.Parameters.AddWithValue("@noweHaslo", noweHaslo);
             cmd.Parameters.AddWithValue("@id_pracownika", id_pracownika);
             cmd.CommandText = "Update Pracownicy set PRC_haslo=@noweHaslo where PRC_id=@id_pracownika;";
@@ -506,6 +507,33 @@ namespace Firma_kurierska.Class
 
             }
             mySqlConnection.Close();
+
+        }
+
+        public string Szyfruj(string haslo)
+        {
+            MySqlConnection mySqlConnection = new MySqlConnection(conect);
+            MySqlCommand szyfr = new MySqlCommand("select md5('" + haslo + "');", mySqlConnection);
+            MySqlDataReader dr;
+
+            string szyfrowaneHaslo = "";
+            mySqlConnection.Open();
+            try
+            {
+                dr = szyfr.ExecuteReader();
+            if (dr.Read())
+            {
+                szyfrowaneHaslo = dr["md5('" + haslo + "')"].ToString();
+
+            }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message);
+
+            }
+            mySqlConnection.Close();
+            return szyfrowaneHaslo;
 
         }
 

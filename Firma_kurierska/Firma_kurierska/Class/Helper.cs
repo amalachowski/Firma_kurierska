@@ -40,9 +40,9 @@ namespace Firma_kurierska.Class
             }
         }
 
-        public bool PoprawnoscHaslaStaregoINowego(System.Windows.Controls.TextBox nowe1, System.Windows.Controls.TextBox nowe2) 
+        public bool PoprawnoscHaslaStaregoINowego(string nowe1, string nowe2) 
         {
-            if (nowe1.Text.Equals(nowe2.Text))
+            if (nowe1.Equals(nowe2))
             {
 
                 return true;

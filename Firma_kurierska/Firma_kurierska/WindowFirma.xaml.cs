@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using Firma_kurierska.ExtraWindows;
 using System.Windows.Shapes;
 
+
 namespace Firma_kurierska
 {
     /// <summary>
@@ -176,20 +177,74 @@ namespace Firma_kurierska
         #region ZmianaHasla
         private void BtnZmienDaneZmien_Click(object sender, RoutedEventArgs e)
         {
-            SQLconnection sQLconnection = new SQLconnection();
-            Helper helper = new Helper();
-            if (sQLconnection.SprawdzPoprzednieHaslo(TxtZmienDaneStareHaslo.Text, id_uzytkownika))
+            if (chbx_pokaz.IsChecked == true)
             {
-                if (helper.PoprawnoscHaslaStaregoINowego(TxtZamienDaneNoweHaslo, TxtZmienDaneNoweHaslo2))
-                {
-                    sQLconnection.ZmienHasloUzytkownika(TxtZamienDaneNoweHaslo.Text, id_uzytkownika);
-                    MessageBox.Show("Haslo zostało zmienione");
-                }
-            }
-            else 
-            {
-                MessageBox.Show("Stare haslo jest błędne");
+                MessageBox.Show("Ukryj hasło aby je dodać");
 
+            }
+            else
+            {
+                SQLconnection sQLconnection = new SQLconnection();
+                Helper helper = new Helper();
+                string stare = sQLconnection.Szyfruj(TxtZmienDaneStareHaslo.Password);
+
+                if (sQLconnection.SprawdzPoprzednieHaslo(stare, id_uzytkownika))
+                {
+
+
+                    if (helper.PoprawnoscHaslaStaregoINowego(TxtZamienDaneNoweHaslo.Password, TxtZmienDaneNoweHaslo2.Password))
+                    {
+                        if (TxtZamienDaneNoweHaslo.Password == TxtZmienDaneStareHaslo.Password)
+                        {
+                            MessageBox.Show("Nowe hasło nie może być takie jak stare.");
+                            return;
+                        }
+                        
+                        if (TxtZamienDaneNoweHaslo.Password.Length < 8 || TxtZamienDaneNoweHaslo.Password.Length > 14)
+                        {
+                            MessageBox.Show("Hasło musi mieć minimum 8 znaków, maksymalnie 14.");
+                            return;
+                        }
+                        else if (!TxtZamienDaneNoweHaslo.Password.Any(char.IsUpper))
+                        {
+                            MessageBox.Show("Hasło musi mieć conajmniej 1 wielką literę");
+                            return;
+                        }
+                        else if (!TxtZamienDaneNoweHaslo.Password.Any(char.IsLower))
+                        {
+                            MessageBox.Show("Hasło musi mieć conajmniej 1 małą literę");
+                            return;
+                        }
+                        else if (TxtZamienDaneNoweHaslo.Password.Contains(" "))
+                        {
+                            MessageBox.Show("Hasło nie może zawierać spacji");
+                            return;
+                        }
+                        bool isspecjal = false;
+                        string specialCh = @"%!@#$%^&*()?/>.<,:;'\|}]{[_~`+=-" + "\"";
+                        char[] specialChh = specialCh.ToCharArray();
+                        foreach (char ch in specialChh)
+                        {
+                            if (TxtZamienDaneNoweHaslo.Password.Contains(ch))
+                            {
+                                isspecjal = true;
+                            }
+
+                        }
+                        if (!isspecjal)
+                        {
+                            MessageBox.Show("Hasło musi zawierać znak specjalny");
+                            return;
+                        }
+                        sQLconnection.ZmienHasloUzytkownika(TxtZamienDaneNoweHaslo.Password, id_uzytkownika);
+                        MessageBox.Show("Hasło zostało zmienione!");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Stare haslo jest błędne");
+
+                }
             }
         }
 
@@ -461,6 +516,36 @@ namespace Firma_kurierska
             tbx_prac_haslo2.Visibility = Visibility.Hidden;
             lbxHaslo.Visibility = Visibility.Hidden;
             lbxHaslo2.Visibility = Visibility.Hidden;
+        }
+
+        private void ShowPassword_Checked(object sender, RoutedEventArgs e)
+        {
+            TxtZmienDaneStareHasloTekst.Text = TxtZmienDaneStareHaslo.Password;
+            TxtZmienDaneStareHaslo.Visibility = Visibility.Collapsed;
+            TxtZmienDaneStareHasloTekst.Visibility = Visibility.Visible;
+
+            TxtZamienDaneNoweHasloTekst.Text = TxtZamienDaneNoweHaslo.Password;
+            TxtZamienDaneNoweHaslo.Visibility = Visibility.Collapsed;
+            TxtZamienDaneNoweHasloTekst.Visibility = Visibility.Visible;
+
+            TxtZmienDaneNoweHaslo2Tekst.Text = TxtZmienDaneNoweHaslo2.Password;
+            TxtZmienDaneNoweHaslo2.Visibility = Visibility.Collapsed;
+            TxtZmienDaneNoweHaslo2Tekst.Visibility = Visibility.Visible;
+        }
+
+        private void ShowPassword_Unchecked(object sender, RoutedEventArgs e)
+        {
+            TxtZmienDaneStareHaslo.Password = TxtZmienDaneStareHasloTekst.Text;
+            TxtZmienDaneStareHasloTekst.Visibility = Visibility.Collapsed;
+            TxtZmienDaneStareHaslo.Visibility = Visibility.Visible;
+
+            TxtZamienDaneNoweHaslo.Password = TxtZamienDaneNoweHasloTekst.Text;
+            TxtZamienDaneNoweHasloTekst.Visibility = Visibility.Collapsed;
+            TxtZamienDaneNoweHaslo.Visibility = Visibility.Visible;
+
+            TxtZmienDaneNoweHaslo2.Password = TxtZmienDaneNoweHaslo2Tekst.Text;
+            TxtZmienDaneNoweHaslo2Tekst.Visibility = Visibility.Collapsed;
+            TxtZmienDaneNoweHaslo2.Visibility = Visibility.Visible;
         }
     }
 }

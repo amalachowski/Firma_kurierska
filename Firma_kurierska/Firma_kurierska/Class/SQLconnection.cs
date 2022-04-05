@@ -76,7 +76,7 @@ namespace Firma_kurierska.Class
         public int[] Sprawdz_uzytkownika(string login, string haslo)
         {
             int[] dane = new int[2];
-            MySqlCommand nowe = new MySqlCommand("SELECT PRC_id ,PRC_STN_id  FROM sql11479040.Pracownicy WHERE PRC_login='" + login + "' AND PRC_haslo='" + haslo + "';", connection);
+            MySqlCommand nowe = new MySqlCommand("SELECT PRC_id ,PRC_STN_id  FROM sql11479040.Pracownicy WHERE PRC_login='" + login + "' AND PRC_haslo=md5('" + haslo + "');", connection);
             MySqlDataReader dd;
             int id;
             try

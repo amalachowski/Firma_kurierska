@@ -191,7 +191,7 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Button x:Name="BtnZamowienieDodaj" Grid.Column="0" Content="Dodaj" Width="150"></Button>
+                            <Button x:Name="BtnZamowienieDodaj" Grid.Column="0" Content="Dodaj" Width="150" Click="BtnZamowienieDodaj_Click"></Button>
                             <Button x:Name="BtnZamowienieUsun" Grid.Column="1" Content="Usuń" Width="150"></Button>
                             <Button x:Name="BtnZamowienieEdytuj" Grid.Column="2" Content="Edytuj" Width="150"></Button>
                         </Grid>

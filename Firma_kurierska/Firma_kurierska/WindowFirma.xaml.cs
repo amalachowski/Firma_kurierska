@@ -14,6 +14,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Firma_kurierska.ExtraWindows;
 using System.Windows.Shapes;
+using Firma_kurierska.WindowsZamowienie;
+
 
 
 namespace Firma_kurierska
@@ -174,6 +176,8 @@ namespace Firma_kurierska
 
         }
         #endregion
+
+
         #region ZmianaHasla
         private void BtnZmienDaneZmien_Click(object sender, RoutedEventArgs e)
         {
@@ -345,6 +349,12 @@ namespace Firma_kurierska
 
         }
 
+        private void BtnKurierzyOdswierz_Click(object sender, RoutedEventArgs e)
+        {
+            SQLconnection sQLconnection = new SQLconnection();
+            sQLconnection.WyswietlKuerierow(DGKureirzy);
+        }
+
         #endregion
 
 
@@ -367,11 +377,17 @@ namespace Firma_kurierska
 
         #endregion
 
-        private void BtnKurierzyOdswierz_Click(object sender, RoutedEventArgs e)
+
+        #region Zamowienie
+        private void BtnZamowienieDodaj_Click(object sender, RoutedEventArgs e)
         {
-            SQLconnection sQLconnection = new SQLconnection();
-            sQLconnection.WyswietlKuerierow(DGKureirzy);
+            WindowZamowienieKlient zamowienieKlient = new WindowZamowienieKlient();
+            zamowienieKlient.ShowDialog();
+            
+            
         }
+        #endregion
+        
 
         #region Pracownicy
 

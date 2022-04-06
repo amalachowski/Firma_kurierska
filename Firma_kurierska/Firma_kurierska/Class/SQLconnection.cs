@@ -428,7 +428,7 @@ namespace Firma_kurierska.Class
 
         public void ZmienHasloUzytkownika(string haslo, int id_pracownika)
         {
-            MySqlConnection mySqlConnection = new MySqlConnection(conect);
+            MySqlConnection mySqlConnection = new MySqlConnection(conect) ;
             MySqlCommand cmd = new MySqlCommand();
             string noweHaslo = Szyfruj(haslo);
             cmd.Parameters.AddWithValue("@noweHaslo", noweHaslo);
@@ -519,6 +519,41 @@ namespace Firma_kurierska.Class
 
         #endregion
 
+        #region Zamowinie
+
+        public void WyszukajNadawca(System.Windows.Controls.TextBox textBox, System.Windows.Controls.DataGrid dataGrid) 
+        {
+            MySqlConnection myconnection = new MySqlConnection(conect);
+            MySqlCommand cmd = new MySqlCommand("SELECT KL_id , KL_imie, ADR_id , KL_nazwisko , ADR_miasto , ADR_ulica, ADR_nr_ulicy , ADR_nr_lok, KL_telefon , KL_email ," +
+                " KL_VIP FROM Klienci INNER JOIN Adres ON Klienci.KL_adres_id = Adres.ADR_id where CONCAT(KL_imie, ' ',KL_nazwisko ) LIKE '%" + textBox.Text + "%' ORDER BY KL_nazwisko , KL_imie ;", myconnection);
+
+            try
+            {
+                myconnection.Open();
+                MySqlDataAdapter adapter = new MySqlDataAdapter();
+                adapter.SelectCommand = cmd;
+                DataTable dataTable = new DataTable();
+                adapter.Fill(dataTable);
+                BindingSource zrodlo = new BindingSource();
+                zrodlo.DataSource = dataTable;
+                dataGrid.ItemsSource = zrodlo;
+                myconnection.Close();
+
+
+            }
+            catch (Exception e) 
+            {
+
+                System.Windows.MessageBox.Show(e.Message);
+            
+            }
+            
+            
+            
+            dataGrid.Columns[0].Visibility = Visibility.Hidden;
+
+        }
+    #endregion
         #region Pracownicy
         public void WyswietlPracownikow(System.Windows.Controls.DataGrid dataGrid)
         {

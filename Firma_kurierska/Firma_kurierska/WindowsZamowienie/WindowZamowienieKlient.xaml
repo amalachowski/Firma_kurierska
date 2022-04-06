@@ -41,10 +41,10 @@
                         <materialDesign1:DataGridCheckBoxColumn Header="VIP" Binding="{Binding KL_VIP}" IsReadOnly="True"/>
 
                     </DataGrid.Columns>
-                    
+
 
                 </DataGrid>
-                <Button Margin="405,600,61,0" Width="130" Content="Wyszukaj" x:Name="BtnZamowienieNadawcaWyszukaj" Click="BtnZamowienieNadawcaWyszukaj_Click" ></Button>
+                <Button Margin="405,601,61,0" Width="130" Content="Wyszukaj" x:Name="BtnZamowienieNadawcaWyszukaj" Click="BtnZamowienieNadawcaWyszukaj_Click" VerticalAlignment="Top" ></Button>
                 <TextBox x:Name="TxtZamowienieNadawcaWyszukaj" Width="200" Height="27" Margin="137,606,259,1" />
                 <StackPanel Grid.Column="1">
                     <TextBlock Text="Odbiorca" Grid.Column="1" HorizontalAlignment="Center" FontSize="20"></TextBlock>

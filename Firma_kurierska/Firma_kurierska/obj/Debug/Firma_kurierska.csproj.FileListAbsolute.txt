@@ -129,3 +129,4 @@ C:\Users\lukas\OneDrive\Pulpit\Firma_kurierska\Firma_kurierska\Firma_kurierska\o
 C:\Users\lukas\OneDrive\Pulpit\Firma_kurierska\Firma_kurierska\Firma_kurierska\obj\Debug\Firma_kurierska.csproj.CopyComplete
 C:\Users\lukas\OneDrive\Pulpit\Firma_kurierska\Firma_kurierska\Firma_kurierska\obj\Debug\Firma_kurierska.exe
 C:\Users\lukas\OneDrive\Pulpit\Firma_kurierska\Firma_kurierska\Firma_kurierska\obj\Debug\Firma_kurierska.pdb
+C:\Users\Adam\Desktop\ADO.NET\Projekt\Firma_kurierska\Firma_kurierska\Firma_kurierska\bin\Debug\MySql.Data.xml

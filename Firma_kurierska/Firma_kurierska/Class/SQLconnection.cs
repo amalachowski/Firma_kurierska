@@ -526,7 +526,31 @@ namespace Firma_kurierska.Class
             MySqlConnection myconnection = new MySqlConnection(conect);
             MySqlCommand cmd = new MySqlCommand("SELECT KL_id , KL_imie, ADR_id , KL_nazwisko , ADR_miasto , ADR_ulica, ADR_nr_ulicy , ADR_nr_lok, KL_telefon , KL_email ," +
                 " KL_VIP FROM Klienci INNER JOIN Adres ON Klienci.KL_adres_id = Adres.ADR_id where CONCAT(KL_imie, ' ',KL_nazwisko ) LIKE '%" + textBox.Text + "%' ORDER BY KL_nazwisko , KL_imie ;", myconnection);
-                            dataGrid.Columns[0].Visibility = Visibility.Hidden;
+
+            try
+            {
+                myconnection.Open();
+                MySqlDataAdapter adapter = new MySqlDataAdapter();
+                adapter.SelectCommand = cmd;
+                DataTable dataTable = new DataTable();
+                adapter.Fill(dataTable);
+                BindingSource zrodlo = new BindingSource();
+                zrodlo.DataSource = dataTable;
+                dataGrid.ItemsSource = zrodlo;
+                myconnection.Close();
+
+
+            }
+            catch (Exception e) 
+            {
+
+                System.Windows.MessageBox.Show(e.Message);
+            
+            }
+            
+            
+            
+            dataGrid.Columns[0].Visibility = Visibility.Hidden;
 
         }
     #endregion

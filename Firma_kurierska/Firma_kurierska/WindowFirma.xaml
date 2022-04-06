@@ -191,7 +191,7 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Button x:Name="BtnZamowienieDodaj" Grid.Column="0" Content="Dodaj" Width="150"></Button>
+                            <Button x:Name="BtnZamowienieDodaj" Grid.Column="0" Content="Dodaj" Width="150" Click="BtnZamowienieDodaj_Click"></Button>
                             <Button x:Name="BtnZamowienieUsun" Grid.Column="1" Content="Usuń" Width="150"></Button>
                             <Button x:Name="BtnZamowienieEdytuj" Grid.Column="2" Content="Edytuj" Width="150"></Button>
                         </Grid>
@@ -372,11 +372,11 @@
 
                             </Grid.RowDefinitions>
                             <Label Content="Stare haslo: " Grid.Column="0" Grid.Row="0" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="26"  ></Label>
-                            <TextBox Name="TxtZmienDaneStareHaslo" Grid.Row="0" Grid.Column="1" Width="200" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="15" Height="27" AutomationProperties.IsRequiredForForm="True"></TextBox>
+                            <PasswordBox Name="TxtZmienDaneStareHaslo" Grid.Row="0" Grid.Column="1" Width="200" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="15" Height="27" AutomationProperties.IsRequiredForForm="True"></PasswordBox>
                             <Label Content="Nowe haslo: " Grid.Column="0" Grid.Row="1" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="26"  ></Label>
-                            <TextBox Name="TxtZamienDaneNoweHaslo" Grid.Row="1" Grid.Column="1" Width="200" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="15" Height="27" AutomationProperties.IsRequiredForForm="True"></TextBox>
+                            <PasswordBox Name="TxtZamienDaneNoweHaslo" Grid.Row="1" Grid.Column="1" Width="200" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="15" Height="27" AutomationProperties.IsRequiredForForm="True"></PasswordBox>
                             <Label Content="Powtórz nowe haslo: " Grid.Column="0" Grid.Row="2" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Bottom"   ></Label>
-                            <TextBox x:Name="TxtZmienDaneNoweHaslo2" Grid.Row="2" Grid.Column="1" Width="200" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="15" Height="27" AutomationProperties.IsRequiredForForm="True"></TextBox>
+                            <PasswordBox x:Name="TxtZmienDaneNoweHaslo2" Grid.Row="2" Grid.Column="1" Width="200" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="15" Height="27" AutomationProperties.IsRequiredForForm="True"></PasswordBox>
                         </Grid>
                         <Grid Margin="0,70,0,0" VerticalAlignment="Bottom">
                             <Grid.ColumnDefinitions>

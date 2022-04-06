@@ -40,9 +40,9 @@ namespace Firma_kurierska.Class
             }
         }
 
-        public bool PoprawnoscHaslaStaregoINowego(System.Windows.Controls.TextBox nowe1, System.Windows.Controls.TextBox nowe2) 
+        public bool PoprawnoscHaslaStaregoINowego(System.Windows.Controls.PasswordBox nowe1, System.Windows.Controls.PasswordBox nowe2) 
         {
-            if (nowe1.Text.Equals(nowe2.Text))
+            if (nowe1.Password.Equals(nowe2.Password))
             {
 
                 return true;

@@ -1,0 +1,98 @@
+﻿<Window x:Class="Firma_kurierska.WindowsZamowienie.WindowZamowienieKlient"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Firma_kurierska.WindowsZamowienie"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:materialDesign1="http://schemas.microsoft.com/netfx/2009/xaml/presentation"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        xml:lang="pl"
+        TextElement.FontSize="13"
+        WindowStartupLocation="CenterScreen"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="WindowZamowienieKlient" Height="900" Width="1200">
+    <Grid>
+        <StackPanel>
+            <materialDesign:ColorZone Padding="15"  Mode="PrimaryMid" Effect="{DynamicResource MaterialDesignShadowDepth2}" >
+                <TextBlock Text="Wybierz Nadawce i Odbiorce" HorizontalAlignment="Center"    FontSize="30" ></TextBlock>
+            </materialDesign:ColorZone>
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Nadawca" Grid.Column="0" HorizontalAlignment="Center"  FontSize="20" Margin="256,10,259,-10"></TextBlock>
+                <DataGrid AutoGenerateColumns="False" Grid.Column="0" Height="500" Margin="67,73,61,59" x:Name="DGZamowienieNadawca" HorizontalAlignment="Center" CanUserAddRows="False"  >
+                    <DataGrid.Columns>
+                        <materialDesign:DataGridTextColumn Header="ID" Binding="{Binding KL_id}"  IsReadOnly="True" Visibility="Hidden"/>
+                        <materialDesign:DataGridTextColumn Header="Imie" Binding="{Binding KL_imie}"  IsReadOnly="True"/>
+                        <materialDesign:DataGridTextColumn Header="Nazwisko" Binding="{Binding KL_nazwisko}"  IsReadOnly="True"/>
+                        <materialDesign:DataGridTextColumn Header="Miasto" Binding="{Binding ADR_miasto}"  IsReadOnly="True"/>
+                        <materialDesign:DataGridTextColumn Header="ulica" Binding="{Binding ADR_ulica}" IsReadOnly="True"/>
+                        <materialDesign:DataGridTextColumn Header="NR ulicy" Binding="{Binding ADR_nr_ulicy}" IsReadOnly="True" Visibility="Hidden"/>
+                        <materialDesign:DataGridTextColumn Header="nr lokalu" Binding="{Binding ADR_nr_lok}" IsReadOnly="True" Visibility="Hidden"/>
+                        <materialDesign:DataGridTextColumn Header="Telefon" Binding="{Binding KL_telefon}" IsReadOnly="True" />
+                        <materialDesign:DataGridTextColumn Header="Email" Binding="{Binding KL_email}" IsReadOnly="True" />
+                        <materialDesign1:DataGridCheckBoxColumn Header="VIP" Binding="{Binding KL_VIP}" IsReadOnly="True"/>
+
+                    </DataGrid.Columns>
+                    
+
+                </DataGrid>
+                <Button Margin="405,600,61,0" Width="130" Content="Wyszukaj" x:Name="BtnZamowienieNadawcaWyszukaj" Click="BtnZamowienieNadawcaWyszukaj_Click" ></Button>
+                <TextBox x:Name="TxtZamowienieNadawcaWyszukaj" Width="200" Height="27" Margin="137,606,259,1" />
+                <StackPanel Grid.Column="1">
+                    <TextBlock Text="Odbiorca" Grid.Column="1" HorizontalAlignment="Center" FontSize="20"></TextBlock>
+                    <Grid Height="400">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="137*"/>
+                            <ColumnDefinition Width="459*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Imię: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom"  Width="56" Height="26"></Label>
+                        <TextBox   Language="pl" x:Name="TxtZamowienieOdbiorcaImie" Grid.Column="1" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" Height="27" />
+                        <Label Grid.Row="1" Content="Nazwisko: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="26" Width="78" ></Label>
+                        <TextBox  x:Name="TxtZamowienieOdbiorcaNazwisko" Grid.Column="1" Grid.Row="1" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" Height="27" ></TextBox>
+                        <Label Grid.Row="2" Content="Miasto: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="26" Width="60" ></Label>
+                        <TextBox x:Name="TxtZamowienieOdbiorcaMiasto" Grid.Column="1" Grid.Row="2" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" Height="27" ></TextBox>
+                        <Label Grid.Row="3" Content="Poczta: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="26" Width="60" ></Label>
+                        <TextBox x:Name="TxtZamowienieOdbiorcaPoczta" Grid.Column="1" Grid.Row="3" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" Height="27" ></TextBox>
+                        <Label Grid.Row="4" Content="ulica: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="26" Width="46" ></Label>
+                        <TextBox x:Name="TxtZamowienieOdbiorcaUlica" Grid.Column="1" Grid.Row="4" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" Height="27" ></TextBox>
+                        <Label Grid.Row="5" Content="nr ulicy: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="26" Width="63" ></Label>
+                        <TextBox x:Name="TxtZamowienieOdbiorcaNRUlica" Grid.Column="1" Grid.Row="5" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" Height="27" ></TextBox>
+                        <Label Grid.Row="6" Content="numer lokalu: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="26" Width="102" ></Label>
+                        <TextBox x:Name="TxtZamowienieOdbiorcaLokal" Grid.Column="1" Grid.Row="6" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" Height="27" ></TextBox>
+                        <Label Grid.Row="7" Content="Telefon: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="26" Width="63" ></Label>
+                        <TextBox x:Name="TxtZamowienieOdbiorcaTelefon" Grid.Column="1" Grid.Row="7" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" Height="27" ></TextBox>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+            <Grid Margin="100">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="BtnZamowienieNadawcaWyjscie" Width="130" Content="Wyjście" Click="BtnZamowienieNadawcaWyjscie_Click" Margin="-61,0,427,0"/>
+                <Button x:Name="BtnZamowienieNadawcaDalej" Width="130" Grid.Column="1" Content="Dalej" Click="BtnZamowienieNadawcaDalej_Click" Margin="407,0,-41,0"  />
+
+            </Grid>
+        </StackPanel>
+
+
+    </Grid>
+</Window>

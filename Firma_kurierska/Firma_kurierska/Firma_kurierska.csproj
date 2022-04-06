@@ -81,6 +81,21 @@
     <Compile Include="WindowFirma.xaml.cs">
       <DependentUpon>WindowFirma.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WindowsZamowienie\WindowZamowienieAdres.xaml.cs">
+      <DependentUpon>WindowZamowienieAdres.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsZamowienie\WindowZamowienieKlient.xaml.cs">
+      <DependentUpon>WindowZamowienieKlient.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsZamowienie\WindowZamowienieKurier.xaml.cs">
+      <DependentUpon>WindowZamowienieKurier.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsZamowienie\WindowZamowieniePaczki.xaml.cs">
+      <DependentUpon>WindowZamowieniePaczki.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsZamowienie\WindowZamowieniePodsumowanie.xaml.cs">
+      <DependentUpon>WindowZamowieniePodsumowanie.xaml</DependentUpon>
+    </Compile>
     <Page Include="ExtraWindows\KurierzyDodaj.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -107,6 +122,26 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="WindowFirma.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowsZamowienie\WindowZamowienieAdres.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowsZamowienie\WindowZamowienieKlient.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowsZamowienie\WindowZamowienieKurier.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowsZamowienie\WindowZamowieniePaczki.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowsZamowienie\WindowZamowieniePodsumowanie.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

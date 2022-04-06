@@ -17,6 +17,8 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         WindowState="Maximized"
+       
+        WindowStyle="None"
         Title="WindowFirma" Height="980" Width="1200">
 
     <Grid>

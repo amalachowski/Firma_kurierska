@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,19 +21,28 @@ namespace Firma_kurierska.WindowsZamowienie
     /// </summary>
     public partial class WindowZamowienieKlient : Window
     {
+        private int id_nadawcy;
         static SQLconnection sQLconnection = new SQLconnection();
+        Helper Helper = new Helper();
         public WindowZamowienieKlient()
         {
 
             InitializeComponent();
             sQLconnection.WyswietlKlientow(DGZamowienieNadawca);
+            Helper.ZaladujCBZamowienieIloscPaczek(CBZamowienieIloscPaczek);
         }
 
         private void BtnZamowienieNadawcaDalej_Click(object sender, RoutedEventArgs e)
         {
+            int wybranaIloscPaczek;
             WindowZamowieniePaczki zamowieniePaczki = new WindowZamowieniePaczki();
+            sQLconnection.DodajZamowienie(id_nadawcy);
+            wybranaIloscPaczek = (int)CBZamowienieIloscPaczek.SelectedItem;
+            sQLconnection.DodajPaczki(wybranaIloscPaczek);
             
-            this.Hide();
+            this.Close();
+
+
             zamowieniePaczki.ShowDialog();
         }
 
@@ -44,6 +54,26 @@ namespace Firma_kurierska.WindowsZamowienie
         private void BtnZamowienieNadawcaWyszukaj_Click(object sender, RoutedEventArgs e)
         {
             sQLconnection.WyszukajNadawca(TxtZamowienieNadawcaWyszukaj,DGZamowienieNadawca);
+        }
+
+        private void DGZamowienieNadawca_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DataGrid dataGrid = sender as DataGrid;
+            DataRowView rowView = dataGrid.SelectedItem as DataRowView;
+            try
+            {
+                if (rowView != null)
+                {
+                    id_nadawcy = (int)rowView.Row[0]; // zapisywanie wybranego id nadawcy
+                    
+
+                }
+
+            }
+            catch (Exception kom)
+            {
+                MessageBox.Show(kom.Message);
+            }
         }
     }
 }

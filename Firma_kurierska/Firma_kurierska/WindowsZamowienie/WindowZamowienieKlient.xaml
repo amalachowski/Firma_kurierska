@@ -26,8 +26,8 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="Nadawca" Grid.Column="0" HorizontalAlignment="Center"  FontSize="20" Margin="256,10,259,-10"></TextBlock>
-                <DataGrid AutoGenerateColumns="False" Grid.Column="0" Height="500" Margin="67,73,61,59" x:Name="DGZamowienieNadawca" HorizontalAlignment="Center" CanUserAddRows="False"  >
+                <TextBlock Text="Nadawca" Grid.Column="0"  HorizontalAlignment="Center"  FontSize="20" ></TextBlock>
+                <DataGrid AutoGenerateColumns="False" Grid.Column="0" Height="500" Margin="67,73,61,59" x:Name="DGZamowienieNadawca" HorizontalAlignment="Center" CanUserAddRows="False" SelectionChanged="DGZamowienieNadawca_SelectionChanged"  >
                     <DataGrid.Columns>
                         <materialDesign:DataGridTextColumn Header="ID" Binding="{Binding KL_id}"  IsReadOnly="True" Visibility="Hidden"/>
                         <materialDesign:DataGridTextColumn Header="Imie" Binding="{Binding KL_imie}"  IsReadOnly="True"/>
@@ -47,7 +47,7 @@
                 <Button Margin="405,601,61,0" Width="130" Content="Wyszukaj" x:Name="BtnZamowienieNadawcaWyszukaj" Click="BtnZamowienieNadawcaWyszukaj_Click" VerticalAlignment="Top" ></Button>
                 <TextBox x:Name="TxtZamowienieNadawcaWyszukaj" Width="200" Height="27" Margin="137,606,259,1" />
                 <StackPanel Grid.Column="1">
-                    <TextBlock Text="Odbiorca" Grid.Column="1" HorizontalAlignment="Center" FontSize="20"></TextBlock>
+                    <TextBlock Text="Ilośc paczek" Grid.Column="1" HorizontalAlignment="Center" FontSize="20"></TextBlock>
                     <Grid Height="400">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
@@ -60,25 +60,12 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="137*"/>
-                            <ColumnDefinition Width="459*"/>
+                            <ColumnDefinition Width="213*"/>
+                            <ColumnDefinition Width="383*"/>
                         </Grid.ColumnDefinitions>
-                        <Label Content="Imię: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom"  Width="56" Height="26"></Label>
-                        <TextBox   Language="pl" x:Name="TxtZamowienieOdbiorcaImie" Grid.Column="1" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" Height="27" />
-                        <Label Grid.Row="1" Content="Nazwisko: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="26" Width="78" ></Label>
-                        <TextBox  x:Name="TxtZamowienieOdbiorcaNazwisko" Grid.Column="1" Grid.Row="1" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" Height="27" ></TextBox>
-                        <Label Grid.Row="2" Content="Miasto: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="26" Width="60" ></Label>
-                        <TextBox x:Name="TxtZamowienieOdbiorcaMiasto" Grid.Column="1" Grid.Row="2" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" Height="27" ></TextBox>
-                        <Label Grid.Row="3" Content="Poczta: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="26" Width="60" ></Label>
-                        <TextBox x:Name="TxtZamowienieOdbiorcaPoczta" Grid.Column="1" Grid.Row="3" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" Height="27" ></TextBox>
-                        <Label Grid.Row="4" Content="ulica: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="26" Width="46" ></Label>
-                        <TextBox x:Name="TxtZamowienieOdbiorcaUlica" Grid.Column="1" Grid.Row="4" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" Height="27" ></TextBox>
-                        <Label Grid.Row="5" Content="nr ulicy: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="26" Width="63" ></Label>
-                        <TextBox x:Name="TxtZamowienieOdbiorcaNRUlica" Grid.Column="1" Grid.Row="5" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" Height="27" ></TextBox>
-                        <Label Grid.Row="6" Content="numer lokalu: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="26" Width="102" ></Label>
-                        <TextBox x:Name="TxtZamowienieOdbiorcaLokal" Grid.Column="1" Grid.Row="6" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" Height="27" ></TextBox>
-                        <Label Grid.Row="7" Content="Telefon: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="26" Width="63" ></Label>
-                        <TextBox x:Name="TxtZamowienieOdbiorcaTelefon" Grid.Column="1" Grid.Row="7" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" Height="27" ></TextBox>
+                        <Label Content="Wpisz ilość paczek: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom"  Width="200" Height="26"></Label>
+                        <ComboBox   Language="pl" x:Name="CBZamowienieIloscPaczek" Grid.Column="1" Width="250" HorizontalAlignment="Left"   FontSize="15" VerticalAlignment="Bottom" Height="27" />
+
                     </Grid>
                 </StackPanel>
             </Grid>
@@ -88,7 +75,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Button x:Name="BtnZamowienieNadawcaWyjscie" Width="130" Content="Wyjście" Click="BtnZamowienieNadawcaWyjscie_Click" Margin="-61,0,427,0"/>
-                <Button x:Name="BtnZamowienieNadawcaDalej" Width="130" Grid.Column="1" Content="Dalej" Click="BtnZamowienieNadawcaDalej_Click" Margin="407,0,-41,0"  />
+                <Button x:Name="BtnZamowienieNadawcaDalej" Width="130" Grid.Column="1" Content="Dalej" Click="BtnZamowienieNadawcaDalej_Click" Margin="407,0,-41,0" HorizontalAlignment="Left"  />
 
             </Grid>
         </StackPanel>

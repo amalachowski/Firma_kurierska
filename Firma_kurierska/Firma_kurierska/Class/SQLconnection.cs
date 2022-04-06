@@ -15,7 +15,7 @@ namespace Firma_kurierska.Class
 {
     class SQLconnection
     {
-
+        private int id_zamowienia;
 
         private const string conect = "datasource=sql11.freesqldatabase.com ; port=3306; username=sql11479040; password=TFWPBFQEvA; database=sql11479040";
         public int[] Sprawdz_uzytkownika(string login, string haslo)
@@ -32,7 +32,7 @@ namespace Firma_kurierska.Class
                 if (dd.Read())
                 {
                     dane[0] = dd.GetInt32(0);
-                    dane[1] = dd.GetInt32(0);
+                    dane[1] = dd.GetInt32(1);
                 }
                 else
                 {
@@ -311,6 +311,10 @@ namespace Firma_kurierska.Class
                 adapter.InsertCommand.Connection = myconnection;
                 
                 adapter.InsertCommand.ExecuteNonQuery();
+
+
+
+                
                 
                 myconnection.Close();
             }
@@ -551,6 +555,84 @@ namespace Firma_kurierska.Class
             
             
             dataGrid.Columns[0].Visibility = Visibility.Hidden;
+
+        }
+
+
+        public void DodajZamowienie(int id_Nadawcy) 
+        {
+            MySqlConnection myconnection = new MySqlConnection(conect);
+            MySqlDataAdapter adapter = new MySqlDataAdapter();
+
+
+            MySqlCommand cmd = new MySqlCommand("insert into Zamówienie set ZAM_klient_id=@Klid , ZAM_status='W trakcie realizacji' ;",myconnection);
+            cmd.Parameters.AddWithValue("@KLid", id_Nadawcy);
+            MySqlDataReader dd;
+            MySqlCommand cmd1 = new MySqlCommand("Select last_insert_id() ;",myconnection);
+           
+
+
+
+
+
+            myconnection.Open();
+            try
+            {
+                
+                
+                adapter.InsertCommand = cmd;
+                adapter.InsertCommand.Connection = myconnection;
+
+                adapter.InsertCommand.ExecuteNonQuery();
+                dd = cmd1.ExecuteReader();
+                if (dd.Read())
+                {
+                    id_zamowienia = dd.GetInt32(0);
+                }
+                
+
+                myconnection.Close();
+            }
+            catch (Exception e)
+            {
+                System.Windows.MessageBox.Show(e.Message);
+            }
+
+
+            
+        }
+
+        public void DodajPaczki(int iloscPaczek) 
+        {
+            MySqlConnection myconnection = new MySqlConnection(conect);
+            MySqlDataAdapter adapter = new MySqlDataAdapter();
+
+
+            MySqlCommand cmd = new MySqlCommand("insert into Paczka set PCK_zamowienie_id=@id_zamowienia;",myconnection);
+
+            cmd.Parameters.AddWithValue("@id_zamowienia" ,id_zamowienia);
+
+
+            for (int i=0; i<iloscPaczek; i++)
+            {
+                try
+                {
+                    myconnection.Open();
+
+                    adapter.InsertCommand = cmd;
+                    adapter.InsertCommand.Connection = myconnection;
+
+                    adapter.InsertCommand.ExecuteNonQuery();
+
+                    myconnection.Close();
+                }
+                catch (Exception e)
+                {
+                    System.Windows.MessageBox.Show(e.Message);
+                    break;
+                }
+
+            }
 
         }
     #endregion

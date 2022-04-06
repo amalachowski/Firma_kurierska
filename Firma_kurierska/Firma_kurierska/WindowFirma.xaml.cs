@@ -17,6 +17,7 @@ using System.Windows.Shapes;
 using Firma_kurierska.WindowsZamowienie;
 
 
+
 namespace Firma_kurierska
 {
     /// <summary>
@@ -25,6 +26,7 @@ namespace Firma_kurierska
     public partial class WindowFirma : Window
     {
         private int id_uzytkownika;
+        private int id_pracownika;
         private int id_rekoruKlienta;
         private int id_rekordAdres;
         private int id_KurierKuriera;
@@ -179,23 +181,92 @@ namespace Firma_kurierska
         #region ZmianaHasla
         private void BtnZmienDaneZmien_Click(object sender, RoutedEventArgs e)
         {
-            SQLconnection sQLconnection = new SQLconnection();
-            Helper helper = new Helper();
-            if (sQLconnection.SprawdzPoprzednieHaslo(TxtZmienDaneStareHaslo.Password, id_uzytkownika))
+            if (chbx_pokaz.IsChecked == true)
             {
-                if (helper.PoprawnoscHaslaStaregoINowego(TxtZamienDaneNoweHaslo, TxtZmienDaneNoweHaslo2))
+                MessageBox.Show("Ukryj hasło aby je dodać");
+
+            }
+            else
+            {
+                SQLconnection sQLconnection = new SQLconnection();
+                Helper helper = new Helper();
+                string stare = sQLconnection.Szyfruj(TxtZmienDaneStareHaslo.Password);
+
+                if (sQLconnection.SprawdzPoprzednieHaslo(stare, id_uzytkownika))
                 {
-                    sQLconnection.ZmienHasloUzytkownika(TxtZamienDaneNoweHaslo.Password, id_uzytkownika);
-                    MessageBox.Show("Haslo zostało zmienione");
+
+
+                    if (helper.PoprawnoscHaslaStaregoINowego(TxtZamienDaneNoweHaslo.Password, TxtZmienDaneNoweHaslo2.Password))
+                    {
+                        if (TxtZamienDaneNoweHaslo.Password == TxtZmienDaneStareHaslo.Password)
+                        {
+                            MessageBox.Show("Nowe hasło nie może być takie jak stare.");
+                            return;
+                        }
+                        
+                        if (TxtZamienDaneNoweHaslo.Password.Length < 8 || TxtZamienDaneNoweHaslo.Password.Length > 14)
+                        {
+                            MessageBox.Show("Hasło musi mieć minimum 8 znaków, maksymalnie 14.");
+                            return;
+                        }
+                        if (helper.SprawdzHaslo(TxtZamienDaneNoweHaslo.Password)) {
+                            sQLconnection.ZmienHasloUzytkownika(TxtZamienDaneNoweHaslo.Password, id_uzytkownika);
+                            MessageBox.Show("Hasło zostało zmienione!");
+                            CzyscHaslo();
+                        }
+                        
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Stare haslo jest błędne");
+
                 }
             }
-            else 
-            {
-                MessageBox.Show("Stare haslo jest błędne");
+        }
+        private void ShowPassword_Checked(object sender, RoutedEventArgs e)
+        {
+            TxtZmienDaneStareHasloTekst.Text = TxtZmienDaneStareHaslo.Password;
+            TxtZmienDaneStareHaslo.Visibility = Visibility.Collapsed;
+            TxtZmienDaneStareHasloTekst.Visibility = Visibility.Visible;
 
-            }
+            TxtZamienDaneNoweHasloTekst.Text = TxtZamienDaneNoweHaslo.Password;
+            TxtZamienDaneNoweHaslo.Visibility = Visibility.Collapsed;
+            TxtZamienDaneNoweHasloTekst.Visibility = Visibility.Visible;
+
+            TxtZmienDaneNoweHaslo2Tekst.Text = TxtZmienDaneNoweHaslo2.Password;
+            TxtZmienDaneNoweHaslo2.Visibility = Visibility.Collapsed;
+            TxtZmienDaneNoweHaslo2Tekst.Visibility = Visibility.Visible;
         }
 
+        private void ShowPassword_Unchecked(object sender, RoutedEventArgs e)
+        {
+            TxtZmienDaneStareHaslo.Password = TxtZmienDaneStareHasloTekst.Text;
+            TxtZmienDaneStareHasloTekst.Visibility = Visibility.Collapsed;
+            TxtZmienDaneStareHaslo.Visibility = Visibility.Visible;
+
+            TxtZamienDaneNoweHaslo.Password = TxtZamienDaneNoweHasloTekst.Text;
+            TxtZamienDaneNoweHasloTekst.Visibility = Visibility.Collapsed;
+            TxtZamienDaneNoweHaslo.Visibility = Visibility.Visible;
+
+            TxtZmienDaneNoweHaslo2.Password = TxtZmienDaneNoweHaslo2Tekst.Text;
+            TxtZmienDaneNoweHaslo2Tekst.Visibility = Visibility.Collapsed;
+            TxtZmienDaneNoweHaslo2.Visibility = Visibility.Visible;
+        }
+        private void CzyscHaslo()
+        {
+            TxtZamienDaneNoweHaslo.Password = "";
+            TxtZmienDaneNoweHaslo2.Password = "";
+            TxtZmienDaneStareHaslo.Password = "";
+
+            TxtZmienDaneStareHasloTekst.Text = "";
+            TxtZmienDaneNoweHaslo2Tekst.Text = "";
+            TxtZamienDaneNoweHasloTekst.Text = "";
+        }
+        private void BtnZmienDaneWyczysc_Click(object sender, RoutedEventArgs e)
+        {
+            CzyscHaslo();
+        }
         #endregion
 
 
@@ -316,5 +387,201 @@ namespace Firma_kurierska
             
         }
         #endregion
+        
+
+        #region Pracownicy
+
+        private void BtinPracownicyWyszukaj_Click(object sender, RoutedEventArgs e)
+        {
+            string[] danePracownicy = new string[4];
+            danePracownicy[0] = tbx_prac_imie.Text;
+            danePracownicy[1] = tbx_prac_nazwisko.Text;
+            danePracownicy[2] = tbx_prac_login.Text;
+            danePracownicy[3] = cbx_stanowisko.Text;
+
+            SQLconnection sQLconnection = new SQLconnection();
+            sQLconnection.WyszukajPracownicy(danePracownicy, dgv_pracownicy);
+        }
+
+        private void Dgv_pracownicy_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DataGrid dataGrid = sender as DataGrid;
+            DataRowView rowView = dataGrid.SelectedItem as DataRowView;
+            try
+            {
+                if (rowView != null)
+                {
+                    id_pracownika = (int)rowView.Row[0]; // zapisywanie wybranego id pracownika
+                    tbx_prac_imie.Text = rowView.Row[1].ToString(); /* 1st Column on selected Row */
+                    tbx_prac_nazwisko.Text = rowView.Row[2].ToString();
+                    tbx_prac_login.Text = rowView.Row[3].ToString();
+                    cbx_stanowisko.Text = rowView.Row[4].ToString();
+                    tbx_prac_haslo.Password = rowView.Row[5].ToString();
+                    tbx_prac_haslo.Password = "";
+                    tbx_prac_haslo2.Password = "";
+                    tbx_prac_hasloTekst.Text = "";
+                    tbx_prac_haslo2Tekst.Text = "";
+                    lbxHaslo.Content = "Podaj nowe hasło:";
+
+
+                }
+            }
+            catch (Exception kom)
+            {
+                MessageBox.Show(kom.Message);
+            }
+        }
+
+        private void Btn_czysc_Click(object sender, RoutedEventArgs e)
+        {
+            Helper helper = new Helper();
+            TextBox[] textBoxes = new TextBox[3];
+            textBoxes[0] = tbx_prac_imie;
+            textBoxes[1] = tbx_prac_nazwisko;
+            textBoxes[2] = tbx_prac_login;
+            helper.WyczyscFormatke(textBoxes);
+            cbx_stanowisko.Text = "";
+            tbx_prac_haslo.Password = "";
+            tbx_prac_haslo2.Password = "";
+            tbx_prac_hasloTekst.Text = "";
+            tbx_prac_haslo2Tekst.Text = "";
+            lbxHaslo.Content = "Hasło:";
+        }
+
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            tbx_prac_haslo.Visibility = Visibility.Visible;
+            tbx_prac_haslo2.Visibility = Visibility.Visible;
+            lbxHaslo.Visibility = Visibility.Visible;
+            lbxHaslo2.Visibility = Visibility.Visible;
+            if (tbx_prac_haslo.Password.Length > 0)
+            {
+                tbx_prac_haslo.Password = "";
+                tbx_prac_haslo2.Password = "";
+                tbx_prac_hasloTekst.Text = "";
+                tbx_prac_haslo2Tekst.Text = "";
+                lbxHaslo.Content = "Podaj nowe hasło:";
+            }
+        }
+
+        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            tbx_prac_haslo.Visibility = Visibility.Hidden;
+            tbx_prac_haslo2.Visibility = Visibility.Hidden;
+            lbxHaslo.Visibility = Visibility.Hidden;
+            lbxHaslo2.Visibility = Visibility.Hidden;
+            lbxHaslo.Content = "Hasło:";
+        }
+
+        private void BtnPracownicyDodaj_Click(object sender, RoutedEventArgs e)
+        {
+            Helper helper = new Helper();
+            SQLconnection sQLconnection = new SQLconnection();
+            if (tbx_prac_imie.Text.Length < 3 || tbx_prac_nazwisko.Text.Length < 3 ||  tbx_prac_login.Text.Length < 3 || cbx_stanowisko.Text.Length < 1)
+            {
+                MessageBox.Show("Uzupełnij dane.");
+                return;
+            }
+            
+      
+            if (sQLconnection.sprawdz_login(tbx_prac_login.Text) == false)
+           {
+                MessageBox.Show("Login zajęty");
+                return;
+
+            }
+            bool hasloDodane = chbx_dodajHaslo.IsChecked ?? false;
+            if (hasloDodane)
+            {
+                helper.SprawdzHaslo(tbx_prac_haslo.Password);
+            }
+            
+            string[] pracownik = new string[5];
+            pracownik[0] = tbx_prac_imie.Text;
+            pracownik[1] = tbx_prac_nazwisko.Text;
+            pracownik[2] = tbx_prac_login.Text;
+            pracownik[3] = tbx_prac_haslo.Password;
+            pracownik[4] = cbx_stanowisko.SelectedValue.ToString();
+            
+            sQLconnection.DodajPracownika(pracownik);
+            sQLconnection.WyswietlPracownikow(dgv_pracownicy);
+
+            TextBox[] textBoxes = new TextBox[3];
+            textBoxes[0] = tbx_prac_imie;
+            textBoxes[1] = tbx_prac_nazwisko;
+            textBoxes[2] = tbx_prac_login;
+            helper.WyczyscFormatke(textBoxes);
+            cbx_stanowisko.Text = "";
+            tbx_prac_haslo.Password = "";
+            tbx_prac_haslo2.Password = "";
+            tbx_prac_hasloTekst.Text = "";
+            tbx_prac_haslo2Tekst.Text = "";
+            lbxHaslo.Content = "Hasło:";
+
+        }
+
+        private void BtnPracownicyUsun_Click(object sender, RoutedEventArgs e)
+        {
+
+            Helper helper = new Helper();
+            SQLconnection sql = new SQLconnection();
+            sql.UsunPracownika(id_pracownika);
+            sql.WyswietlPracownikow(dgv_pracownicy);
+            TextBox[] textBoxes = new TextBox[5];
+            textBoxes[0] = tbx_prac_imie;
+            textBoxes[1] = tbx_prac_nazwisko;
+            textBoxes[2] = tbx_prac_login;
+            helper.WyczyscFormatke(textBoxes);
+            tbx_prac_haslo.Password = "";
+            tbx_prac_haslo2.Password = "";
+            tbx_prac_hasloTekst.Text = "";
+            tbx_prac_haslo2Tekst.Text = "";
+            cbx_stanowisko.Text = "";
+            lbxHaslo.Content = "Hasło:";
+
+
+        }
+        
+
+        private void BtnPracownicyEdytuj_Click(object sender, RoutedEventArgs e)
+        {
+            Helper helper = new Helper();
+            string[] pracownik = new string[5];
+            pracownik[0] = tbx_prac_imie.Text;
+            pracownik[1] = tbx_prac_nazwisko.Text;
+            pracownik[2] = tbx_prac_login.Text;
+            pracownik[3] = tbx_prac_haslo.Password;
+            pracownik[4] = cbx_stanowisko.SelectedValue.ToString();
+            SQLconnection sQLconnection = new SQLconnection();
+            sQLconnection.EdytujPracownika(id_pracownika, pracownik);
+            sQLconnection.WyswietlPracownikow(dgv_pracownicy);
+
+            TextBox[] textBoxes = new TextBox[5];
+            textBoxes[0] = tbx_prac_imie;
+            textBoxes[1] = tbx_prac_nazwisko;
+            textBoxes[2] = tbx_prac_login;
+            helper.WyczyscFormatke(textBoxes);
+            tbx_prac_haslo.Password = "";
+            tbx_prac_haslo2.Password = "";
+            tbx_prac_hasloTekst.Text = "";
+            tbx_prac_haslo2Tekst.Text = "";
+            cbx_stanowisko.Text = "";
+            lbxHaslo.Content = "Hasło:";
+        }
+
+        private void TabItemPracownicy_Loaded(object sender, RoutedEventArgs e)
+        {
+            SQLconnection sQLconnection = new SQLconnection();
+            sQLconnection.WyswietlPracownikow(dgv_pracownicy);
+            sQLconnection.ZaladujStanowiskaDoCBX(cbx_stanowisko);
+            tbx_prac_haslo.Visibility = Visibility.Hidden;
+            tbx_prac_haslo2.Visibility = Visibility.Hidden;
+            lbxHaslo.Visibility = Visibility.Hidden;
+            lbxHaslo2.Visibility = Visibility.Hidden;
+        }
+        #endregion
+
+        
     }
 }

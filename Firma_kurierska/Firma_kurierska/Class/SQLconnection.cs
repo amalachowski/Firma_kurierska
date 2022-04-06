@@ -18,70 +18,16 @@ namespace Firma_kurierska.Class
 
 
         private const string conect = "datasource=sql11.freesqldatabase.com ; port=3306; username=sql11479040; password=TFWPBFQEvA; database=sql11479040";
-        private MySqlConnection connection;
-        private string server;
-        private string database;
-        private string uid;
-        private string password;
-
-        public SQLconnection()
-        {
-            Initialize();
-        }
-
-        private void Initialize()
-        {
-            server = "sql11.freesqldatabase.com";
-            database = "sql11479040";
-            uid = "sql11479040";
-            password = "TFWPBFQEvA";
-            string connectionString;
-            connectionString = "SERVER=" + server + ";" + "DATABASE=" +
-            database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
-
-            connection = new MySqlConnection(connectionString);
-        }
-
-
-
-        private bool OpenConnection()
-        {
-            try
-            {
-                connection.Open();
-                return true;
-            }
-            catch (MySqlException ex)
-            {
-
-                Console.WriteLine(ex);
-                return false;
-            }
-        }
-
-        private bool CloseConnection()
-        {
-            try
-            {
-                connection.Close();
-                return true;
-            }
-            catch (MySqlException ex)
-            {
-                Console.WriteLine(ex);
-                return false;
-            }
-        }
-        
         public int[] Sprawdz_uzytkownika(string login, string haslo)
         {
             int[] dane = new int[2];
-            MySqlCommand nowe = new MySqlCommand("SELECT PRC_id ,PRC_STN_id  FROM sql11479040.Pracownicy WHERE PRC_login='" + login + "' AND PRC_haslo='" + haslo + "';", connection);
+            MySqlConnection myconnection = new MySqlConnection(conect);
+            MySqlCommand nowe = new MySqlCommand("SELECT PRC_id ,PRC_STN_id  FROM sql11479040.Pracownicy WHERE PRC_login='" + login + "' AND PRC_haslo=md5('" + haslo + "');", myconnection);
             MySqlDataReader dd;
             int id;
             try
             {
-                OpenConnection();
+                myconnection.Open();
                 dd = nowe.ExecuteReader();
                 if (dd.Read())
                 {
@@ -93,7 +39,7 @@ namespace Firma_kurierska.Class
                     id = 0;
                 }
                 dd.Close();
-                CloseConnection();
+                myconnection.Close();
             }
             catch (Exception e)
             {
@@ -443,9 +389,6 @@ namespace Firma_kurierska.Class
 
         #endregion
 
-
-
-
         #region ZmianaHasla
 
         public bool SprawdzPoprzednieHaslo(string stareHaslo, int id_pracownika)
@@ -483,10 +426,11 @@ namespace Firma_kurierska.Class
             
         }
 
-        public void ZmienHasloUzytkownika(string noweHaslo, int id_pracownika)
+        public void ZmienHasloUzytkownika(string haslo, int id_pracownika)
         {
             MySqlConnection mySqlConnection = new MySqlConnection(conect) ;
             MySqlCommand cmd = new MySqlCommand();
+            string noweHaslo = Szyfruj(haslo);
             cmd.Parameters.AddWithValue("@noweHaslo", noweHaslo);
             cmd.Parameters.AddWithValue("@id_pracownika", id_pracownika);
             cmd.CommandText = "Update Pracownicy set PRC_haslo=@noweHaslo where PRC_id=@id_pracownika;";
@@ -509,6 +453,67 @@ namespace Firma_kurierska.Class
 
         }
 
+        public string Szyfruj(string haslo)
+        {
+            MySqlConnection mySqlConnection = new MySqlConnection(conect);
+            MySqlCommand szyfr = new MySqlCommand("select md5('" + haslo + "');", mySqlConnection);
+            MySqlDataReader dr;
+
+            string szyfrowaneHaslo = "";
+            mySqlConnection.Open();
+            try
+            {
+                dr = szyfr.ExecuteReader();
+            if (dr.Read())
+            {
+                szyfrowaneHaslo = dr["md5('" + haslo + "')"].ToString();
+
+            }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message);
+
+            }
+            mySqlConnection.Close();
+            return szyfrowaneHaslo;
+
+        }
+        public bool sprawdz_login(string login)
+        {
+            MySqlConnection mySqlConnection = new MySqlConnection(conect);
+            MySqlCommand nowe = new MySqlCommand("SELECT Count(PRC_id) FROM Pracownicy WHERE PRC_login='" + login + "';", mySqlConnection);
+            MySqlDataReader dr;
+
+            mySqlConnection.Open();
+            dr = nowe.ExecuteReader();
+
+            if (dr.Read())
+            {
+                int check = dr.GetInt32(0);
+
+                if (check == 0)
+                {
+                    mySqlConnection.Close();
+                    return true;
+                }
+                else
+                {
+                    mySqlConnection.Close();
+                    return false;
+                }
+
+            }
+            else
+            {
+                mySqlConnection.Close();
+                return false;
+
+            }
+
+
+
+        }
 
 
 
@@ -521,6 +526,46 @@ namespace Firma_kurierska.Class
             MySqlConnection myconnection = new MySqlConnection(conect);
             MySqlCommand cmd = new MySqlCommand("SELECT KL_id , KL_imie, ADR_id , KL_nazwisko , ADR_miasto , ADR_ulica, ADR_nr_ulicy , ADR_nr_lok, KL_telefon , KL_email ," +
                 " KL_VIP FROM Klienci INNER JOIN Adres ON Klienci.KL_adres_id = Adres.ADR_id where CONCAT(KL_imie, ' ',KL_nazwisko ) LIKE '%" + textBox.Text + "%' ORDER BY KL_nazwisko , KL_imie ;", myconnection);
+                            dataGrid.Columns[0].Visibility = Visibility.Hidden;
+
+        }
+    #endregion
+        #region Pracownicy
+        public void WyswietlPracownikow(System.Windows.Controls.DataGrid dataGrid)
+        {
+            MySqlConnection myconnection = new MySqlConnection(conect);
+
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand("SELECT PRC_id, PRC_imie, PRC_nazwisko, PRC_login, STN_stanowisko, PRC_haslo FROM Pracownicy INNER JOIN Stanowisko ON PRC_STN_id = STN_id;", myconnection);
+                DataTable dt = new DataTable();
+                myconnection.Open();
+                MySqlDataReader sdr = cmd.ExecuteReader();
+                dt.Load(sdr);
+                myconnection.Close();
+                dataGrid.ItemsSource = dt.DefaultView;
+
+            }
+            catch (Exception e)
+            {
+                System.Windows.MessageBox.Show(e.Message);
+            }
+
+        }
+        public void WyszukajPracownicy(string[] dane, System.Windows.Controls.DataGrid dataGrid)
+        {
+            if (dane is null)
+            {
+                throw new ArgumentNullException(nameof(dane));
+            }
+
+            if (dataGrid is null)
+            {
+                throw new ArgumentNullException(nameof(dataGrid));
+            }
+
+            MySqlConnection myconnection = new MySqlConnection(conect);
+            MySqlCommand cmd = new MySqlCommand("SELECT PRC_id, PRC_imie, PRC_nazwisko, PRC_login, STN_stanowisko, PRC_haslo  FROM Pracownicy INNER JOIN Stanowisko ON PRC_STN_id = STN_id where PRC_imie like '%" + dane[0] + "%' and PRC_nazwisko like '%" + dane[1] + "%' and PRC_login like '%" + dane[2] + "%' and STN_stanowisko like '%" + dane[3] + "%';", myconnection);
 
             try
             {
@@ -539,12 +584,120 @@ namespace Firma_kurierska.Class
             {
                 System.Windows.MessageBox.Show(e.Message);
             }
-            dataGrid.Columns[0].Visibility = Visibility.Hidden;
+
+
 
         }
-    #endregion
+        public void DodajPracownika(string[] dane)
+        {
 
 
+            MySqlConnection myconnection = new MySqlConnection(conect);
+            MySqlDataAdapter adapter = new MySqlDataAdapter();
+            MySqlCommand cmd = new MySqlCommand("insert into Pracownicy set PRC_imie=@PRC_imie , PRC_nazwisko=@PRC_nazwisko , PRC_login=@PRC_login , PRC_STN_id=@PRC_stanowisko , PRC_haslo=@PRC_haslo;");
+            cmd.Parameters.AddWithValue("@PRC_imie", dane[0]);
+            cmd.Parameters.AddWithValue("@PRC_nazwisko", dane[1]);
+            cmd.Parameters.AddWithValue("@PRC_login", dane[2]);
+            cmd.Parameters.AddWithValue("@PRC_haslo", dane[3]);
+            cmd.Parameters.AddWithValue("@PRC_stanowisko", dane[4]);
+
+
+            try
+            {
+                myconnection.Open();
+                adapter.InsertCommand = cmd;
+                adapter.InsertCommand.Connection = myconnection;
+                adapter.InsertCommand.ExecuteNonQuery();
+                myconnection.Close();
+            }
+            catch (Exception e)
+            {
+                System.Windows.MessageBox.Show(e.Message);
+            }
+
+        }
+        public void ZaladujStanowiskaDoCBX(System.Windows.Controls.ComboBox comboBox)
+        {
+            MySqlConnection myconnection = new MySqlConnection(conect);
+            MySqlCommand cmd = new MySqlCommand("SELECT * FROM Stanowisko", myconnection);
+            try
+            {
+                myconnection.Open();
+                MySqlDataAdapter adapter = new MySqlDataAdapter();
+                adapter.SelectCommand = cmd;
+                DataTable dataTable = new DataTable();
+                adapter.Fill(dataTable);
+                BindingSource zrodlo = new BindingSource();
+                zrodlo.DataSource = dataTable;
+                comboBox.ItemsSource = zrodlo;
+                myconnection.Close();
+
+            }
+            catch (Exception e)
+            {
+                System.Windows.MessageBox.Show(e.Message);
+            }
+
+        }
+
+        public void UsunPracownika(int id_pracownika)
+        {
+
+            MySqlConnection myconnection = new MySqlConnection(conect);
+            MySqlCommand zapytanie = myconnection.CreateCommand();
+            MySqlTransaction transaction;
+
+            myconnection.Open();
+            transaction = myconnection.BeginTransaction(IsolationLevel.ReadCommitted);
+            zapytanie.Connection = myconnection;
+            zapytanie.Transaction = transaction;
+
+            try
+            {
+
+                zapytanie.CommandText = "Delete from Pracownicy where PRC_id=" + id_pracownika + "; ";
+                zapytanie.ExecuteNonQuery();
+                transaction.Commit();
+
+
+            }
+            catch (Exception e)
+            {
+                System.Windows.Forms.MessageBox.Show(e.Message);
+                transaction.Rollback();
+            }
+            myconnection.Close();
+
+
+        }
+
+        public void EdytujPracownika(int id_pracownika, string[] dane)
+        {
+            MySqlConnection myconnection = new MySqlConnection(conect);
+            MySqlDataAdapter adapter = new MySqlDataAdapter();
+            MySqlCommand cmd = new MySqlCommand("Update Pracownicy set PRC_imie=@PRC_imie , PRC_nazwisko=@PRC_nazwisko , PRC_login=@PRC_login , PRC_STN_id=@PRC_stanowisko , PRC_haslo=@PRC_haslo where PRC_id=@id;");
+            cmd.Parameters.AddWithValue("@PRC_imie", dane[0]);
+            cmd.Parameters.AddWithValue("@PRC_nazwisko", dane[1]);
+            cmd.Parameters.AddWithValue("@PRC_login", dane[2]);
+            cmd.Parameters.AddWithValue("@PRC_haslo", dane[3]);
+            cmd.Parameters.AddWithValue("@PRC_stanowisko", dane[4]);
+            cmd.Parameters.AddWithValue("@id", id_pracownika);
+
+
+            try
+            {
+                myconnection.Open();
+                adapter.InsertCommand = cmd;
+                adapter.InsertCommand.Connection = myconnection;
+                adapter.InsertCommand.ExecuteNonQuery();
+                myconnection.Close();
+            }
+            catch (Exception e)
+            {
+                System.Windows.MessageBox.Show(e.Message);
+            }
+        }
+        #endregion
 
     }
 

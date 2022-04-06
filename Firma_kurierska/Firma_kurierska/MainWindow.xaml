@@ -20,7 +20,7 @@
         Title="Login" Height="500" Width="800">
     <Grid Margin="0,0,0,3">
         <materialDesign:ColorZone Mode="PrimaryMid" Padding="20" materialDesign:ShadowAssist.ShadowDepth="Depth3" Margin="0,0,0,368" VerticalAlignment="Stretch" >
-            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Login" FontSize="50" Foreground="GhostWhite" x:Name="loginHeader" Height="69" Margin="310,0,319,-11"></TextBlock>
+            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Logowanie" FontSize="50" Foreground="GhostWhite" x:Name="loginHeader" Height="69" Margin="277,1,203.6,-10.8" Width="273"></TextBlock>
 
         </materialDesign:ColorZone>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="375,128,37,22" Height="316" RenderTransformOrigin="0.5,0.5" Width="380">
@@ -32,12 +32,12 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,15,0,0" VerticalAlignment="Center"  HorizontalAlignment="Center" >
                 <materialDesign:PackIcon Kind="Password" Width="40" Height="40"/>
-                <Label Content="Password:  " FontSize="18" VerticalAlignment="Bottom" />
+                <Label Content="Hasło:  " FontSize="18" VerticalAlignment="Bottom" />
                 <PasswordBox Name="txtPassword" MinWidth="100" VerticalAlignment="Bottom"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,50,0,0">
-                <Button x:Name="btnLogin" Content="Login" Width="100" Height="40" Margin="0,0,15,0" Click="btnLogin_Click" ></Button>
-                <Button x:Name="btnExit" Content="Exit" Width="100" Height="40" Margin="15,0,0,0" Click="btnExit_Click"></Button>
+                <Button x:Name="btnLogin" Content="Zaloguj" Width="100" Height="40" Margin="0,0,15,0" Click="btnLogin_Click" ></Button>
+                <Button x:Name="btnExit" Content="Wyjdź" Width="100" Height="40" Margin="15,0,0,0" Click="btnExit_Click"></Button>
             </StackPanel>
         </StackPanel>
         <Image Source="images/logo_login.png" Width="300" Margin="75,234,417,131">

@@ -491,33 +491,47 @@ namespace Firma_kurierska
                 return;
 
             }
-            bool hasloDodane = chbx_dodajHaslo.IsChecked ?? false;
-            if (hasloDodane)
+
+            bool HasloDodane()
             {
-                helper.SprawdzHaslo(tbx_prac_haslo.Password);
+                bool hasloDodane = chbx_dodajHaslo.IsChecked ?? false;
+                if (hasloDodane)
+                {
+                    return true;
+                }
+                else
+                {
+                    MessageBox.Show("Dodaj hasło");
+                    return false;
+                }
+            }
+
+            if (HasloDodane() & helper.PoprawnoscHaslaStaregoINowego(tbx_prac_haslo.Password,tbx_prac_haslo2.Password) & helper.SprawdzHaslo(tbx_prac_haslo.Password))
+            {
+
+                string[] pracownik = new string[5];
+                pracownik[0] = tbx_prac_imie.Text;
+                pracownik[1] = tbx_prac_nazwisko.Text;
+                pracownik[2] = tbx_prac_login.Text;
+                pracownik[3] = tbx_prac_haslo.Password;
+                pracownik[4] = cbx_stanowisko.SelectedValue.ToString();
+
+                sQLconnection.DodajPracownika(pracownik);
+                sQLconnection.WyswietlPracownikow(dgv_pracownicy);
+
+                TextBox[] textBoxes = new TextBox[3];
+                textBoxes[0] = tbx_prac_imie;
+                textBoxes[1] = tbx_prac_nazwisko;
+                textBoxes[2] = tbx_prac_login;
+                helper.WyczyscFormatke(textBoxes);
+                cbx_stanowisko.Text = "";
+                tbx_prac_haslo.Password = "";
+                tbx_prac_haslo2.Password = "";
+                tbx_prac_hasloTekst.Text = "";
+                tbx_prac_haslo2Tekst.Text = "";
+                lbxHaslo.Content = "Hasło:";
             }
             
-            string[] pracownik = new string[5];
-            pracownik[0] = tbx_prac_imie.Text;
-            pracownik[1] = tbx_prac_nazwisko.Text;
-            pracownik[2] = tbx_prac_login.Text;
-            pracownik[3] = tbx_prac_haslo.Password;
-            pracownik[4] = cbx_stanowisko.SelectedValue.ToString();
-            
-            sQLconnection.DodajPracownika(pracownik);
-            sQLconnection.WyswietlPracownikow(dgv_pracownicy);
-
-            TextBox[] textBoxes = new TextBox[3];
-            textBoxes[0] = tbx_prac_imie;
-            textBoxes[1] = tbx_prac_nazwisko;
-            textBoxes[2] = tbx_prac_login;
-            helper.WyczyscFormatke(textBoxes);
-            cbx_stanowisko.Text = "";
-            tbx_prac_haslo.Password = "";
-            tbx_prac_haslo2.Password = "";
-            tbx_prac_hasloTekst.Text = "";
-            tbx_prac_haslo2Tekst.Text = "";
-            lbxHaslo.Content = "Hasło:";
 
         }
 
@@ -528,7 +542,7 @@ namespace Firma_kurierska
             SQLconnection sql = new SQLconnection();
             sql.UsunPracownika(id_pracownika);
             sql.WyswietlPracownikow(dgv_pracownicy);
-            TextBox[] textBoxes = new TextBox[5];
+            TextBox[] textBoxes = new TextBox[3];
             textBoxes[0] = tbx_prac_imie;
             textBoxes[1] = tbx_prac_nazwisko;
             textBoxes[2] = tbx_prac_login;

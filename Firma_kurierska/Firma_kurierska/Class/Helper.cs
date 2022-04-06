@@ -53,6 +53,48 @@ namespace Firma_kurierska.Class
                 return false;
             }
         }
+        public bool SprawdzHaslo(string haslo)
+        {
+            if (haslo.Length < 8 || haslo.Length > 14)
+            {
+                MessageBox.Show("Hasło musi mieć minimum 8 znaków, maksymalnie 14.");
+                return false;
+            }
+            else if (!haslo.Any(char.IsUpper))
+            {
+                MessageBox.Show("Hasło musi mieć conajmniej 1 wielką literę");
+                return false;
+            }
+            else if (!haslo.Any(char.IsLower))
+            {
+                MessageBox.Show("Hasło musi mieć conajmniej 1 małą literę");
+                return false;
+            }
+            else if (haslo.Contains(" "))
+            {
+                MessageBox.Show("Hasło nie może zawierać spacji");
+                return false;
+            }
+            bool isspecjal = false;
+            string specialCh = @"%!@#$%^&*()?/>.<,:;'\|}]{[_~`+=-" + "\"";
+            char[] specialChh = specialCh.ToCharArray();
+            foreach (char ch in specialChh)
+            {
+                if (haslo.Contains(ch))
+                {
+                    isspecjal = true;
+                }
+
+            }
+            if (!isspecjal)
+            {
+                MessageBox.Show("Hasło musi zawierać znak specjalny");
+                return false;
+            }
+            return true;
+            
+        }
+    }
 
     }
-}
+

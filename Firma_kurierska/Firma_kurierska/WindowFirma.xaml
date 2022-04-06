@@ -221,12 +221,12 @@
                                     <BindingGroup/>
                                 </DataGrid.BindingGroup>
                                 <DataGrid.Columns>
-                                    <materialDesign:DataGridTextColumn Header="ID" Binding="{Binding PRC_id}"  IsReadOnly="True"/>
+                                    <materialDesign:DataGridTextColumn Visibility="Hidden" Header="ID" Binding="{Binding PRC_id}"  IsReadOnly="True"/>
                                     <materialDesign:DataGridTextColumn Header="Imie" Binding="{Binding PRC_imie}" IsReadOnly="True"/>
                                     <materialDesign:DataGridTextColumn Header="Nazwisko" Binding="{Binding PRC_nazwisko}" IsReadOnly="True"/>
                                     <materialDesign:DataGridTextColumn Header="Login" Binding="{Binding PRC_login}" IsReadOnly="True"/>
                                     <materialDesign:DataGridTextColumn Header="Stanowisko" Binding="{Binding STN_stanowisko}" IsReadOnly="True"/>
-                                    <materialDesign:DataGridTextColumn Header="Haslo" Binding="{Binding PRC_haslo}" IsReadOnly="True"/>
+                                    <materialDesign:DataGridTextColumn Visibility="Hidden" Header="Haslo" Binding="{Binding PRC_haslo}" IsReadOnly="True"/>
 
 
                                 </DataGrid.Columns>
@@ -267,13 +267,19 @@
                                 <TextBox x:Name="tbx_prac_login" Grid.Column="1" Grid.Row="2" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" ></TextBox>
                                 <Label Grid.Row="3" Content="Stanowisko: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" ></Label>
                                 <Label   Grid.Row="6" Content="Hasło: " Name="lbxHaslo" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,10" ></Label>
-                                <TextBox x:Name="tbx_prac_haslo"  Grid.Row="6" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" Margin="136,0,10,13" Grid.ColumnSpan="2" />
+                                <Grid Grid.Row="6" MaxWidth="250" VerticalAlignment="Bottom" Margin="136,0,10,13" Grid.ColumnSpan="2">
+                                    <PasswordBox Name="tbx_prac_haslo" PasswordChar="*" FontSize="15" />
+                                    <TextBox Name="tbx_prac_hasloTekst" Visibility="Collapsed" FontSize="15" />
+                                </Grid>
                                 <Label   Grid.Row="7" Name="lbxHaslo2" Content="Powtórz hasło: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,10" ></Label>
-                                <TextBox x:Name="tbx_prac_haslo2"  Grid.Row="7" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Margin="136,0,10,10" />
+                                <Grid Grid.Row="7" MaxWidth="250" VerticalAlignment="Bottom" Margin="136,0,10,10" Grid.ColumnSpan="2">
+                                    <PasswordBox Name="tbx_prac_haslo2" PasswordChar="*" FontSize="15" />
+                                    <TextBox Name="tbx_prac_haslo2Tekst" Visibility="Collapsed" FontSize="15" />
+                                </Grid>
                                 <ComboBox x:Name="cbx_stanowisko" Grid.Column="1" DisplayMemberPath="STN_stanowisko" SelectedValuePath="STN_id" HorizontalAlignment="Left" Margin="55,13,0,0" Grid.Row="3" VerticalAlignment="Top" Width="250" RenderTransformOrigin="0.504,0.32" Height="27"/>
                                 <Button x:Name="btn_czysc" Content="Wyczyść" Height="32" Margin="186,21,39,27" Grid.Row="4" Width="130" Click="Btn_czysc_Click" Grid.Column="1" Grid.RowSpan="2"/>
                                 <Button x:Name="BtinPracownicyWyszukaj" Content="Wyszukaj" Width="130" Margin="32,21,193,27" Click="BtinPracownicyWyszukaj_Click" Grid.Column="1" Height="Auto" Grid.Row="4" Grid.RowSpan="2"/>
-                                <CheckBox Content="Dodaj lub edytuj hasło" Margin="37,13,301,9" Grid.ColumnSpan="2" Grid.Row="5" RenderTransformOrigin="0.369,0.667" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
+                                <CheckBox Name="chbx_dodajHaslo"  Content="Dodaj lub edytuj hasło" Margin="37,13,301,9" Grid.ColumnSpan="2" Grid.Row="5" RenderTransformOrigin="0.369,0.667" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
                             </Grid>
                             <Grid Margin="0,60,0,0">
                                 <Grid.ColumnDefinitions>
@@ -384,7 +390,7 @@
 
                             </Grid.RowDefinitions>
                             
-                            <Label Content="Stare haslo: " Grid.Column="0" Grid.Row="0" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="26"  ></Label>
+                            <Label Content="Aktualne haslo: " Grid.Column="0" Grid.Row="0" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="26"  ></Label>
                             <Grid Grid.Row="0" Grid.Column="1" Width="200" HorizontalAlignment="Left" VerticalAlignment="Bottom"  Height="27" AutomationProperties.IsRequiredForForm="True">
                                 <PasswordBox Name="TxtZmienDaneStareHaslo" PasswordChar="*" FontSize="15" />
                                 <TextBox Name="TxtZmienDaneStareHasloTekst" Visibility="Collapsed" FontSize="15" />
@@ -407,7 +413,7 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Button x:Name="BtnZmienDaneZmien" Content="Zmień hasło" Width="150" Height="Auto" Margin="50,0" Click="BtnZmienDaneZmien_Click" />
-                            <Button Grid.Column="1" Name="BtnZmienDaneWyczysc" Content="Wyczyść" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="150"></Button>
+                            <Button Grid.Column="1" Name="BtnZmienDaneWyczysc" Content="Wyczyść" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="150" Click="BtnZmienDaneWyczysc_Click"></Button>
                         </Grid>
                     </StackPanel>
 

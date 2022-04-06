@@ -205,39 +205,12 @@ namespace Firma_kurierska
                             MessageBox.Show("Hasło musi mieć minimum 8 znaków, maksymalnie 14.");
                             return;
                         }
-                        else if (!TxtZamienDaneNoweHaslo.Password.Any(char.IsUpper))
-                        {
-                            MessageBox.Show("Hasło musi mieć conajmniej 1 wielką literę");
-                            return;
+                        if (helper.SprawdzHaslo(TxtZamienDaneNoweHaslo.Password)) {
+                            sQLconnection.ZmienHasloUzytkownika(TxtZamienDaneNoweHaslo.Password, id_uzytkownika);
+                            MessageBox.Show("Hasło zostało zmienione!");
+                            CzyscHaslo();
                         }
-                        else if (!TxtZamienDaneNoweHaslo.Password.Any(char.IsLower))
-                        {
-                            MessageBox.Show("Hasło musi mieć conajmniej 1 małą literę");
-                            return;
-                        }
-                        else if (TxtZamienDaneNoweHaslo.Password.Contains(" "))
-                        {
-                            MessageBox.Show("Hasło nie może zawierać spacji");
-                            return;
-                        }
-                        bool isspecjal = false;
-                        string specialCh = @"%!@#$%^&*()?/>.<,:;'\|}]{[_~`+=-" + "\"";
-                        char[] specialChh = specialCh.ToCharArray();
-                        foreach (char ch in specialChh)
-                        {
-                            if (TxtZamienDaneNoweHaslo.Password.Contains(ch))
-                            {
-                                isspecjal = true;
-                            }
-
-                        }
-                        if (!isspecjal)
-                        {
-                            MessageBox.Show("Hasło musi zawierać znak specjalny");
-                            return;
-                        }
-                        sQLconnection.ZmienHasloUzytkownika(TxtZamienDaneNoweHaslo.Password, id_uzytkownika);
-                        MessageBox.Show("Hasło zostało zmienione!");
+                        
                     }
                 }
                 else
@@ -247,7 +220,49 @@ namespace Firma_kurierska
                 }
             }
         }
+        private void ShowPassword_Checked(object sender, RoutedEventArgs e)
+        {
+            TxtZmienDaneStareHasloTekst.Text = TxtZmienDaneStareHaslo.Password;
+            TxtZmienDaneStareHaslo.Visibility = Visibility.Collapsed;
+            TxtZmienDaneStareHasloTekst.Visibility = Visibility.Visible;
 
+            TxtZamienDaneNoweHasloTekst.Text = TxtZamienDaneNoweHaslo.Password;
+            TxtZamienDaneNoweHaslo.Visibility = Visibility.Collapsed;
+            TxtZamienDaneNoweHasloTekst.Visibility = Visibility.Visible;
+
+            TxtZmienDaneNoweHaslo2Tekst.Text = TxtZmienDaneNoweHaslo2.Password;
+            TxtZmienDaneNoweHaslo2.Visibility = Visibility.Collapsed;
+            TxtZmienDaneNoweHaslo2Tekst.Visibility = Visibility.Visible;
+        }
+
+        private void ShowPassword_Unchecked(object sender, RoutedEventArgs e)
+        {
+            TxtZmienDaneStareHaslo.Password = TxtZmienDaneStareHasloTekst.Text;
+            TxtZmienDaneStareHasloTekst.Visibility = Visibility.Collapsed;
+            TxtZmienDaneStareHaslo.Visibility = Visibility.Visible;
+
+            TxtZamienDaneNoweHaslo.Password = TxtZamienDaneNoweHasloTekst.Text;
+            TxtZamienDaneNoweHasloTekst.Visibility = Visibility.Collapsed;
+            TxtZamienDaneNoweHaslo.Visibility = Visibility.Visible;
+
+            TxtZmienDaneNoweHaslo2.Password = TxtZmienDaneNoweHaslo2Tekst.Text;
+            TxtZmienDaneNoweHaslo2Tekst.Visibility = Visibility.Collapsed;
+            TxtZmienDaneNoweHaslo2.Visibility = Visibility.Visible;
+        }
+        private void CzyscHaslo()
+        {
+            TxtZamienDaneNoweHaslo.Password = "";
+            TxtZmienDaneNoweHaslo2.Password = "";
+            TxtZmienDaneStareHaslo.Password = "";
+
+            TxtZmienDaneStareHasloTekst.Text = "";
+            TxtZmienDaneNoweHaslo2Tekst.Text = "";
+            TxtZamienDaneNoweHasloTekst.Text = "";
+        }
+        private void BtnZmienDaneWyczysc_Click(object sender, RoutedEventArgs e)
+        {
+            CzyscHaslo();
+        }
         #endregion
 
 
@@ -385,9 +400,11 @@ namespace Firma_kurierska
                     tbx_prac_nazwisko.Text = rowView.Row[2].ToString();
                     tbx_prac_login.Text = rowView.Row[3].ToString();
                     cbx_stanowisko.Text = rowView.Row[4].ToString();
-                    tbx_prac_haslo.Text = rowView.Row[5].ToString();
-                    tbx_prac_haslo.Text = "";
-                    tbx_prac_haslo2.Text = "";
+                    tbx_prac_haslo.Password = rowView.Row[5].ToString();
+                    tbx_prac_haslo.Password = "";
+                    tbx_prac_haslo2.Password = "";
+                    tbx_prac_hasloTekst.Text = "";
+                    tbx_prac_haslo2Tekst.Text = "";
                     lbxHaslo.Content = "Podaj nowe hasło:";
 
 
@@ -402,14 +419,16 @@ namespace Firma_kurierska
         private void Btn_czysc_Click(object sender, RoutedEventArgs e)
         {
             Helper helper = new Helper();
-            TextBox[] textBoxes = new TextBox[5];
+            TextBox[] textBoxes = new TextBox[3];
             textBoxes[0] = tbx_prac_imie;
             textBoxes[1] = tbx_prac_nazwisko;
             textBoxes[2] = tbx_prac_login;
-            textBoxes[3] = tbx_prac_haslo;
-            textBoxes[4] = tbx_prac_haslo2;
             helper.WyczyscFormatke(textBoxes);
             cbx_stanowisko.Text = "";
+            tbx_prac_haslo.Password = "";
+            tbx_prac_haslo2.Password = "";
+            tbx_prac_hasloTekst.Text = "";
+            tbx_prac_haslo2Tekst.Text = "";
             lbxHaslo.Content = "Hasło:";
         }
 
@@ -420,10 +439,12 @@ namespace Firma_kurierska
             tbx_prac_haslo2.Visibility = Visibility.Visible;
             lbxHaslo.Visibility = Visibility.Visible;
             lbxHaslo2.Visibility = Visibility.Visible;
-            if (tbx_prac_haslo.Text.Length > 0)
+            if (tbx_prac_haslo.Password.Length > 0)
             {
-                tbx_prac_haslo.Text = "";
-                tbx_prac_haslo2.Text = "";
+                tbx_prac_haslo.Password = "";
+                tbx_prac_haslo2.Password = "";
+                tbx_prac_hasloTekst.Text = "";
+                tbx_prac_haslo2Tekst.Text = "";
                 lbxHaslo.Content = "Podaj nowe hasło:";
             }
         }
@@ -440,24 +461,46 @@ namespace Firma_kurierska
         private void BtnPracownicyDodaj_Click(object sender, RoutedEventArgs e)
         {
             Helper helper = new Helper();
+            SQLconnection sQLconnection = new SQLconnection();
+            if (tbx_prac_imie.Text.Length < 3 || tbx_prac_nazwisko.Text.Length < 3 ||  tbx_prac_login.Text.Length < 3 || cbx_stanowisko.Text.Length < 1)
+            {
+                MessageBox.Show("Uzupełnij dane.");
+                return;
+            }
+            
+      
+            if (sQLconnection.sprawdz_login(tbx_prac_login.Text) == false)
+           {
+                MessageBox.Show("Login zajęty");
+                return;
+
+            }
+            bool hasloDodane = chbx_dodajHaslo.IsChecked ?? false;
+            if (hasloDodane)
+            {
+                helper.SprawdzHaslo(tbx_prac_haslo.Password);
+            }
+            
             string[] pracownik = new string[5];
             pracownik[0] = tbx_prac_imie.Text;
             pracownik[1] = tbx_prac_nazwisko.Text;
             pracownik[2] = tbx_prac_login.Text;
-            pracownik[3] = tbx_prac_haslo.Text;
+            pracownik[3] = tbx_prac_haslo.Password;
             pracownik[4] = cbx_stanowisko.SelectedValue.ToString();
-            SQLconnection sQLconnection = new SQLconnection();
+            
             sQLconnection.DodajPracownika(pracownik);
             sQLconnection.WyswietlPracownikow(dgv_pracownicy);
 
-            TextBox[] textBoxes = new TextBox[5];
+            TextBox[] textBoxes = new TextBox[3];
             textBoxes[0] = tbx_prac_imie;
             textBoxes[1] = tbx_prac_nazwisko;
             textBoxes[2] = tbx_prac_login;
-            textBoxes[3] = tbx_prac_haslo;
-            textBoxes[4] = tbx_prac_haslo2;
             helper.WyczyscFormatke(textBoxes);
             cbx_stanowisko.Text = "";
+            tbx_prac_haslo.Password = "";
+            tbx_prac_haslo2.Password = "";
+            tbx_prac_hasloTekst.Text = "";
+            tbx_prac_haslo2Tekst.Text = "";
             lbxHaslo.Content = "Hasło:";
 
         }
@@ -473,15 +516,17 @@ namespace Firma_kurierska
             textBoxes[0] = tbx_prac_imie;
             textBoxes[1] = tbx_prac_nazwisko;
             textBoxes[2] = tbx_prac_login;
-            textBoxes[3] = tbx_prac_haslo;
-            textBoxes[4] = tbx_prac_haslo2;
             helper.WyczyscFormatke(textBoxes);
+            tbx_prac_haslo.Password = "";
+            tbx_prac_haslo2.Password = "";
+            tbx_prac_hasloTekst.Text = "";
+            tbx_prac_haslo2Tekst.Text = "";
             cbx_stanowisko.Text = "";
             lbxHaslo.Content = "Hasło:";
 
 
         }
-        #endregion
+        
 
         private void BtnPracownicyEdytuj_Click(object sender, RoutedEventArgs e)
         {
@@ -490,7 +535,7 @@ namespace Firma_kurierska
             pracownik[0] = tbx_prac_imie.Text;
             pracownik[1] = tbx_prac_nazwisko.Text;
             pracownik[2] = tbx_prac_login.Text;
-            pracownik[3] = tbx_prac_haslo.Text;
+            pracownik[3] = tbx_prac_haslo.Password;
             pracownik[4] = cbx_stanowisko.SelectedValue.ToString();
             SQLconnection sQLconnection = new SQLconnection();
             sQLconnection.EdytujPracownika(id_pracownika, pracownik);
@@ -500,9 +545,11 @@ namespace Firma_kurierska
             textBoxes[0] = tbx_prac_imie;
             textBoxes[1] = tbx_prac_nazwisko;
             textBoxes[2] = tbx_prac_login;
-            textBoxes[3] = tbx_prac_haslo;
-            textBoxes[4] = tbx_prac_haslo2;
             helper.WyczyscFormatke(textBoxes);
+            tbx_prac_haslo.Password = "";
+            tbx_prac_haslo2.Password = "";
+            tbx_prac_hasloTekst.Text = "";
+            tbx_prac_haslo2Tekst.Text = "";
             cbx_stanowisko.Text = "";
             lbxHaslo.Content = "Hasło:";
         }
@@ -517,35 +564,8 @@ namespace Firma_kurierska
             lbxHaslo.Visibility = Visibility.Hidden;
             lbxHaslo2.Visibility = Visibility.Hidden;
         }
+        #endregion
 
-        private void ShowPassword_Checked(object sender, RoutedEventArgs e)
-        {
-            TxtZmienDaneStareHasloTekst.Text = TxtZmienDaneStareHaslo.Password;
-            TxtZmienDaneStareHaslo.Visibility = Visibility.Collapsed;
-            TxtZmienDaneStareHasloTekst.Visibility = Visibility.Visible;
-
-            TxtZamienDaneNoweHasloTekst.Text = TxtZamienDaneNoweHaslo.Password;
-            TxtZamienDaneNoweHaslo.Visibility = Visibility.Collapsed;
-            TxtZamienDaneNoweHasloTekst.Visibility = Visibility.Visible;
-
-            TxtZmienDaneNoweHaslo2Tekst.Text = TxtZmienDaneNoweHaslo2.Password;
-            TxtZmienDaneNoweHaslo2.Visibility = Visibility.Collapsed;
-            TxtZmienDaneNoweHaslo2Tekst.Visibility = Visibility.Visible;
-        }
-
-        private void ShowPassword_Unchecked(object sender, RoutedEventArgs e)
-        {
-            TxtZmienDaneStareHaslo.Password = TxtZmienDaneStareHasloTekst.Text;
-            TxtZmienDaneStareHasloTekst.Visibility = Visibility.Collapsed;
-            TxtZmienDaneStareHaslo.Visibility = Visibility.Visible;
-
-            TxtZamienDaneNoweHaslo.Password = TxtZamienDaneNoweHasloTekst.Text;
-            TxtZamienDaneNoweHasloTekst.Visibility = Visibility.Collapsed;
-            TxtZamienDaneNoweHaslo.Visibility = Visibility.Visible;
-
-            TxtZmienDaneNoweHaslo2.Password = TxtZmienDaneNoweHaslo2Tekst.Text;
-            TxtZmienDaneNoweHaslo2Tekst.Visibility = Visibility.Collapsed;
-            TxtZmienDaneNoweHaslo2.Visibility = Visibility.Visible;
-        }
+        
     }
 }

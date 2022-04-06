@@ -18,70 +18,16 @@ namespace Firma_kurierska.Class
 
 
         private const string conect = "datasource=sql11.freesqldatabase.com ; port=3306; username=sql11479040; password=TFWPBFQEvA; database=sql11479040";
-        private MySqlConnection connection;
-        private string server;
-        private string database;
-        private string uid;
-        private string password;
-
-        public SQLconnection()
-        {
-            Initialize();
-        }
-
-        private void Initialize()
-        {
-            server = "sql11.freesqldatabase.com";
-            database = "sql11479040";
-            uid = "sql11479040";
-            password = "TFWPBFQEvA";
-            string connectionString;
-            connectionString = "SERVER=" + server + ";" + "DATABASE=" +
-            database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
-
-            connection = new MySqlConnection(connectionString);
-        }
-
-
-
-        private bool OpenConnection()
-        {
-            try
-            {
-                connection.Open();
-                return true;
-            }
-            catch (MySqlException ex)
-            {
-
-                Console.WriteLine(ex);
-                return false;
-            }
-        }
-
-        private bool CloseConnection()
-        {
-            try
-            {
-                connection.Close();
-                return true;
-            }
-            catch (MySqlException ex)
-            {
-                Console.WriteLine(ex);
-                return false;
-            }
-        }
-        
         public int[] Sprawdz_uzytkownika(string login, string haslo)
         {
             int[] dane = new int[2];
-            MySqlCommand nowe = new MySqlCommand("SELECT PRC_id ,PRC_STN_id  FROM sql11479040.Pracownicy WHERE PRC_login='" + login + "' AND PRC_haslo=md5('" + haslo + "');", connection);
+            MySqlConnection myconnection = new MySqlConnection(conect);
+            MySqlCommand nowe = new MySqlCommand("SELECT PRC_id ,PRC_STN_id  FROM sql11479040.Pracownicy WHERE PRC_login='" + login + "' AND PRC_haslo=md5('" + haslo + "');", myconnection);
             MySqlDataReader dd;
             int id;
             try
             {
-                OpenConnection();
+                myconnection.Open();
                 dd = nowe.ExecuteReader();
                 if (dd.Read())
                 {
@@ -93,7 +39,7 @@ namespace Firma_kurierska.Class
                     id = 0;
                 }
                 dd.Close();
-                CloseConnection();
+                myconnection.Close();
             }
             catch (Exception e)
             {
@@ -443,9 +389,6 @@ namespace Firma_kurierska.Class
 
         #endregion
 
-
-
-
         #region ZmianaHasla
 
         public bool SprawdzPoprzednieHaslo(string stareHaslo, int id_pracownika)
@@ -536,7 +479,41 @@ namespace Firma_kurierska.Class
             return szyfrowaneHaslo;
 
         }
+        public bool sprawdz_login(string login)
+        {
+            MySqlConnection mySqlConnection = new MySqlConnection(conect);
+            MySqlCommand nowe = new MySqlCommand("SELECT Count(PRC_id) FROM Pracownicy WHERE PRC_login='" + login + "';", mySqlConnection);
+            MySqlDataReader dr;
 
+            mySqlConnection.Open();
+            dr = nowe.ExecuteReader();
+
+            if (dr.Read())
+            {
+                int check = dr.GetInt32(0);
+
+                if (check == 0)
+                {
+                    mySqlConnection.Close();
+                    return true;
+                }
+                else
+                {
+                    mySqlConnection.Close();
+                    return false;
+                }
+
+            }
+            else
+            {
+                mySqlConnection.Close();
+                return false;
+
+            }
+
+
+
+        }
 
 
 

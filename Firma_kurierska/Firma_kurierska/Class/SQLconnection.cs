@@ -16,6 +16,7 @@ namespace Firma_kurierska.Class
     class SQLconnection
     {
         private static int id_zamowienia;
+        
 
         private const string conect = "datasource=sql11.freesqldatabase.com ; port=3306; username=sql11479040; password=TFWPBFQEvA; database=sql11479040";
         public int[] Sprawdz_uzytkownika(string login, string haslo)
@@ -676,12 +677,6 @@ namespace Firma_kurierska.Class
                 DataTable dataTable = new DataTable();
                 BindingSource zrodlo = new BindingSource();
 
-                
-                
-
-
-                
-                
                     myconnection.Open();
                     adapter.SelectCommand = cmd;
                     adapter.Fill(dataTable);
@@ -689,9 +684,6 @@ namespace Firma_kurierska.Class
                     dataGrid.ItemsSource = zrodlo;
                     
                      myconnection.Close();
-               
-                
-               
 
             }
             catch (Exception e)
@@ -701,6 +693,7 @@ namespace Firma_kurierska.Class
 
 
         }
+
         public void WypLnijstatusZamowienia(System.Windows.Controls.ComboBox comboBox) 
         {
             MySqlConnection myconnection = new MySqlConnection(conect);
@@ -724,50 +717,86 @@ namespace Firma_kurierska.Class
 
         }
 
-
-
-        public void UaktualinijPaczki(string miasto, string ulica, string nrUlicy,string lokal, int id_kuriera,int id_paczki,int id_statusu) 
+        public int SprawdzAdres(string miasto, string ulica, string nrUlicy, string lokal)
         {
-
-            MySqlConnection myconnection = new MySqlConnection(conect);
-            MySqlCommand cmd = myconnection.CreateCommand();
-            MySqlTransaction transaction;
-            MySqlCommand cmd1 = new MySqlCommand("Select ADR_id from Adres where ADR_miasto='" + miasto + "' and ADR_ulica='" + ulica + "' and ADR_nr_ulicy='" + nrUlicy + "' and ADR_nr_lok='" + lokal + "';",myconnection);
-
-            cmd.Parameters.AddWithValue("@ADRMiasto", miasto);
-            cmd.Parameters.AddWithValue("@ADRulica",ulica );
-            cmd.Parameters.AddWithValue("@ADRnrUlicy",nrUlicy );
-            cmd.Parameters.AddWithValue("@ADRLokal", lokal );
-
-
-
-            myconnection.Open();
-            transaction = myconnection.BeginTransaction(IsolationLevel.ReadCommitted);
-            cmd.Connection = myconnection;
-            cmd.Transaction = transaction;
+            int idAdr = 0;
             
+            MySqlConnection myconnection = new MySqlConnection(conect);
+            MySqlCommand nowe = new MySqlCommand("Select ADR_id from Adres where ADR_miasto = '" + miasto + "' AND ADR_ulica = '" + ulica + "' AND ADR_nr_ulicy='" + nrUlicy + "' AND ADR_nr_lok='" + lokal + "';", myconnection);
+            MySqlDataReader dd;
 
             try
             {
+                myconnection.Open();
+                dd = nowe.ExecuteReader();
+                if (dd.Read())
+                {
+                    idAdr = dd.GetInt32(0);
 
-                
-
-
-                cmd.CommandText = "Insert ignore into Adres set ADR_miasto=@ADRMiasto , ADR_ulica=@ADRulica , ADR_nr_ulicy=@ADRnrUlicy, ADR_nr_lok=@ADRLokal;";
-                cmd.ExecuteNonQuery();
-                
-                cmd.CommandText = "Update Paczka set PCK_rodzaj_id='"+id_statusu+ "' , PCK_adr_id= , PCK_kurier_id='" + id_kuriera+"' where PCK_id ='"+id_paczki+"' ; ";
-                cmd.ExecuteNonQuery();
-
-
-                transaction.Commit();
+                }
+                else
+                {
+                    idAdr = 0;
+                }
+                dd.Close();
+                myconnection.Close();
             }
             catch (Exception e)
             {
                 System.Windows.MessageBox.Show(e.Message);
-                transaction.Rollback();
             }
-            myconnection.Close();
+            return idAdr;
+        }
+
+        public void UaktualinijPaczki(string miasto, string ulica, string nrUlicy,string lokal, int id_kuriera,int id_paczki,int id_statusu) 
+        {
+            MySqlConnection myconnection = new MySqlConnection(conect);
+            MySqlDataAdapter adapter = new MySqlDataAdapter();
+            MySqlCommand cmd;
+            if (SprawdzAdres(miasto, ulica, nrUlicy, lokal) == 0)
+            {
+                MySqlCommand cmd1 = new MySqlCommand("Insert into Adres set ADR_miasto=@ADRMiasto , ADR_ulica=@ADRUlica , ADR_nr_ulicy=@ADRNrUlica , ADR_nr_lok=@ADRLokal ");
+                cmd1.Parameters.AddWithValue("@ADRMiasto", miasto);
+                cmd1.Parameters.AddWithValue("@ADRUlica", ulica);
+                cmd1.Parameters.AddWithValue("@ADRNrUlica", nrUlicy);
+                cmd1.Parameters.AddWithValue("@ADRLokal", lokal);
+                try
+                {
+                    myconnection.Open();
+                    adapter.InsertCommand = cmd1;
+                    adapter.InsertCommand.Connection = myconnection;
+                    adapter.InsertCommand.ExecuteNonQuery();
+                    myconnection.Close();
+                }
+                catch (Exception e)
+                {
+                    System.Windows.MessageBox.Show(e.Message);
+                }
+            }
+            
+                int idADR = SprawdzAdres(miasto, ulica, nrUlicy, lokal);
+                cmd = new MySqlCommand("Update Paczka set  PCK_rodzaj_id=@PCK_rodzaj, PCK_adr_id=@PCK_adr_id , PCK_kurier_id=@PCK_kurier_id  where PCK_id=@id;");
+                cmd.Parameters.AddWithValue("@PCK_adr_id", idADR);
+                cmd.Parameters.AddWithValue("@PCK_rodzaj", id_statusu);
+                cmd.Parameters.AddWithValue("@PCK_kurier_id", id_kuriera);
+                cmd.Parameters.AddWithValue("@id", id_paczki);
+
+
+
+
+                try
+                {
+                    myconnection.Open();
+                    adapter.InsertCommand = cmd;
+                    adapter.InsertCommand.Connection = myconnection;
+                    adapter.InsertCommand.ExecuteNonQuery();
+                    myconnection.Close();
+                }
+                catch (Exception e)
+                {
+                    System.Windows.MessageBox.Show(e.Message);
+                }
+            
 
 
 
@@ -917,13 +946,14 @@ namespace Firma_kurierska.Class
 
         public void EdytujPracownika(int id_pracownika, string[] dane)
         {
+            Helper helper = new Helper();
             MySqlConnection myconnection = new MySqlConnection(conect);
             MySqlDataAdapter adapter = new MySqlDataAdapter();
             MySqlCommand cmd = new MySqlCommand("Update Pracownicy set PRC_imie=@PRC_imie , PRC_nazwisko=@PRC_nazwisko , PRC_login=@PRC_login , PRC_STN_id=@PRC_stanowisko , PRC_haslo=@PRC_haslo where PRC_id=@id;");
             cmd.Parameters.AddWithValue("@PRC_imie", dane[0]);
             cmd.Parameters.AddWithValue("@PRC_nazwisko", dane[1]);
             cmd.Parameters.AddWithValue("@PRC_login", dane[2]);
-            cmd.Parameters.AddWithValue("@PRC_haslo", dane[3]);
+            cmd.Parameters.AddWithValue("@PRC_haslo", Szyfruj(dane[3]));
             cmd.Parameters.AddWithValue("@PRC_stanowisko", dane[4]);
             cmd.Parameters.AddWithValue("@id", id_pracownika);
 
@@ -941,6 +971,33 @@ namespace Firma_kurierska.Class
                 System.Windows.MessageBox.Show(e.Message);
             }
         }
+        public void EdytujPracownikaBezHasla(int id_pracownika, string[] dane)
+        {
+            Helper helper = new Helper();
+            MySqlConnection myconnection = new MySqlConnection(conect);
+            MySqlDataAdapter adapter = new MySqlDataAdapter();
+            MySqlCommand cmd = new MySqlCommand("Update Pracownicy set PRC_imie=@PRC_imie , PRC_nazwisko=@PRC_nazwisko , PRC_login=@PRC_login , PRC_STN_id=@PRC_stanowisko where PRC_id=@id;");
+            cmd.Parameters.AddWithValue("@PRC_imie", dane[0]);
+            cmd.Parameters.AddWithValue("@PRC_nazwisko", dane[1]);
+            cmd.Parameters.AddWithValue("@PRC_login", dane[2]);
+            cmd.Parameters.AddWithValue("@PRC_stanowisko", dane[4]);
+            cmd.Parameters.AddWithValue("@id", id_pracownika);
+
+
+            try
+            {
+                myconnection.Open();
+                adapter.InsertCommand = cmd;
+                adapter.InsertCommand.Connection = myconnection;
+                adapter.InsertCommand.ExecuteNonQuery();
+                myconnection.Close();
+            }
+            catch (Exception e)
+            {
+                System.Windows.MessageBox.Show(e.Message);
+            }
+        }
+
         #endregion
 
     }

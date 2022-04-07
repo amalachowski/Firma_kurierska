@@ -60,9 +60,9 @@
                                     <materialDesign:DataGridTextColumn Header="Imie" Binding="{Binding KL_imie}" IsReadOnly="True"/>
                                     <materialDesign:DataGridTextColumn Header="Nazwisko" Binding="{Binding KL_nazwisko}" IsReadOnly="True"/>
                                     <materialDesign:DataGridTextColumn Header="Miasto" Binding="{Binding ADR_miasto}" IsReadOnly="True"/>
-                                    <materialDesign:DataGridTextColumn Header="ulica" Binding="{Binding ADR_ulica}" IsReadOnly="True"/>
-                                    <materialDesign:DataGridTextColumn Header="NR ulicy" Binding="{Binding ADR_nr_ulicy}" IsReadOnly="True"/>
-                                    <materialDesign:DataGridTextColumn Header="nr lokalu" Binding="{Binding ADR_nr_lok}" IsReadOnly="True"/>
+                                    <materialDesign:DataGridTextColumn Header="Ulica" Binding="{Binding ADR_ulica}" IsReadOnly="True"/>
+                                    <materialDesign:DataGridTextColumn Header="Nr ulicy" Binding="{Binding ADR_nr_ulicy}" IsReadOnly="True"/>
+                                    <materialDesign:DataGridTextColumn Header="Nr lokalu" Binding="{Binding ADR_nr_lok}" IsReadOnly="True"/>
                                     <materialDesign:DataGridTextColumn Header="Telefon" Binding="{Binding KL_telefon}" IsReadOnly="True"/>
                                     <materialDesign:DataGridTextColumn Header="Email" Binding="{Binding KL_email}" IsReadOnly="True"/>
                                     <materialDesign1:DataGridCheckBoxColumn Header="VIP" Binding="{Binding KL_VIP}"   IsReadOnly="True"/>
@@ -106,11 +106,11 @@
                                 <TextBox  x:Name="TxtKlienciNazwisko" Grid.Column="1" Grid.Row="1" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" ></TextBox>
                                 <Label Grid.Row="2" Content="Miasto: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" ></Label>
                                 <TextBox x:Name="TxtKlienciMiasto" Grid.Column="1" Grid.Row="2" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" ></TextBox>
-                                <Label Grid.Row="3" Content="ulica: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" ></Label>
+                                <Label Grid.Row="3" Content="Ulica: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" ></Label>
                                 <TextBox x:Name="TxtKlieciUlica" Grid.Column="1" Grid.Row="3" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" ></TextBox>
-                                <Label Grid.Row="4" Content="nr ulicy: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" ></Label>
+                                <Label Grid.Row="4" Content="Nr ulicy: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" ></Label>
                                 <TextBox x:Name="TxtKlienciNRUlica" Grid.Column="1" Grid.Row="4" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" ></TextBox>
-                                <Label Grid.Row="5" Content="numer lokalu: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" ></Label>
+                                <Label Grid.Row="5" Content="Nr lokalu: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" ></Label>
                                 <TextBox x:Name="TxtKlienciLokal" Grid.Column="1" Grid.Row="5" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" ></TextBox>
                                 <Label Grid.Row="6" Content="Telefon: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" ></Label>
                                 <TextBox x:Name="TxtKlienciTelefon" Grid.Column="1" Grid.Row="6" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" ></TextBox>
@@ -201,7 +201,7 @@
 
 
                 </TabItem>
-                <TabItem x:Name="TabItemPracownicy" Style="{StaticResource MaterialDesignNavigationRailTabItem}" Width="100" Loaded="TabItemPracownicy_Loaded">
+                <TabItem x:Name="TabItemPracownicy" Style="{StaticResource MaterialDesignNavigationRailTabItem}" Width="100" Loaded="TabItemPracownicy_Loaded" HorizontalAlignment="Left">
                     <TabItem.Header >
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                             <materialDesign:PackIcon Kind="Worker" Height="40" Width="40" HorizontalAlignment="Center" />
@@ -240,7 +240,7 @@
                         </StackPanel>
                         <StackPanel Margin="30,20,0,20" Grid.Column="1" Width="500" Background="{DynamicResource MaterialDesignLightBackground}" Grid.RowSpan="2" HorizontalAlignment="Left" >
                             <materialDesign:ColorZone Padding="15"  Mode="PrimaryMid" Effect="{DynamicResource MaterialDesignShadowDepth2}" >
-                                <TextBlock Text="Opcje" HorizontalAlignment="Center"    FontSize="30" ></TextBlock>
+                                <TextBlock Text="Opcje" HorizontalAlignment="Center"    FontSize="30" />
                             </materialDesign:ColorZone>
                             <Grid Margin="0,15,0,0">
                                 <Grid.ColumnDefinitions>
@@ -261,37 +261,39 @@
 
 
                                 </Grid.RowDefinitions>
-                                <Label Content="Imię: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom"  Width="56"></Label>
-                                <TextBox x:Name="tbx_prac_imie" Grid.Column="1" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" ></TextBox>
-                                <Label Grid.Row="1" Content="Nazwisko: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" ></Label>
-                                <TextBox x:Name="tbx_prac_nazwisko" Grid.Column="1" Grid.Row="1" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" ></TextBox>
-                                <Label Grid.Row="2" Content="Login: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" ></Label>
-                                <TextBox x:Name="tbx_prac_login" Grid.Column="1" Grid.Row="2" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" ></TextBox>
-                                <Label Grid.Row="3" Content="Stanowisko: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" ></Label>
-                                <Label   Grid.Row="6" Content="Hasło: " Name="lbxHaslo" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,10" ></Label>
+                                <Label Content="Imię: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom"  Width="56"/>
+                                <TextBox x:Name="tbx_prac_imie" Grid.Column="1" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" />
+                                <Label Grid.Row="1" Content="Nazwisko: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" />
+                                <TextBox x:Name="tbx_prac_nazwisko" Grid.Column="1" Grid.Row="1" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" />
+                                <Label Grid.Row="2" Content="Login: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" />
+                                <TextBox x:Name="tbx_prac_login" Grid.Column="1" Grid.Row="2" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" />
+                                <Label Grid.Row="3" Content="Stanowisko: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" />
+                                <Label   Grid.Row="6" Content="Hasło: " x:Name="lbxHaslo" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,10" />
                                 <Grid Grid.Row="6" MaxWidth="250" VerticalAlignment="Bottom" Margin="136,0,10,13" Grid.ColumnSpan="2">
-                                    <PasswordBox Name="tbx_prac_haslo" PasswordChar="*" FontSize="15" />
-                                    <TextBox Name="tbx_prac_hasloTekst" Visibility="Collapsed" FontSize="15" />
+                                    <PasswordBox x:Name="tbx_prac_haslo" PasswordChar="*" FontSize="15" />
+                                    <TextBox x:Name="tbx_prac_hasloTekst" Visibility="Collapsed" FontSize="15" />
                                 </Grid>
-                                <Label   Grid.Row="7" Name="lbxHaslo2" Content="Powtórz hasło: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,10" ></Label>
+                                <Label   Grid.Row="7" x:Name="lbxHaslo2" Content="Powtórz hasło: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,10" />
                                 <Grid Grid.Row="7" MaxWidth="250" VerticalAlignment="Bottom" Margin="136,0,10,10" Grid.ColumnSpan="2">
-                                    <PasswordBox Name="tbx_prac_haslo2" PasswordChar="*" FontSize="15" />
-                                    <TextBox Name="tbx_prac_haslo2Tekst" Visibility="Collapsed" FontSize="15" />
+                                    <PasswordBox x:Name="tbx_prac_haslo2" PasswordChar="*" FontSize="15" />
+                                    <TextBox x:Name="tbx_prac_haslo2Tekst" Visibility="Collapsed" FontSize="15" />
                                 </Grid>
                                 <ComboBox x:Name="cbx_stanowisko" Grid.Column="1" DisplayMemberPath="STN_stanowisko" SelectedValuePath="STN_id" HorizontalAlignment="Left" Margin="55,13,0,0" Grid.Row="3" VerticalAlignment="Top" Width="250" RenderTransformOrigin="0.504,0.32" Height="27"/>
                                 <Button x:Name="btn_czysc" Content="Wyczyść" Height="32" Margin="186,21,39,27" Grid.Row="4" Width="130" Click="Btn_czysc_Click" Grid.Column="1" Grid.RowSpan="2"/>
                                 <Button x:Name="BtinPracownicyWyszukaj" Content="Wyszukaj" Width="130" Margin="32,21,193,27" Click="BtinPracownicyWyszukaj_Click" Grid.Column="1" Height="Auto" Grid.Row="4" Grid.RowSpan="2"/>
-                                <CheckBox Name="chbx_dodajHaslo"  Content="Dodaj lub edytuj hasło" Margin="37,13,301,9" Grid.ColumnSpan="2" Grid.Row="5" RenderTransformOrigin="0.369,0.667" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
+                                <CheckBox x:Name="chbx_dodajHaslo"  Content="Dodaj lub edytuj hasło" Margin="37,13,301,9" Grid.ColumnSpan="2" Grid.Row="5" RenderTransformOrigin="0.369,0.667" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
                             </Grid>
+                            <Label x:Name="lbl_hasloWal" Visibility="Hidden" FontSize="8" Content="Hasło musi mieć od 8 do 14 znaków, conajmniej jedną wielką literę i conajmniej jeden znak specjalny." Height="17" Margin="82,0,0,0"/>
+                            <CheckBox x:Name="chbx_pokaz_Copy" Visibility="Hidden" Content="Pokaż hasła." Height="27" Margin="366,0,0,0" Unchecked="ShowPasswordPRC_Unchecked"  Checked="ShowPasswordPRC_Checked"/>
                             <Grid Margin="0,60,0,0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Button Content="Dodaj" Name="BtnPracownicyDodaj" Grid.Column="0" Width="130" Click="BtnPracownicyDodaj_Click"></Button>
-                                <Button Content="Usuń" Name="BtnPracownicyUsun" Grid.Column="1" Width="130" Click="BtnPracownicyUsun_Click"></Button>
-                                <Button Content="Edytuj" Name="BtnPracownicyEdytuj" Grid.Column="2" Width="130" Click="BtnPracownicyEdytuj_Click"></Button>
+                                <Button Content="Dodaj" x:Name="BtnPracownicyDodaj" Grid.Column="0" Width="130" Click="BtnPracownicyDodaj_Click"/>
+                                <Button Content="Usuń" x:Name="BtnPracownicyUsun" Grid.Column="1" Width="130" Click="BtnPracownicyUsun_Click"/>
+                                <Button Content="Edytuj" x:Name="BtnPracownicyEdytuj" Grid.Column="2" Width="130" Click="BtnPracownicyEdytuj_Click"/>
 
 
                             </Grid>
@@ -391,7 +393,7 @@
                                 <RowDefinition Height="40"/>
 
                             </Grid.RowDefinitions>
-                            
+
                             <Label Content="Aktualne haslo: " Grid.Column="0" Grid.Row="0" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="26"  ></Label>
                             <Grid Grid.Row="0" Grid.Column="1" Width="200" HorizontalAlignment="Left" VerticalAlignment="Bottom"  Height="27" AutomationProperties.IsRequiredForForm="True">
                                 <PasswordBox Name="TxtZmienDaneStareHaslo" PasswordChar="*" FontSize="15" />
@@ -407,7 +409,7 @@
                                 <PasswordBox  Name="TxtZmienDaneNoweHaslo2" PasswordChar="*" FontSize="15"  />
                                 <TextBox Name="TxtZmienDaneNoweHaslo2Tekst" Visibility="Collapsed" FontSize="15" />
                             </Grid>
-                            </Grid>
+                        </Grid>
                         <CheckBox Name="chbx_pokaz" Content="Pokaż hasła." Height="48" Margin="366,0,0,0" Unchecked="ShowPassword_Unchecked"  Checked="ShowPassword_Checked"/>
                         <Grid Margin="0,70,0,0" VerticalAlignment="Bottom">
                             <Grid.ColumnDefinitions>

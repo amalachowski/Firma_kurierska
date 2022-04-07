@@ -15,7 +15,7 @@ namespace Firma_kurierska.Class
 {
     class SQLconnection
     {
-        private int id_zamowienia;
+        private static int id_zamowienia;
 
         private const string conect = "datasource=sql11.freesqldatabase.com ; port=3306; username=sql11479040; password=TFWPBFQEvA; database=sql11479040";
         public int[] Sprawdz_uzytkownika(string login, string haslo)
@@ -568,17 +568,17 @@ namespace Firma_kurierska.Class
             MySqlCommand cmd = new MySqlCommand("insert into Zamówienie set ZAM_klient_id=@Klid , ZAM_status='W trakcie realizacji' ;",myconnection);
             cmd.Parameters.AddWithValue("@KLid", id_Nadawcy);
             MySqlDataReader dd;
-            MySqlCommand cmd1 = new MySqlCommand("Select last_insert_id() ;",myconnection);
+            MySqlCommand cmd1 = new MySqlCommand("Select last_insert_id() from Zamówienie ;",myconnection);
            
 
 
 
 
 
-            myconnection.Open();
+            
             try
             {
-                
+                myconnection.Open();
                 
                 adapter.InsertCommand = cmd;
                 adapter.InsertCommand.Connection = myconnection;
@@ -633,6 +633,144 @@ namespace Firma_kurierska.Class
                 }
 
             }
+
+        }
+
+
+        public void WyswietlZamowienia(System.Windows.Controls.DataGrid dataGrid) 
+        {
+            MySqlConnection myconnection = new MySqlConnection(conect);
+            MySqlCommand cmd = new MySqlCommand("SELECT ZAM_id , ZAM_status, ZAM_klient_id, ZAM_znizka " +
+                " FROM Zamówienie ;", myconnection);
+            try
+            {
+                myconnection.Open();
+                MySqlDataAdapter adapter = new MySqlDataAdapter();
+                adapter.SelectCommand = cmd;
+                DataTable dataTable = new DataTable();
+                adapter.Fill(dataTable);
+                BindingSource zrodlo = new BindingSource();
+                zrodlo.DataSource = dataTable;
+                dataGrid.ItemsSource = zrodlo;
+                myconnection.Close();
+
+            }
+            catch (Exception e)
+            {
+                System.Windows.MessageBox.Show(e.Message);
+            }
+
+        }
+
+        public void WyswietlPaczki(System.Windows.Controls.DataGrid dataGrid) 
+        {
+
+            MySqlConnection myconnection = new MySqlConnection(conect);
+            MySqlCommand cmd = new MySqlCommand("SELECT PCK_id , RPCK_wielkosc, PCK_zamowienie_id, ADR_miasto,ADR_ulica , RPCK_cena "+
+                "FROM Paczka left join Adres on Paczka.PCK_adr_nadawcy_id=Adres.ADR_id left join RodzajPaczki on  Paczka.PCK_rodzaj_id=RodzajPaczki.RPCK_id where PCK_zamowienie_id='"+id_zamowienia +"' ;", myconnection);
+
+            try 
+            {
+                MySqlDataAdapter adapter = new MySqlDataAdapter();
+                
+                DataTable dataTable = new DataTable();
+                BindingSource zrodlo = new BindingSource();
+
+                
+                
+
+
+                
+                
+                    myconnection.Open();
+                    adapter.SelectCommand = cmd;
+                    adapter.Fill(dataTable);
+                    zrodlo.DataSource = dataTable;
+                    dataGrid.ItemsSource = zrodlo;
+                    
+                     myconnection.Close();
+               
+                
+               
+
+            }
+            catch (Exception e)
+            {
+                System.Windows.MessageBox.Show(e.Message);
+            }
+
+
+        }
+        public void WypLnijstatusZamowienia(System.Windows.Controls.ComboBox comboBox) 
+        {
+            MySqlConnection myconnection = new MySqlConnection(conect);
+            MySqlCommand cmd = new MySqlCommand("Select * from RodzajPaczki ;", myconnection);
+            try
+            {
+                myconnection.Open();
+                MySqlDataAdapter adapter = new MySqlDataAdapter();
+                adapter.SelectCommand = cmd;
+                DataTable dataTable = new DataTable();
+                adapter.Fill(dataTable);
+                BindingSource zrodlo = new BindingSource();
+                zrodlo.DataSource = dataTable;
+                comboBox.ItemsSource = zrodlo;
+                myconnection.Close();
+            }
+            catch (Exception e) 
+            {
+                System.Windows.MessageBox.Show(e.Message);
+            }
+
+        }
+
+
+
+        public void UaktualinijPaczki(string miasto, string ulica, string nrUlicy,string lokal, int id_kuriera,int id_paczki,int id_statusu) 
+        {
+
+            MySqlConnection myconnection = new MySqlConnection(conect);
+            MySqlCommand cmd = myconnection.CreateCommand();
+            MySqlTransaction transaction;
+            MySqlCommand cmd1 = new MySqlCommand("Select ADR_id from Adres where ADR_miasto='" + miasto + "' and ADR_ulica='" + ulica + "' and ADR_nr_ulicy='" + nrUlicy + "' and ADR_nr_lok='" + lokal + "';",myconnection);
+
+            cmd.Parameters.AddWithValue("@ADRMiasto", miasto);
+            cmd.Parameters.AddWithValue("@ADRulica",ulica );
+            cmd.Parameters.AddWithValue("@ADRnrUlicy",nrUlicy );
+            cmd.Parameters.AddWithValue("@ADRLokal", lokal );
+
+
+
+            myconnection.Open();
+            transaction = myconnection.BeginTransaction(IsolationLevel.ReadCommitted);
+            cmd.Connection = myconnection;
+            cmd.Transaction = transaction;
+            
+
+            try
+            {
+
+                
+
+
+                cmd.CommandText = "Insert ignore into Adres set ADR_miasto=@ADRMiasto , ADR_ulica=@ADRulica , ADR_nr_ulicy=@ADRnrUlicy, ADR_nr_lok=@ADRLokal;";
+                cmd.ExecuteNonQuery();
+                
+                cmd.CommandText = "Update Paczka set PCK_rodzaj_id='"+id_statusu+ "' , PCK_adr_id= , PCK_kurier_id='" + id_kuriera+"' where PCK_id ='"+id_paczki+"' ; ";
+                cmd.ExecuteNonQuery();
+
+
+                transaction.Commit();
+            }
+            catch (Exception e)
+            {
+                System.Windows.MessageBox.Show(e.Message);
+                transaction.Rollback();
+            }
+            myconnection.Close();
+
+
+
 
         }
     #endregion

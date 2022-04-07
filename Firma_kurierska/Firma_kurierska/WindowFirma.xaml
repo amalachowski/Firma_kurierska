@@ -135,7 +135,7 @@
 
 
                 </TabItem>
-                <TabItem Style="{StaticResource MaterialDesignNavigationRailTabItem}" Width="100" Background="White">
+                <TabItem x:Name="TabItemZamowienie" Style="{StaticResource MaterialDesignNavigationRailTabItem}" Width="100" Background="White" Loaded="TabItemZamowienie_Loaded">
                     <TabItem.Header >
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                             <materialDesign:PackIcon Kind="BoxAdd" Height="40" Width="40" HorizontalAlignment="Center" />
@@ -156,12 +156,12 @@
                                 <ColumnDefinition Width="57*"/>
                             </Grid.ColumnDefinitions>
                             <StackPanel Grid.Row="0" Margin="0,0,15,0" >
-                                <DataGrid x:Name="DGZamowienia" Height="600" Width="400" CanUserAddRows="False" >
+                                <DataGrid x:Name="DGZamowienia" Height="600" Width="400" CanUserAddRows="False" AutoGenerateColumns="False" >
                                     <DataGrid.Columns>
-                                        <materialDesign:DataGridTextColumn Header="ID"  IsReadOnly="True"/>
-                                        <materialDesign:DataGridTextColumn Header="Nadawca"  IsReadOnly="True"/>
-                                        <materialDesign:DataGridTextColumn Header="Status"  IsReadOnly="True"/>
-                                        <materialDesign:DataGridTextColumn Header="Zniżka"  IsReadOnly="True"/>
+                                        <materialDesign:DataGridTextColumn Header="ID" Binding="{Binding ZAM_id}"  IsReadOnly="True"/>
+                                        <materialDesign:DataGridTextColumn Header="Nadawca" Binding="{Binding ZAM_status}"  IsReadOnly="True"/>
+                                        <materialDesign:DataGridTextColumn Header="Status" Binding="{Binding ZAM_klient_id}" IsReadOnly="True"/>
+                                        <materialDesign:DataGridTextColumn Header="Zniżka" Binding="{Binding ZAM_znizka}" IsReadOnly="True"/>
                                         <materialDesign:DataGridTextColumn Header="Wartość Końcowa"  IsReadOnly="True"/>
                                     </DataGrid.Columns>
                                 </DataGrid>

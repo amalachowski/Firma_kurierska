@@ -21,7 +21,7 @@ namespace Firma_kurierska.WindowsZamowienie
     /// </summary>
     public partial class WindowZamowienieKlient : Window
     {
-        private int id_nadawcy;
+        private int id_nadawcy { get; set; }
         static SQLconnection sQLconnection = new SQLconnection();
         Helper Helper = new Helper();
         public WindowZamowienieKlient()
@@ -35,11 +35,11 @@ namespace Firma_kurierska.WindowsZamowienie
         private void BtnZamowienieNadawcaDalej_Click(object sender, RoutedEventArgs e)
         {
             int wybranaIloscPaczek;
-            WindowZamowieniePaczki zamowieniePaczki = new WindowZamowieniePaczki();
+            
             sQLconnection.DodajZamowienie(id_nadawcy);
             wybranaIloscPaczek = (int)CBZamowienieIloscPaczek.SelectedItem;
             sQLconnection.DodajPaczki(wybranaIloscPaczek);
-            
+            WindowZamowieniePaczki zamowieniePaczki = new WindowZamowieniePaczki();
             this.Close();
 
 

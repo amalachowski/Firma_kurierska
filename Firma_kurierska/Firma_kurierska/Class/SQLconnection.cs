@@ -667,8 +667,10 @@ namespace Firma_kurierska.Class
         {
 
             MySqlConnection myconnection = new MySqlConnection(conect);
-            MySqlCommand cmd = new MySqlCommand("SELECT PCK_id , RPCK_wielkosc, PCK_zamowienie_id, ADR_miasto,ADR_ulica , RPCK_cena "+
-                "FROM Paczka left join Adres on Paczka.PCK_adr_nadawcy_id=Adres.ADR_id left join RodzajPaczki on  Paczka.PCK_rodzaj_id=RodzajPaczki.RPCK_id where PCK_zamowienie_id='"+id_zamowienia +"' ;", myconnection);
+            MySqlCommand cmd = new MySqlCommand("SELECT PCK_id , RPCK_wielkosc, PCK_zamowienie_id, ADR_miasto , ADR_ulica , RPCK_cena "+
+                "FROM Paczka"+
+                " left join Adres on Paczka.PCK_adr_id = Adres.ADR_id"+
+                " left join RodzajPaczki on  Paczka.PCK_rodzaj_id = RodzajPaczki.RPCK_id where PCK_zamowienie_id ='"+id_zamowienia+"' ; ", myconnection);
 
             try 
             {

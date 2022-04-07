@@ -697,13 +697,14 @@ namespace Firma_kurierska.Class
 
         public void EdytujPracownika(int id_pracownika, string[] dane)
         {
+            Helper helper = new Helper();
             MySqlConnection myconnection = new MySqlConnection(conect);
             MySqlDataAdapter adapter = new MySqlDataAdapter();
             MySqlCommand cmd = new MySqlCommand("Update Pracownicy set PRC_imie=@PRC_imie , PRC_nazwisko=@PRC_nazwisko , PRC_login=@PRC_login , PRC_STN_id=@PRC_stanowisko , PRC_haslo=@PRC_haslo where PRC_id=@id;");
             cmd.Parameters.AddWithValue("@PRC_imie", dane[0]);
             cmd.Parameters.AddWithValue("@PRC_nazwisko", dane[1]);
             cmd.Parameters.AddWithValue("@PRC_login", dane[2]);
-            cmd.Parameters.AddWithValue("@PRC_haslo", dane[3]);
+            cmd.Parameters.AddWithValue("@PRC_haslo", Szyfruj(dane[3]));
             cmd.Parameters.AddWithValue("@PRC_stanowisko", dane[4]);
             cmd.Parameters.AddWithValue("@id", id_pracownika);
 
@@ -721,6 +722,33 @@ namespace Firma_kurierska.Class
                 System.Windows.MessageBox.Show(e.Message);
             }
         }
+        public void EdytujPracownikaBezHasla(int id_pracownika, string[] dane)
+        {
+            Helper helper = new Helper();
+            MySqlConnection myconnection = new MySqlConnection(conect);
+            MySqlDataAdapter adapter = new MySqlDataAdapter();
+            MySqlCommand cmd = new MySqlCommand("Update Pracownicy set PRC_imie=@PRC_imie , PRC_nazwisko=@PRC_nazwisko , PRC_login=@PRC_login , PRC_STN_id=@PRC_stanowisko where PRC_id=@id;");
+            cmd.Parameters.AddWithValue("@PRC_imie", dane[0]);
+            cmd.Parameters.AddWithValue("@PRC_nazwisko", dane[1]);
+            cmd.Parameters.AddWithValue("@PRC_login", dane[2]);
+            cmd.Parameters.AddWithValue("@PRC_stanowisko", dane[4]);
+            cmd.Parameters.AddWithValue("@id", id_pracownika);
+
+
+            try
+            {
+                myconnection.Open();
+                adapter.InsertCommand = cmd;
+                adapter.InsertCommand.Connection = myconnection;
+                adapter.InsertCommand.ExecuteNonQuery();
+                myconnection.Close();
+            }
+            catch (Exception e)
+            {
+                System.Windows.MessageBox.Show(e.Message);
+            }
+        }
+
         #endregion
 
     }

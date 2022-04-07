@@ -41,7 +41,7 @@
                 <TextBox  x:Name="TxtKurierzyWNazwisko" Grid.Column="1" Grid.Row="1" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" Height="27" ></TextBox>
                 <Label Grid.Row="2" Content="Miasto: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="26" Width="60" ></Label>
                 <TextBox x:Name="TxtKurierzyWMiasto" Grid.Column="1" Grid.Row="2" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" Height="27" ></TextBox>
-                <Label Grid.Row="3" Content="telefon: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="26" Width="60" ></Label>
+                <Label Grid.Row="3" Content="Telefon: " FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="26" Width="60" ></Label>
                 <TextBox x:Name="TxtKurierzyWTelefon" Grid.Column="1" Grid.Row="3" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" Height="27" ></TextBox>
             </Grid>
             <Grid Margin="0,50,0,0">

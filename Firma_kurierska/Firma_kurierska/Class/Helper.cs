@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -95,7 +96,7 @@ namespace Firma_kurierska.Class
             
         }
 
-
+        
 
         public void ZaladujCBZamowienieIloscPaczek(System.Windows.Controls.ComboBox comboBox) 
         {

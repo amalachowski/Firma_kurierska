@@ -29,8 +29,8 @@ namespace Firma_kurierska.WindowsZamowienie
         private static int id_paczki;
         private static int id_kuriera;
         private static  int id_statusu;
-        
-        
+
+
         public WindowZamowieniePaczki()
         {
             InitializeComponent();

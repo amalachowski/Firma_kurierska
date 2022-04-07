@@ -386,8 +386,14 @@ namespace Firma_kurierska
             
             
         }
+
+        private void TabItemZamowienie_Loaded(object sender, RoutedEventArgs e)
+        {
+            SQLconnection sQLconnection = new SQLconnection();
+            sQLconnection.WyswietlZamowienia(DGZamowienia);
+        }
         #endregion
-        
+
 
         #region Pracownicy
 
@@ -580,8 +586,9 @@ namespace Firma_kurierska
             lbxHaslo.Visibility = Visibility.Hidden;
             lbxHaslo2.Visibility = Visibility.Hidden;
         }
+
         #endregion
 
-        
+       
     }
 }

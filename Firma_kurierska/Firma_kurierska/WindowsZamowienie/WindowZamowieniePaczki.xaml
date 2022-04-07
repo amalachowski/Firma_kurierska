@@ -70,7 +70,7 @@
 
                     </Grid>
                     <Button x:Name="BtnZamowieniePaczkiDodaj" Content="Dodaj" Width="130"   HorizontalAlignment="Left" Margin="13,221,0,-221" Click="BtnZamowieniePaczkiDodaj_Click"  />
-                    <Button Visibility="Visible" Grid.Column="1" x:Name="BtnZamowieniePaczkiUsun" Content="Usuń" Width="130"   HorizontalAlignment="Right" Margin="0,189,22,-189" Background="#FFB73A3A"   />
+                    <Button Visibility="Visible" Grid.Column="1" x:Name="BtnZamowieniePaczkiUsun" Content="Usuń" Width="130"   HorizontalAlignment="Right" Margin="0,189,22,-189" Background="#FFB73A3A" Click="BtnZamowieniePaczkiUsun_Click"   />
 
 
                 </StackPanel>

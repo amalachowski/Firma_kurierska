@@ -94,7 +94,24 @@ namespace Firma_kurierska.Class
             return true;
             
         }
-         
+
+
+
+        public void ZaladujCBZamowienieIloscPaczek(System.Windows.Controls.ComboBox comboBox) 
+        {
+            int[] items = new int[10];
+            for (int i = 0; i < 10; i++) 
+            {
+                items[i] = i + 1;
+            
+            }
+            comboBox.ItemsSource = items;
+            
+            
+        
+        
+        
+        }
     }
 
     }

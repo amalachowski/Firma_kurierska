@@ -15,28 +15,33 @@
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="WindowZamowieniePaczki" Height="500" Width="800">
+        Title="WindowZamowieniePaczki" Height="700" Width="1200">
     <Grid>
         <StackPanel>
             <materialDesign:ColorZone Padding="15"  Mode="PrimaryMid" Effect="{DynamicResource MaterialDesignShadowDepth2}" >
                 <TextBlock Text="Dodaj Paczki" HorizontalAlignment="Center"    FontSize="30" ></TextBlock>
             </materialDesign:ColorZone>
-        
+
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <DataGrid Height="300" AutoGenerateColumns="False" Name="DGZamowieniePaczki" CanUserAddRows="False">
+
+                <DataGrid Height="500" AutoGenerateColumns="False" Name="DGZamowieniePaczki" SelectionMode="Single"  CanUserAddRows="False" SelectionChanged="DGZamowieniePaczki_SelectionChanged">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="ID" />
-                        <DataGridTextColumn Header="Rodzaj" />
-                        <DataGridTextColumn Header="Zamowienie ID" />
-                        <DataGridTextColumn Header="Cena" />
-                        
+                        <DataGridTextColumn Header="ID" Binding="{Binding PCK_id}" IsReadOnly="True" />
+                        <DataGridTextColumn Header="Rodzaj" Binding="{Binding RPCK_wielkosc}" IsReadOnly="True" />
+                        <DataGridTextColumn Header="Zamowienie ID" Binding="{Binding PCK_zamowienie_id}" IsReadOnly="True" />
+                        <DataGridTextColumn Header="Adres" Binding="{Binding ADR_miasto}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Ulica" Binding="{Binding ADR_ulica}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Cena" Binding="{Binding RPCK_cena}" IsReadOnly="True" />
+
                     </DataGrid.Columns>
                 </DataGrid>
-                <StackPanel Grid.Column="1">
+                <Label Content="Wybierz paczkę" Margin="0,505,0,-26" FontSize="20" HorizontalContentAlignment="Center"/>
+                <StackPanel Grid.Column="1" >
                     <Grid Grid.Column="1" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -45,25 +50,44 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <Label Content="Wybierz rodzaj paczki" Grid.Column="0" Grid.Row="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom"/>
-                        <ComboBox x:Name="CBZamowienieRodzajPaczki" Grid.Column="1" Grid.Row="0"/>
-                        <Label Content="ilość paczek" Grid.Column="0" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom"/>
-                        <TextBox x:Name="TxtZamowienieIloscPaczek" Width="130" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1"/>
+                        <Label Content="Wybierz rodzaj paczki (kg)" Grid.Column="0" Grid.Row="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom"/>
+                        <ComboBox x:Name="CBZamowienieRodzajPaczki" Grid.Column="1" Grid.Row="0" DisplayMemberPath="RPCK_wielkosc" SelectedValuePath="RPCK_id"/>
+                        <Label Grid.Row="1" Content="Miasto: " FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Bottom" ></Label>
+                        <TextBox x:Name="TxtPaczkaMiasto" Grid.Column="1" Grid.Row="1" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" ></TextBox>
+                        <Label Grid.Row="2" Content="ulica: " FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Bottom" ></Label>
+                        <TextBox x:Name="TxtPaczkaUlica" Grid.Column="1" Grid.Row="2" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" ></TextBox>
+                        <Label Grid.Row="3" Content="nr ulicy: " FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Bottom" ></Label>
+                        <TextBox x:Name="TxtPaczkaNRUlica" Grid.Column="1" Grid.Row="3" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" ></TextBox>
+                        <Label Grid.Row="4" Content="numer lokalu: " FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Bottom" ></Label>
+                        <TextBox x:Name="TxtPaczkaLokal" Grid.Column="1" Grid.Row="4" MaxWidth="250"  FontSize="15" VerticalAlignment="Bottom" ></TextBox>
+
                     </Grid>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" x:Name="BtnZamowieniePaczkiDodaj" Content="Dodaj" Width="130"   HorizontalAlignment="Left" Margin="15,189,0,-189"  />
-                        <Button Visibility="Hidden" Grid.Column="1" x:Name="BtnZamowieniePaczkiUsun" Content="Usuń" Width="130"   HorizontalAlignment="Right" Margin="0,189,22,-189" Background="#FFB73A3A"   />
-                    </Grid>
-                    
+                    <Button x:Name="BtnZamowieniePaczkiDodaj" Content="Dodaj" Width="130"   HorizontalAlignment="Left" Margin="13,221,0,-221" Click="BtnZamowieniePaczkiDodaj_Click"  />
+                    <Button Visibility="Visible" Grid.Column="1" x:Name="BtnZamowieniePaczkiUsun" Content="Usuń" Width="130"   HorizontalAlignment="Right" Margin="0,189,22,-189" Background="#FFB73A3A"   />
+
+
                 </StackPanel>
-                
+                <DataGrid x:Name="DGZamowienieKurierzy" Grid.Column="2" CanUserAddRows="False" AutoGenerateColumns="False" SelectionChanged="DGZamowienieKurierzy_SelectionChanged" >
+                    <DataGrid.Columns>
+                        <materialDesign:DataGridTextColumn Header="ID" Binding="{Binding KR_id}"  IsReadOnly="True"/>
+                        <materialDesign:DataGridTextColumn Header="Imie" Binding="{Binding KR_imie}" IsReadOnly="True"/>
+                        <materialDesign:DataGridTextColumn Header="Nazwisko" Binding="{Binding KR_nazwisko}" IsReadOnly="True"/>
+                        <materialDesign:DataGridTextColumn Header="Miasto" Binding="{Binding KR_miasto}" IsReadOnly="True"/>
+                        <materialDesign:DataGridTextColumn Header="Telefon" Binding="{Binding KR_telefon}" IsReadOnly="True"/>
+
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Label Content="Wybierz kureira" FontSize="20" Margin="0,511,0,-32" Grid.Column="2" HorizontalAlignment="Center" />
+
             </Grid>
-            <Grid Height="102">
+            <Grid Height="119" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>

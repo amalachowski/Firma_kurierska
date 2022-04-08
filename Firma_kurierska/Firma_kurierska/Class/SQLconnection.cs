@@ -641,8 +641,7 @@ namespace Firma_kurierska.Class
         public void WyswietlZamowienia(System.Windows.Controls.DataGrid dataGrid) 
         {
             MySqlConnection myconnection = new MySqlConnection(conect);
-            MySqlCommand cmd = new MySqlCommand("SELECT ZAM_id , ZAM_status, ZAM_klient_id, ZAM_znizka " +
-                " FROM Zamówienie ;", myconnection);
+            MySqlCommand cmd = new MySqlCommand("SELECT ZAM_id , ZAM_status, ZAM_klient_id, ZAM_znizka,(Select sum(RPCK_cena) from Paczka inner join RodzajPaczki on PCK_rodzaj_id=RPCK_id where PCK_zamowienie_id = ZAM_id) as WartoscKoncowa FROM Zamówienie ;", myconnection);
             try
             {
                 myconnection.Open();

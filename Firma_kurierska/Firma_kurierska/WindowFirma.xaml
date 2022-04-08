@@ -159,10 +159,10 @@
                                 <DataGrid x:Name="DGZamowienia" Height="600" Width="400" CanUserAddRows="False" AutoGenerateColumns="False" >
                                     <DataGrid.Columns>
                                         <materialDesign:DataGridTextColumn Header="ID" Binding="{Binding ZAM_id}"  IsReadOnly="True"/>
-                                        <materialDesign:DataGridTextColumn Header="Nadawca" Binding="{Binding ZAM_status}"  IsReadOnly="True"/>
-                                        <materialDesign:DataGridTextColumn Header="Status" Binding="{Binding ZAM_klient_id}" IsReadOnly="True"/>
+                                        <materialDesign:DataGridTextColumn Header="Nadawca" Binding="{Binding ZAM_klient_id}"  IsReadOnly="True"/>
+                                        <materialDesign:DataGridTextColumn Header="Status" Binding="{Binding ZAM_status}" IsReadOnly="True"/>
                                         <materialDesign:DataGridTextColumn Header="Zniżka" Binding="{Binding ZAM_znizka}" IsReadOnly="True"/>
-                                        <materialDesign:DataGridTextColumn Header="Wartość Końcowa"  IsReadOnly="True"/>
+                                        <materialDesign:DataGridTextColumn Header="Wartość Końcowa" Binding="{Binding WartoscKoncowa}" IsReadOnly="True"/>
                                     </DataGrid.Columns>
                                 </DataGrid>
 

@@ -308,14 +308,14 @@
                             <TextBlock Text="Kurierzy"/>
                         </StackPanel>
                     </TabItem.Header>
-                    <StackPanel Width="500" Height="700" Background="{DynamicResource MaterialDesignLightBackground}">
+                    <StackPanel Width="500" Height="650" Background="{DynamicResource MaterialDesignLightBackground}">
                         <StackPanel.Effect>
                             <DropShadowEffect BlurRadius="20" Opacity="0.65" ShadowDepth="21"/>
                         </StackPanel.Effect>
                         <materialDesign:ColorZone Padding="15"  Mode="PrimaryMid" Effect="{DynamicResource MaterialDesignShadowDepth2}" >
                             <TextBlock Text="Kurierzy" HorizontalAlignment="Center"    FontSize="30" ></TextBlock>
                         </materialDesign:ColorZone>
-                        <DataGrid CanUserAddRows="False"  Height="450" x:Name="DGKureirzy" AutoGenerateColumns="False"  IsSynchronizedWithCurrentItem="False"  SelectionMode="Single" SelectionChanged="DGKureirzy_SelectionChanged"  >
+                        <DataGrid CanUserAddRows="False"  Height="400" x:Name="DGKureirzy" AutoGenerateColumns="False"  IsSynchronizedWithCurrentItem="False"  SelectionMode="Single" SelectionChanged="DGKureirzy_SelectionChanged"  >
                             <DataGrid.BindingGroup>
                                 <BindingGroup/>
                             </DataGrid.BindingGroup>

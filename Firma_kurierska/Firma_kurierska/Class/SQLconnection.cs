@@ -909,6 +909,44 @@ namespace Firma_kurierska.Class
 
         }
 
+        public void UsunZamowienie(int idWybranegoZamowienia) 
+        {
+            MySqlConnection myconnection = new MySqlConnection(conect);
+            MySqlCommand zapytanie = myconnection.CreateCommand();
+            MySqlTransaction transaction;
+
+            myconnection.Open();
+
+
+
+            transaction = myconnection.BeginTransaction(IsolationLevel.ReadCommitted);
+            zapytanie.Transaction = transaction;
+            zapytanie.Connection = myconnection;
+            try
+            {
+                zapytanie.CommandText = "Delete from Paczka where PCK_zamowienie_id='" + idWybranegoZamowienia + "';";
+                zapytanie.ExecuteNonQuery();
+
+                zapytanie.CommandText = "Delete from Zamówienie where ZAM_id='" + idWybranegoZamowienia + "';";
+                zapytanie.ExecuteNonQuery();
+
+
+                transaction.Commit();
+
+
+            }
+            catch (Exception e)
+            {
+                System.Windows.Forms.MessageBox.Show(e.Message);
+                transaction.Rollback();
+            }
+            myconnection.Close();
+
+
+        }
+
+        
+
 
     #endregion
         #region Pracownicy

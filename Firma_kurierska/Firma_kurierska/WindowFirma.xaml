@@ -192,10 +192,11 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
-                                
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Button x:Name="BtnZamowienieDodaj" Grid.Column="0" Content="Dodaj" Width="130" Click="BtnZamowienieDodaj_Click"></Button>
-                            <Button x:Name="BtnZamowienieUsun" Grid.Column="1" Content="Usuń" Width="130" Background="#FFB73A3A"></Button>
+                            <Button x:Name="BtnZamowienieOdswiez" Grid.Column="1" Content="Odświerz" Width="130" Click="BtnZamowienieOdswiez_Click"></Button>
+                            <Button x:Name="BtnZamowienieUsun" Grid.Column="2" Content="Usuń" Width="130" Background="#FFB73A3A" Click="BtnZamowienieUsun_Click"></Button>
                             
                         </Grid>
                     </StackPanel>

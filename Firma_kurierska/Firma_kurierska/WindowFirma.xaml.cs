@@ -670,6 +670,15 @@ namespace Firma_kurierska
             sql.WyswietlZamowienia(DGZamowienia);
         }
 
-       
+        private void BtnZamowienieOdswiez_Click(object sender, RoutedEventArgs e)
+        {
+            sql.WyswietlZamowienia(DGZamowienia);
+        }
+
+        private void BtnZamowienieUsun_Click(object sender, RoutedEventArgs e)
+        {
+            sql.UsunZamowienie(id_WybranegoZamowienia);
+            sql.WyswietlZamowienia(DGZamowienia);
+        }
     }
 }

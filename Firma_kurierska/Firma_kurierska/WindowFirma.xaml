@@ -177,7 +177,7 @@
                                         <RowDefinition Height="*"></RowDefinition>
                                     </Grid.RowDefinitions>
                                     <Label Content="Zmień status zamówienia :" HorizontalAlignment="Center"/>
-                                    <ComboBox x:Name="CBZamowienieStatus" Grid.Row="1" Margin="10,7,0,0" Width="250"  HorizontalAlignment="Center" ></ComboBox>
+                                    <ComboBox x:Name="CBZamowienieStatus"  Grid.Row="1" Margin="10,7,0,0" Width="250"  HorizontalAlignment="Center" />
                                     <Label Content="Zmień stawke zniżki(%) :" Grid.Row="2" Margin="0,15,0,0" HorizontalAlignment="Center" />
                                     <ComboBox x:Name="CBZamowienieZnizka" Grid.Row="3" Margin="10,7,0,0" Width="250" HorizontalAlignment="Center"></ComboBox>
                                     <Button x:Name="BtnZamowienieZatwierdz" Grid.Row="4" Width="130" Content="Zatwierdź" HorizontalAlignment="Center" Margin="0,50,0,0" Click="BtnZamowienieZatwierdz_Click"></Button>

@@ -874,7 +874,7 @@ namespace Firma_kurierska.Class
         }
 
 
-        public void DodawanieStatusuIZnizki(System.Windows.Controls.ComboBox comboBoxStatus, System.Windows.Controls.ComboBox comboBoxZnizka, int id_WybranegoZamowienia) 
+        public void DodawanieZnizki(System.Windows.Controls.ComboBox comboBoxZnizka, int id_WybranegoZamowienia) 
         {
             MySqlConnection myconnection = new MySqlConnection(conect);
             MySqlCommand zapytanie = myconnection.CreateCommand();
@@ -890,7 +890,7 @@ namespace Firma_kurierska.Class
             try
             {
 
-                zapytanie.CommandText = "Update Zamówienie set ZAM_status='" + comboBoxStatus.SelectedItem + "', ZAM_znizka='"+ comboBoxZnizka.SelectedItem + "', ZAM_wartoscKoncowa=ZAM_wartoscKoncowa - (ZAM_wartoscKoncowa * (" + comboBoxZnizka.SelectedItem+"/100)) where ZAM_id='" +id_WybranegoZamowienia +"'  ;";
+                zapytanie.CommandText = "Update Zamówienie set  ZAM_znizka='"+ comboBoxZnizka.SelectedItem + "', ZAM_wartoscKoncowa=ZAM_wartoscKoncowa - (ZAM_wartoscKoncowa * (" + comboBoxZnizka.SelectedItem+"/100)) where ZAM_id='" +id_WybranegoZamowienia +"'  ;";
                 zapytanie.ExecuteNonQuery();
 
 
@@ -906,6 +906,39 @@ namespace Firma_kurierska.Class
             myconnection.Close();
 
 
+
+        }
+
+        public void DodawnieStatusu(System.Windows.Controls.ComboBox comboBoxStatus, int id_WybranegoZamowienia) 
+        {
+            MySqlConnection myconnection = new MySqlConnection(conect);
+            MySqlCommand zapytanie = myconnection.CreateCommand();
+            MySqlTransaction transaction;
+
+            myconnection.Open();
+
+
+
+            transaction = myconnection.BeginTransaction(IsolationLevel.ReadCommitted);
+            zapytanie.Transaction = transaction;
+            zapytanie.Connection = myconnection;
+            try
+            {
+
+                zapytanie.CommandText = "Update Zamówienie set ZAM_status='"+comboBoxStatus.SelectedItem+"'  where ZAM_id='" + id_WybranegoZamowienia + "'  ;";
+                zapytanie.ExecuteNonQuery();
+
+
+                transaction.Commit();
+
+
+            }
+            catch (Exception e)
+            {
+                System.Windows.Forms.MessageBox.Show(e.Message);
+                transaction.Rollback();
+            }
+            myconnection.Close();
 
         }
 
@@ -945,7 +978,33 @@ namespace Firma_kurierska.Class
 
         }
 
+        public bool SprawdzStatusKlienta(int idWybranegoZamowienia) 
+        {
+            MySqlConnection mySqlConnection = new MySqlConnection(conect);
+            MySqlDataReader dd;
+            MySqlCommand cmd = new MySqlCommand("Select KL_VIP from Klienci inner join Zamówienie on KL_id=ZAM_klient_id where Zamówienie.ZAM_id='"+idWybranegoZamowienia+"'; ",mySqlConnection);
+            try
+            {
+                mySqlConnection.Open();
+                dd = cmd.ExecuteReader();
+                if (dd.Read())
+                {
+
+                    return Convert.ToBoolean(dd.GetInt32(0));
+
+
+                }
+                mySqlConnection.Close();
+            }
+            catch (Exception e) 
+            {
+                System.Windows.MessageBox.Show(e.Message);
+            
+            }
+            return false;
         
+        
+        }
 
 
     #endregion

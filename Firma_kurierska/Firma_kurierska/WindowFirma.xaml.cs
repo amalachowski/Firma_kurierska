@@ -666,7 +666,42 @@ namespace Firma_kurierska
         private void BtnZamowienieZatwierdz_Click(object sender, RoutedEventArgs e)
         {
             SQLconnection sql = new SQLconnection();
-            sql.DodawanieStatusuIZnizki(CBZamowienieStatus, CBZamowienieZnizka, id_WybranegoZamowienia);
+            if (!string.IsNullOrEmpty(CBZamowienieZnizka.Text) && string.IsNullOrEmpty(CBZamowienieStatus.Text))
+            {
+                if (sql.SprawdzStatusKlienta(id_WybranegoZamowienia))
+                {
+
+                    sql.DodawanieZnizki(CBZamowienieZnizka, id_WybranegoZamowienia);
+
+                }
+                else
+                {
+                    MessageBox.Show("Nie można naliczyć zniżki klient nie jest VIP-em");
+
+                }
+            }
+            else if (string.IsNullOrEmpty(CBZamowienieZnizka.Text) && !string.IsNullOrEmpty(CBZamowienieStatus.Text))
+            {
+                sql.DodawnieStatusu(CBZamowienieStatus, id_WybranegoZamowienia);
+
+            }
+            else 
+            {
+                if (sql.SprawdzStatusKlienta(id_WybranegoZamowienia))
+                {
+
+                    sql.DodawanieZnizki(CBZamowienieZnizka, id_WybranegoZamowienia);
+
+                }
+                else
+                {
+                    MessageBox.Show("Nie można naliczyć zniżki klient nie jest VIP-em");
+
+                }
+                sql.DodawnieStatusu(CBZamowienieStatus, id_WybranegoZamowienia);
+
+            }
+            
             sql.WyswietlZamowienia(DGZamowienia);
         }
 

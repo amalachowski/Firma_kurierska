@@ -641,7 +641,7 @@ namespace Firma_kurierska.Class
         public void WyswietlZamowienia(System.Windows.Controls.DataGrid dataGrid) 
         {
             MySqlConnection myconnection = new MySqlConnection(conect);
-            MySqlCommand cmd = new MySqlCommand("SELECT ZAM_id , ZAM_status, ZAM_klient_id, ZAM_znizka,(Select sum(RPCK_cena) from Paczka inner join RodzajPaczki on PCK_rodzaj_id=RPCK_id where PCK_zamowienie_id = ZAM_id) as WartoscKoncowa FROM Zamówienie ;", myconnection);
+            MySqlCommand cmd = new MySqlCommand("SELECT ZAM_id , ZAM_status, ZAM_klient_id, ZAM_znizka, ZAM_wartoscKoncowa FROM Zamówienie ;", myconnection);
             try
             {
                 myconnection.Open();
@@ -659,6 +659,41 @@ namespace Firma_kurierska.Class
             {
                 System.Windows.MessageBox.Show(e.Message);
             }
+
+        }
+        public void UaktualnijZamowienie() 
+        {
+            MySqlConnection myconnection = new MySqlConnection(conect);
+            MySqlCommand zapytanie = myconnection.CreateCommand();
+            MySqlTransaction transaction;
+
+            myconnection.Open();
+
+
+
+            transaction = myconnection.BeginTransaction(IsolationLevel.ReadCommitted);
+            zapytanie.Transaction = transaction;
+            zapytanie.Connection = myconnection;
+            try
+            {
+
+                zapytanie.CommandText = "Update Zamówienie set ZAM_wartoscKoncowa=(Select sum(RPCK_cena) from Paczka inner join RodzajPaczki on PCK_rodzaj_id=RPCK_id where PCK_zamowienie_id = '"+id_zamowienia+"') ;";
+                zapytanie.ExecuteNonQuery();
+
+
+                transaction.Commit();
+
+
+            }
+            catch (Exception e)
+            {
+                System.Windows.Forms.MessageBox.Show(e.Message);
+                transaction.Rollback();
+            }
+            myconnection.Close();
+
+
+
 
         }
 
@@ -820,6 +855,42 @@ namespace Firma_kurierska.Class
             {
 
                 zapytanie.CommandText = "Delete from Paczka where PCK_id=" + id_paczki + " and PCK_zamowienie_id='"+id_zamowienia+"' ;";
+                zapytanie.ExecuteNonQuery();
+
+
+                transaction.Commit();
+
+
+            }
+            catch (Exception e)
+            {
+                System.Windows.Forms.MessageBox.Show(e.Message);
+                transaction.Rollback();
+            }
+            myconnection.Close();
+
+
+
+        }
+
+
+        public void DodawanieStatusuIZnizki(System.Windows.Controls.ComboBox comboBoxStatus, System.Windows.Controls.ComboBox comboBoxZnizka, int id_WybranegoZamowienia) 
+        {
+            MySqlConnection myconnection = new MySqlConnection(conect);
+            MySqlCommand zapytanie = myconnection.CreateCommand();
+            MySqlTransaction transaction;
+
+            myconnection.Open();
+
+
+
+            transaction = myconnection.BeginTransaction(IsolationLevel.ReadCommitted);
+            zapytanie.Transaction = transaction;
+            zapytanie.Connection = myconnection;
+            try
+            {
+
+                zapytanie.CommandText = "Update Zamówienie set ZAM_status='" + comboBoxStatus.SelectedItem + "', ZAM_znizka='"+ comboBoxZnizka.SelectedItem + "', ZAM_wartoscKoncowa=ZAM_wartoscKoncowa - (ZAM_wartoscKoncowa * (" + comboBoxZnizka.SelectedItem+"/100)) where ZAM_id='" +id_WybranegoZamowienia +"'  ;";
                 zapytanie.ExecuteNonQuery();
 
 

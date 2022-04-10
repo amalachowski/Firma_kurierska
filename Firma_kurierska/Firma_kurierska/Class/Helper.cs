@@ -113,6 +113,32 @@ namespace Firma_kurierska.Class
         
         
         }
+
+        public void ZaladujCBZamowienieStatus(System.Windows.Controls.ComboBox comboBox) 
+        {
+            List<string> statusy = new List<string>() 
+            {"W trakcie realizacji",
+            "Przekazane do Doręczenia",
+            "Dostarczone",
+            "Anulowane"};
+
+            comboBox.ItemsSource = statusy;
+        }
+        public void ZaladujCBZamowienieZnizka(System.Windows.Controls.ComboBox comboBox)
+        {
+            List<int> znizki = new List<int>()
+            {0,
+            5,
+            10,
+            15,
+            20,
+            25,
+            30};
+
+            comboBox.ItemsSource = znizki;
+        }
+
+
     }
 
     }

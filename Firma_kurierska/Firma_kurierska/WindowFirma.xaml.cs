@@ -1,20 +1,10 @@
 ﻿using Firma_kurierska.Class;
+using Firma_kurierska.ExtraWindows;
+using Firma_kurierska.WindowsZamowienie;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using Firma_kurierska.ExtraWindows;
-using System.Windows.Shapes;
-using Firma_kurierska.WindowsZamowienie;
 
 
 
@@ -25,15 +15,18 @@ namespace Firma_kurierska
     /// </summary>
     public partial class WindowFirma : Window
     {
+        SQLconnection sql = new SQLconnection();
         private int id_uzytkownika;
         private int id_pracownika;
         private int id_rekoruKlienta;
         private int id_rekordAdres;
         private int id_KurierKuriera;
+        private int id_WybranegoZamowienia;
         private string kurierImieKuriera;
         private string kurierNazwiskoKuriera;
         private string kurierMiastoKuriera;
         private string kurierTelefonKuriera;
+        
 
 
         
@@ -393,7 +386,10 @@ namespace Firma_kurierska
         private void TabItemZamowienie_Loaded(object sender, RoutedEventArgs e)
         {
             SQLconnection sQLconnection = new SQLconnection();
+            Helper helper = new Helper();
             sQLconnection.WyswietlZamowienia(DGZamowienia);
+            helper.ZaladujCBZamowienieStatus(CBZamowienieStatus);
+            helper.ZaladujCBZamowienieZnizka(CBZamowienieZnizka);
         }
         #endregion
 
@@ -641,8 +637,39 @@ namespace Firma_kurierska
             tbx_prac_haslo2.Visibility = Visibility.Visible;
 
         }
+
         #endregion
 
+        private void DGZamowienia_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            GRIDStatusIZnizka.Visibility = Visibility.Visible;
+            DataGrid dataGrid = sender as DataGrid;
+            DataRowView rowView = dataGrid.SelectedItem as DataRowView;
+            try
+            {
+                if (rowView != null)
+                {
+                    id_WybranegoZamowienia = (int)rowView.Row[0]; // zapisywanie wybranego id Zamowienia
+                    
+                }
 
+            }
+            catch (Exception kom)
+            {
+                MessageBox.Show(kom.Message);
+            }
+
+            
+
+        }
+
+        private void BtnZamowienieZatwierdz_Click(object sender, RoutedEventArgs e)
+        {
+            SQLconnection sql = new SQLconnection();
+            sql.DodawanieStatusuIZnizki(CBZamowienieStatus, CBZamowienieZnizka, id_WybranegoZamowienia);
+            sql.WyswietlZamowienia(DGZamowienia);
+        }
+
+       
     }
 }

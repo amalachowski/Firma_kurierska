@@ -159,10 +159,10 @@
                                 <DataGrid x:Name="DGZamowienia" Height="600" Width="400" CanUserAddRows="False" AutoGenerateColumns="False" >
                                     <DataGrid.Columns>
                                         <materialDesign:DataGridTextColumn Header="ID" Binding="{Binding ZAM_id}"  IsReadOnly="True"/>
-                                        <materialDesign:DataGridTextColumn Header="Nadawca" Binding="{Binding ZAM_status}"  IsReadOnly="True"/>
-                                        <materialDesign:DataGridTextColumn Header="Status" Binding="{Binding ZAM_klient_id}" IsReadOnly="True"/>
+                                        <materialDesign:DataGridTextColumn Header="Nadawca" Binding="{Binding ZAM_klient_id}"  IsReadOnly="True"/>
+                                        <materialDesign:DataGridTextColumn Header="Status" Binding="{Binding ZAM_status}" IsReadOnly="True"/>
                                         <materialDesign:DataGridTextColumn Header="Zniżka" Binding="{Binding ZAM_znizka}" IsReadOnly="True"/>
-                                        <materialDesign:DataGridTextColumn Header="Wartość Końcowa"  IsReadOnly="True"/>
+                                        <materialDesign:DataGridTextColumn Header="Wartość Końcowa" Binding="{Binding WartoscKoncowa}" IsReadOnly="True"/>
                                     </DataGrid.Columns>
                                 </DataGrid>
 
@@ -308,14 +308,14 @@
                             <TextBlock Text="Kurierzy"/>
                         </StackPanel>
                     </TabItem.Header>
-                    <StackPanel Width="500" Height="800" Background="{DynamicResource MaterialDesignLightBackground}">
+                    <StackPanel Width="500" Height="650" Background="{DynamicResource MaterialDesignLightBackground}">
                         <StackPanel.Effect>
                             <DropShadowEffect BlurRadius="20" Opacity="0.65" ShadowDepth="21"/>
                         </StackPanel.Effect>
                         <materialDesign:ColorZone Padding="15"  Mode="PrimaryMid" Effect="{DynamicResource MaterialDesignShadowDepth2}" >
                             <TextBlock Text="Kurierzy" HorizontalAlignment="Center"    FontSize="30" ></TextBlock>
                         </materialDesign:ColorZone>
-                        <DataGrid CanUserAddRows="False"  Height="550" x:Name="DGKureirzy" AutoGenerateColumns="False"  IsSynchronizedWithCurrentItem="False"  SelectionMode="Single" SelectionChanged="DGKureirzy_SelectionChanged"  >
+                        <DataGrid CanUserAddRows="False"  Height="400" x:Name="DGKureirzy" AutoGenerateColumns="False"  IsSynchronizedWithCurrentItem="False"  SelectionMode="Single" SelectionChanged="DGKureirzy_SelectionChanged"  >
                             <DataGrid.BindingGroup>
                                 <BindingGroup/>
                             </DataGrid.BindingGroup>

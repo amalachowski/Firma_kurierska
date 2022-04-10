@@ -35,15 +35,18 @@ namespace Firma_kurierska.WindowsZamowienie
         private void BtnZamowienieNadawcaDalej_Click(object sender, RoutedEventArgs e)
         {
             int wybranaIloscPaczek;
+            if (CBZamowienieIloscPaczek.SelectedItem != null)
+            {
+                sQLconnection.DodajZamowienie(id_nadawcy);
+                wybranaIloscPaczek = (int)CBZamowienieIloscPaczek.SelectedItem;
+                sQLconnection.DodajPaczki(wybranaIloscPaczek);
+                WindowZamowieniePaczki zamowieniePaczki = new WindowZamowieniePaczki();
+                this.Close();
+                zamowieniePaczki.ShowDialog();
+            }
+
+
             
-            sQLconnection.DodajZamowienie(id_nadawcy);
-            wybranaIloscPaczek = (int)CBZamowienieIloscPaczek.SelectedItem;
-            sQLconnection.DodajPaczki(wybranaIloscPaczek);
-            WindowZamowieniePaczki zamowieniePaczki = new WindowZamowieniePaczki();
-            this.Close();
-
-
-            zamowieniePaczki.ShowDialog();
         }
 
         private void BtnZamowienieNadawcaWyjscie_Click(object sender, RoutedEventArgs e)

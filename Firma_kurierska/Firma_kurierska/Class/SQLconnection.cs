@@ -641,8 +641,7 @@ namespace Firma_kurierska.Class
         public void WyswietlZamowienia(System.Windows.Controls.DataGrid dataGrid) 
         {
             MySqlConnection myconnection = new MySqlConnection(conect);
-            MySqlCommand cmd = new MySqlCommand("SELECT ZAM_id , ZAM_status, ZAM_klient_id, ZAM_znizka " +
-                " FROM Zamówienie ;", myconnection);
+            MySqlCommand cmd = new MySqlCommand("SELECT ZAM_id , ZAM_status, ZAM_klient_id, ZAM_znizka,(Select sum(RPCK_cena) from Paczka inner join RodzajPaczki on PCK_rodzaj_id=RPCK_id where PCK_zamowienie_id = ZAM_id) as WartoscKoncowa FROM Zamówienie ;", myconnection);
             try
             {
                 myconnection.Open();
@@ -667,8 +666,10 @@ namespace Firma_kurierska.Class
         {
 
             MySqlConnection myconnection = new MySqlConnection(conect);
-            MySqlCommand cmd = new MySqlCommand("SELECT PCK_id , RPCK_wielkosc, PCK_zamowienie_id, ADR_miasto,ADR_ulica , RPCK_cena "+
-                "FROM Paczka left join Adres on Paczka.PCK_adr_id=Adres.ADR_id left join RodzajPaczki on  Paczka.PCK_rodzaj_id=RodzajPaczki.RPCK_id where PCK_zamowienie_id='"+id_zamowienia +"' ;", myconnection);
+            MySqlCommand cmd = new MySqlCommand("SELECT PCK_id , RPCK_wielkosc, PCK_zamowienie_id, ADR_miasto , ADR_ulica , RPCK_cena "+
+                "FROM Paczka"+
+                " left join Adres on Paczka.PCK_adr_id = Adres.ADR_id"+
+                " left join RodzajPaczki on  Paczka.PCK_rodzaj_id = RodzajPaczki.RPCK_id where PCK_zamowienie_id ='"+id_zamowienia+"' ; ", myconnection);
 
             try 
             {

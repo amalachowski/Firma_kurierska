@@ -75,7 +75,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Button x:Name="BtnZamowienieNadawcaWyjscie" Width="130" Content="Wyjście" Click="BtnZamowienieNadawcaWyjscie_Click" Margin="-61,0,427,0"/>
-                <Button x:Name="BtnZamowienieNadawcaDalej" Width="130" Grid.Column="1" Content="Dalej" Click="BtnZamowienieNadawcaDalej_Click" Margin="407,0,-41,0" HorizontalAlignment="Left"  />
+                <Button x:Name="BtnZamowienieNadawcaDalej" Grid.Column="1" Content="Dalej" Click="BtnZamowienieNadawcaDalej_Click" Margin="407,0,-40,0" HorizontalAlignment="Left" Width="130"  />
 
             </Grid>
         </StackPanel>

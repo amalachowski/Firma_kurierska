@@ -55,6 +55,7 @@ namespace Firma_kurierska.WindowsZamowienie
 
         private void DGZamowieniePaczki_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            BtnZamowieniePaczkiUsun.Visibility = Visibility.Visible;
             DataGrid dataGrid = sender as DataGrid;
             DataRowView rowView = dataGrid.SelectedItem as DataRowView;
             try
@@ -101,6 +102,11 @@ namespace Firma_kurierska.WindowsZamowienie
             sQLconnection.WyswietlPaczki(DGZamowieniePaczki);
 
 
+        }
+
+        private void BtnZamowieniePaczkiZatwierdz_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

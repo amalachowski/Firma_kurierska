@@ -70,7 +70,7 @@
 
                     </Grid>
                     <Button x:Name="BtnZamowieniePaczkiDodaj" Content="Dodaj" Width="130"   HorizontalAlignment="Left" Margin="13,221,0,-221" Click="BtnZamowieniePaczkiDodaj_Click"  />
-                    <Button Visibility="Visible" Grid.Column="1" x:Name="BtnZamowieniePaczkiUsun" Content="Usuń" Width="130"   HorizontalAlignment="Right" Margin="0,189,22,-189" Background="#FFB73A3A" Click="BtnZamowieniePaczkiUsun_Click"   />
+                    <Button Visibility="Hidden" Grid.Column="1" x:Name="BtnZamowieniePaczkiUsun" Content="Usuń" Width="130"   HorizontalAlignment="Right" Margin="0,189,22,-189" Background="#FFB73A3A" Click="BtnZamowieniePaczkiUsun_Click"   />
 
 
                 </StackPanel>
@@ -92,8 +92,8 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Button x:Name="BtnZamowieniePaczkiWtecz" Content="Wstecz" Grid.Column="0" Width="130" RenderTransformOrigin="-0.069,0.5" Margin="39,35,227,35"/>
-                <Button Grid.Column="1" x:Name="BtnZamowieniePaczkiDalej" Width="130" Content="Dalej" Margin="233,0,33,0" RenderTransformOrigin="0.638,1.125"/>
+                
+                <Button Grid.Column="1" x:Name="BtnZamowieniePaczkiZatwierdz" Width="130" Content="Zatwierdź" Margin="233,0,33,0" RenderTransformOrigin="0.638,1.125" Click="BtnZamowieniePaczkiZatwierdz_Click"/>
             </Grid>
         </StackPanel>
     </Grid>

@@ -803,6 +803,42 @@ namespace Firma_kurierska.Class
 
 
         }
+        public void UsunPaczke(int id_paczki) 
+        {
+            MySqlConnection myconnection = new MySqlConnection(conect);
+            MySqlCommand zapytanie = myconnection.CreateCommand();
+            MySqlTransaction transaction;
+
+            myconnection.Open();
+
+
+
+            transaction = myconnection.BeginTransaction(IsolationLevel.ReadCommitted);
+            zapytanie.Transaction = transaction;
+            zapytanie.Connection = myconnection;
+            try
+            {
+
+                zapytanie.CommandText = "Delete from Paczka where PCK_id=" + id_paczki + " and PCK_zamowienie_id='"+id_zamowienia+"' ;";
+                zapytanie.ExecuteNonQuery();
+
+
+                transaction.Commit();
+
+
+            }
+            catch (Exception e)
+            {
+                System.Windows.Forms.MessageBox.Show(e.Message);
+                transaction.Rollback();
+            }
+            myconnection.Close();
+
+
+
+        }
+
+
     #endregion
         #region Pracownicy
         public void WyswietlPracownikow(System.Windows.Controls.DataGrid dataGrid)

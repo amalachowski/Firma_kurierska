@@ -94,5 +94,13 @@ namespace Firma_kurierska.WindowsZamowienie
             }
 
         }
+
+        private void BtnZamowieniePaczkiUsun_Click(object sender, RoutedEventArgs e)
+        {
+            sQLconnection.UsunPaczke(id_paczki);
+            sQLconnection.WyswietlPaczki(DGZamowieniePaczki);
+
+
+        }
     }
 }

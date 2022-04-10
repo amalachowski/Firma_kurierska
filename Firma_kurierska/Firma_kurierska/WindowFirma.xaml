@@ -135,7 +135,7 @@
 
 
                 </TabItem>
-                <TabItem x:Name="TabItemZamowienie" Style="{StaticResource MaterialDesignNavigationRailTabItem}" Width="100" Background="White" Loaded="TabItemZamowienie_Loaded">
+                <TabItem x:Name="TabItemZamowienie" Style="{StaticResource MaterialDesignNavigationRailTabItem}" Width="100" Background="White" Loaded="TabItemZamowienie_Loaded" >
                     <TabItem.Header >
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                             <materialDesign:PackIcon Kind="BoxAdd" Height="40" Width="40" HorizontalAlignment="Center" />
@@ -143,7 +143,7 @@
                         </StackPanel>
 
                     </TabItem.Header>
-                    <StackPanel Width="700" Height="800" Background="{DynamicResource MaterialDesignLightBackground}">
+                    <StackPanel Width="800" Height="800" Background="{DynamicResource MaterialDesignLightBackground}">
                         <StackPanel.Effect>
                             <DropShadowEffect BlurRadius="20" Opacity="0.65" ShadowDepth="21"/>
                         </StackPanel.Effect>
@@ -156,19 +156,19 @@
                                 <ColumnDefinition Width="57*"/>
                             </Grid.ColumnDefinitions>
                             <StackPanel Grid.Row="0" Margin="0,0,15,0" >
-                                <DataGrid x:Name="DGZamowienia" Height="600" Width="400" CanUserAddRows="False" AutoGenerateColumns="False" >
+                                <DataGrid x:Name="DGZamowienia" Height="600" Width="450" CanUserAddRows="False" AutoGenerateColumns="False" SelectionChanged="DGZamowienia_SelectionChanged" >
                                     <DataGrid.Columns>
                                         <materialDesign:DataGridTextColumn Header="ID" Binding="{Binding ZAM_id}"  IsReadOnly="True"/>
                                         <materialDesign:DataGridTextColumn Header="Nadawca" Binding="{Binding ZAM_klient_id}"  IsReadOnly="True"/>
                                         <materialDesign:DataGridTextColumn Header="Status" Binding="{Binding ZAM_status}" IsReadOnly="True"/>
                                         <materialDesign:DataGridTextColumn Header="Zniżka" Binding="{Binding ZAM_znizka}" IsReadOnly="True"/>
-                                        <materialDesign:DataGridTextColumn Header="Wartość Końcowa" Binding="{Binding WartoscKoncowa}" IsReadOnly="True"/>
+                                        <materialDesign:DataGridTextColumn Header="Wartość Końcowa" Binding="{Binding ZAM_wartoscKoncowa}" IsReadOnly="True"/>
                                     </DataGrid.Columns>
                                 </DataGrid>
 
                             </StackPanel>
                             <StackPanel Grid.Column="1">
-                                <Grid Margin="0,50,0,0">
+                                <Grid x:Name="GRIDStatusIZnizka" Margin="0,50,0,0" Visibility="Hidden">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*"></RowDefinition>
                                         <RowDefinition Height="*"></RowDefinition>
@@ -177,12 +177,13 @@
                                         <RowDefinition Height="*"></RowDefinition>
                                     </Grid.RowDefinitions>
                                     <Label Content="Zmień status zamówienia :" HorizontalAlignment="Center"/>
-                                    <ComboBox x:Name="CBZamowienieStatus" Grid.Row="1" Margin="10,7,0,0" Width="250" HorizontalAlignment="Center"></ComboBox>
-                                    <Label Content="Zmień stawke zniżki :" Grid.Row="2" Margin="0,15,0,0" HorizontalAlignment="Center" />
+                                    <ComboBox x:Name="CBZamowienieStatus"  Grid.Row="1" Margin="10,7,0,0" Width="250"  HorizontalAlignment="Center" />
+                                    <Label Content="Zmień stawke zniżki(%) :" Grid.Row="2" Margin="0,15,0,0" HorizontalAlignment="Center" />
                                     <ComboBox x:Name="CBZamowienieZnizka" Grid.Row="3" Margin="10,7,0,0" Width="250" HorizontalAlignment="Center"></ComboBox>
-                                    <Button x:Name="BtnZamowienieZatwierdz" Grid.Row="4" Width="130" Content="Zatwierdź" HorizontalAlignment="Center" Margin="0,50,0,0"></Button>
+                                    <Button x:Name="BtnZamowienieZatwierdz" Grid.Row="4" Width="130" Content="Zatwierdź" HorizontalAlignment="Center" Margin="0,50,0,0" Click="BtnZamowienieZatwierdz_Click"></Button>
                                 </Grid>
-                                <Button x:Name="BtnZamowienieSzczegoly" Grid.Row="4" Width="130" Content="Szczegóły" HorizontalAlignment="Left" Margin="30,250,0,0"></Button>
+                                
+                                <Button x:Name="BtnZamowienieSzczegoly" Width="132" Content="Szczegóły" HorizontalAlignment="Left" Margin="44,250,0,0"/>
                             </StackPanel>
 
 
@@ -193,9 +194,10 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Button x:Name="BtnZamowienieDodaj" Grid.Column="0" Content="Dodaj" Width="150" Click="BtnZamowienieDodaj_Click"></Button>
-                            <Button x:Name="BtnZamowienieUsun" Grid.Column="1" Content="Usuń" Width="150"></Button>
-                            <Button x:Name="BtnZamowienieEdytuj" Grid.Column="2" Content="Edytuj" Width="150"></Button>
+                            <Button x:Name="BtnZamowienieDodaj" Grid.Column="0" Content="Dodaj" Width="130" Click="BtnZamowienieDodaj_Click"></Button>
+                            <Button x:Name="BtnZamowienieOdswiez" Grid.Column="1" Content="Odświerz" Width="130" Click="BtnZamowienieOdswiez_Click"></Button>
+                            <Button x:Name="BtnZamowienieUsun" Grid.Column="2" Content="Usuń" Width="130" Background="#FFB73A3A" Click="BtnZamowienieUsun_Click"></Button>
+                            
                         </Grid>
                     </StackPanel>
 

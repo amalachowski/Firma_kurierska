@@ -41,6 +41,8 @@ namespace Firma_kurierska.WindowsZamowienie
 
         private void BtnZamowieniePaczkiDodaj_Click(object sender, RoutedEventArgs e)
         {
+            
+            
 
             id_statusu = (int)CBZamowienieRodzajPaczki.SelectedValue;
             miasto = TxtPaczkaMiasto.Text;
@@ -49,6 +51,8 @@ namespace Firma_kurierska.WindowsZamowienie
             lokal = TxtPaczkaLokal.Text;
             
             sQLconnection.UaktualinijPaczki(miasto , ulica , nr_ulicy, lokal, id_kuriera, id_paczki, id_statusu);
+            sQLconnection.UaktualnijZamowienie();
+            
             sQLconnection.WyswietlPaczki(DGZamowieniePaczki);
 
         }
@@ -79,6 +83,7 @@ namespace Firma_kurierska.WindowsZamowienie
         {
             DataGrid dataGrid = sender as DataGrid;
             DataRowView rowView = dataGrid.SelectedItem as DataRowView;
+            
             try
             {
                 if (rowView != null)
@@ -106,6 +111,7 @@ namespace Firma_kurierska.WindowsZamowienie
 
         private void BtnZamowieniePaczkiZatwierdz_Click(object sender, RoutedEventArgs e)
         {
+            
             this.Close();
         }
     }

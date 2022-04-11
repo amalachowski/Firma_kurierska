@@ -272,10 +272,10 @@ namespace Firma_kurierska.Class
                 myconnection.Open();
                 MySqlDataAdapter adapter = new MySqlDataAdapter();
                 adapter.SelectCommand = cmd;
-                DataTable dataTable = new DataTable();
-                adapter.Fill(dataTable);
+                DataTable wyszukajKurierow = new DataTable();
+                adapter.Fill(wyszukajKurierow);
                 BindingSource zrodlo = new BindingSource();
-                zrodlo.DataSource = dataTable;
+                zrodlo.DataSource = wyszukajKurierow;
                 dataGrid.ItemsSource = zrodlo;
                 myconnection.Close();
 

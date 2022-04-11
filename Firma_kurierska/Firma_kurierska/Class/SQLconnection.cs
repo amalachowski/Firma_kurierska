@@ -677,7 +677,7 @@ namespace Firma_kurierska.Class
             try
             {
 
-                zapytanie.CommandText = "Update Zamówienie set ZAM_wartoscKoncowa=(Select sum(RPCK_cena) from Paczka inner join RodzajPaczki on PCK_rodzaj_id=RPCK_id where PCK_zamowienie_id = '"+id_zamowienia+"') ;";
+                zapytanie.CommandText = "Update Zamówienie set ZAM_wartoscKoncowa=(Select sum(RPCK_cena) from Paczka inner join RodzajPaczki on PCK_rodzaj_id=RPCK_id where PCK_zamowienie_id = '"+id_zamowienia+"') where ZAM_id='"+id_zamowienia+"' ;";
                 zapytanie.ExecuteNonQuery();
 
 
@@ -692,6 +692,41 @@ namespace Firma_kurierska.Class
             }
             myconnection.Close();
 
+
+
+
+        }
+
+        public void NadawanieVIPKlientomZPromocji(int idKlienta) 
+        {
+            MySqlConnection myconnection = new MySqlConnection(conect);
+            MySqlCommand zapytanie = myconnection.CreateCommand();
+            MySqlTransaction transaction;
+
+            myconnection.Open();
+
+
+
+            transaction = myconnection.BeginTransaction(IsolationLevel.ReadCommitted);
+            zapytanie.Transaction = transaction;
+            zapytanie.Connection = myconnection;
+            try
+            {
+
+                zapytanie.CommandText = "Update Klienci set KL_VIP='1' where KL_id='"+idKlienta+"' ;";
+                zapytanie.ExecuteNonQuery();
+
+
+                transaction.Commit();
+
+
+            }
+            catch (Exception e)
+            {
+                System.Windows.Forms.MessageBox.Show(e.Message);
+                transaction.Rollback();
+            }
+            myconnection.Close();
 
 
 

@@ -358,16 +358,7 @@
 
                 </TabItem>
 
-                <!--Panel dodawania paczek-->
-                <TabItem Style="{StaticResource MaterialDesignNavigationRailTabItem}" Width="100">
-                    <TabItem.Header >
-                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <materialDesign:PackIcon Kind="ArrowUpBox" Height="40" Width="40" HorizontalAlignment="Center" />
-                            <TextBlock Text="Paczki"/>
-                        </StackPanel>
-                    </TabItem.Header>
-
-                </TabItem>
+                
                 <!--Panel Zmien Dane-->
                 <TabItem Style="{StaticResource MaterialDesignNavigationRailTabItem}" Width="100" HorizontalAlignment="Right">
                     <TabItem.Header >

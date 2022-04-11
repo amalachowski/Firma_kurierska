@@ -35,7 +35,7 @@ namespace Firma_kurierska.WindowsZamowienie
         {
             InitializeComponent();
             sQLconnection.WyswietlPaczki(DGZamowieniePaczki);
-            sQLconnection.WypLnijstatusZamowienia(CBZamowienieRodzajPaczki);
+            sQLconnection.WypelnijRodzajePaczek(CBZamowienieRodzajPaczki);
             sQLconnection.WyswietlKuerierow(DGZamowienieKurierzy);
         }
 

@@ -63,10 +63,10 @@ namespace Firma_kurierska.Class
                 {
                     SelectCommand = cmd
                 };
-                DataTable dataTable = new DataTable();
-                adapter.Fill(dataTable);
+                DataTable wyswietlKlientow = new DataTable();
+                adapter.Fill(wyswietlKlientow);
                 BindingSource zrodlo = new BindingSource();
-                zrodlo.DataSource = dataTable;
+                zrodlo.DataSource = wyswietlKlientow;
                 dataGrid.ItemsSource = zrodlo;
                 myconnection.Close();
 
@@ -90,10 +90,10 @@ namespace Firma_kurierska.Class
                 myconnection.Open();
                 MySqlDataAdapter adapter = new MySqlDataAdapter();
                 adapter.SelectCommand = cmd;
-                DataTable dataTable = new DataTable();
-                adapter.Fill(dataTable);
+                DataTable wyszukajKlienci = new DataTable();
+                adapter.Fill(wyszukajKlienci);
                 BindingSource zrodlo = new BindingSource();
-                zrodlo.DataSource = dataTable;
+                zrodlo.DataSource = wyszukajKlienci;
                 dataGrid.ItemsSource = zrodlo;
                 myconnection.Close();
 
@@ -243,10 +243,10 @@ namespace Firma_kurierska.Class
                 myconnection.Open();
                 MySqlDataAdapter adapter = new MySqlDataAdapter();
                 adapter.SelectCommand = cmd;
-                DataTable dataTable = new DataTable();
-                adapter.Fill(dataTable);
+                DataTable wyswietlKurierow = new DataTable();
+                adapter.Fill(wyswietlKurierow);
                 BindingSource zrodlo = new BindingSource();
-                zrodlo.DataSource = dataTable;
+                zrodlo.DataSource = wyswietlKurierow;
                 dataGrid.ItemsSource = zrodlo;
                 myconnection.Close();
 
@@ -537,10 +537,10 @@ namespace Firma_kurierska.Class
                 myconnection.Open();
                 MySqlDataAdapter adapter = new MySqlDataAdapter();
                 adapter.SelectCommand = cmd;
-                DataTable dataTable = new DataTable();
-                adapter.Fill(dataTable);
+                DataTable wyszukajNadawce = new DataTable();
+                adapter.Fill(wyszukajNadawce);
                 BindingSource zrodlo = new BindingSource();
-                zrodlo.DataSource = dataTable;
+                zrodlo.DataSource = wyszukajNadawce;
                 dataGrid.ItemsSource = zrodlo;
                 myconnection.Close();
 
@@ -647,10 +647,10 @@ namespace Firma_kurierska.Class
                 myconnection.Open();
                 MySqlDataAdapter adapter = new MySqlDataAdapter();
                 adapter.SelectCommand = cmd;
-                DataTable dataTable = new DataTable();
-                adapter.Fill(dataTable);
+                DataTable wyswietlZamowienia = new DataTable();
+                adapter.Fill(wyswietlZamowienia);
                 BindingSource zrodlo = new BindingSource();
-                zrodlo.DataSource = dataTable;
+                zrodlo.DataSource = wyswietlZamowienia;
                 dataGrid.ItemsSource = zrodlo;
                 myconnection.Close();
 
@@ -710,13 +710,13 @@ namespace Firma_kurierska.Class
             {
                 MySqlDataAdapter adapter = new MySqlDataAdapter();
                 
-                DataTable dataTable = new DataTable();
+                DataTable wyswietlPaczki = new DataTable();
                 BindingSource zrodlo = new BindingSource();
 
                     myconnection.Open();
                     adapter.SelectCommand = cmd;
-                    adapter.Fill(dataTable);
-                    zrodlo.DataSource = dataTable;
+                    adapter.Fill(wyswietlPaczki);
+                    zrodlo.DataSource = wyswietlPaczki;
                     dataGrid.ItemsSource = zrodlo;
                     
                      myconnection.Close();
@@ -742,13 +742,13 @@ namespace Firma_kurierska.Class
             {
                 MySqlDataAdapter adapter = new MySqlDataAdapter();
 
-                DataTable dataTable = new DataTable();
+                DataTable wyswietlPaczki = new DataTable();
                 BindingSource zrodlo = new BindingSource();
 
                 myconnection.Open();
                 adapter.SelectCommand = cmd;
-                adapter.Fill(dataTable);
-                zrodlo.DataSource = dataTable;
+                adapter.Fill(wyswietlPaczki);
+                zrodlo.DataSource = wyswietlPaczki;
                 dataGrid.ItemsSource = zrodlo;
 
                 myconnection.Close();
@@ -784,7 +784,7 @@ namespace Firma_kurierska.Class
             }
 
         }
-        public void WypLnijstatusZamowienia(System.Windows.Controls.ComboBox comboBox) 
+        public void WypelnijRodzajePaczek(System.Windows.Controls.ComboBox comboBox) 
         {
             MySqlConnection myconnection = new MySqlConnection(conect);
             MySqlCommand cmd = new MySqlCommand("Select * from RodzajPaczki ;", myconnection);
@@ -793,10 +793,10 @@ namespace Firma_kurierska.Class
                 myconnection.Open();
                 MySqlDataAdapter adapter = new MySqlDataAdapter();
                 adapter.SelectCommand = cmd;
-                DataTable dataTable = new DataTable();
-                adapter.Fill(dataTable);
+                DataTable rodzajPaczki = new DataTable();
+                adapter.Fill(rodzajPaczki);
                 BindingSource zrodlo = new BindingSource();
-                zrodlo.DataSource = dataTable;
+                zrodlo.DataSource = rodzajPaczki;
                 comboBox.ItemsSource = zrodlo;
                 myconnection.Close();
             }
@@ -1070,12 +1070,12 @@ namespace Firma_kurierska.Class
             try
             {
                 MySqlCommand cmd = new MySqlCommand("SELECT PRC_id, PRC_imie, PRC_nazwisko, PRC_login, STN_stanowisko, PRC_haslo FROM Pracownicy INNER JOIN Stanowisko ON PRC_STN_id = STN_id;", myconnection);
-                DataTable dt = new DataTable();
+                DataTable wyswietlPracownikow = new DataTable();
                 myconnection.Open();
                 MySqlDataReader sdr = cmd.ExecuteReader();
-                dt.Load(sdr);
+                wyswietlPracownikow.Load(sdr);
                 myconnection.Close();
-                dataGrid.ItemsSource = dt.DefaultView;
+                dataGrid.ItemsSource = wyswietlPracownikow.DefaultView;
 
             }
             catch (Exception e)
@@ -1104,10 +1104,10 @@ namespace Firma_kurierska.Class
                 myconnection.Open();
                 MySqlDataAdapter adapter = new MySqlDataAdapter();
                 adapter.SelectCommand = cmd;
-                DataTable dataTable = new DataTable();
-                adapter.Fill(dataTable);
+                DataTable wyszukajPracownikow = new DataTable();
+                adapter.Fill(wyszukajPracownikow);
                 BindingSource zrodlo = new BindingSource();
-                zrodlo.DataSource = dataTable;
+                zrodlo.DataSource = wyszukajPracownikow;
                 dataGrid.ItemsSource = zrodlo;
                 myconnection.Close();
 
@@ -1157,10 +1157,10 @@ namespace Firma_kurierska.Class
                 myconnection.Open();
                 MySqlDataAdapter adapter = new MySqlDataAdapter();
                 adapter.SelectCommand = cmd;
-                DataTable dataTable = new DataTable();
-                adapter.Fill(dataTable);
+                DataTable zaladujStanowiska = new DataTable();
+                adapter.Fill(zaladujStanowiska);
                 BindingSource zrodlo = new BindingSource();
-                zrodlo.DataSource = dataTable;
+                zrodlo.DataSource = zaladujStanowiska;
                 comboBox.ItemsSource = zrodlo;
                 myconnection.Close();
 

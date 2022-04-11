@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Firma_kurierska.Class;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,18 @@ namespace Firma_kurierska.WindowsZamowienie
     /// </summary>
     public partial class WindowZamowieniePodsumowanie : Window
     {
-        public WindowZamowieniePodsumowanie()
+        public WindowZamowieniePodsumowanie(int id_zamowienia)
         {
             InitializeComponent();
+            SQLconnection sql = new SQLconnection();
+            sql.WyswietlDane(dane, id_zamowienia);
+            sql.WyswietlPaczki(DGZamowieniePaczki, id_zamowienia);
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+
+
         }
     }
 }

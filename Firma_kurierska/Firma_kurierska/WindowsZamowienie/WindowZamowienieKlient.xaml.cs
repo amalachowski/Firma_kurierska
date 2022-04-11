@@ -39,7 +39,7 @@ namespace Firma_kurierska.WindowsZamowienie
             {
                 sQLconnection.DodajZamowienie(id_nadawcy);
                 wybranaIloscPaczek = (int)CBZamowienieIloscPaczek.SelectedItem;
-                sQLconnection.DodajPaczki(wybranaIloscPaczek);
+                sQLconnection.DodajPaczki(wybranaIloscPaczek,id_nadawcy);
                 WindowZamowieniePaczki zamowieniePaczki = new WindowZamowieniePaczki();
                 
                 this.Close();

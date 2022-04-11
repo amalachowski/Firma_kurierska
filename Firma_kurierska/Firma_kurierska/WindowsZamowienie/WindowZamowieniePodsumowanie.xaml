@@ -14,10 +14,25 @@
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="WindowZamowieniePodsumowanie" Height="900" Width="900">
-    <Grid>
+        Title="Szczegóły" Height="763.5" Width="619.5" Loaded="Window_Loaded">
+    <Grid Margin="0,0,4,0">
         <materialDesign:ColorZone Padding="15"  Mode="PrimaryMid" Effect="{DynamicResource MaterialDesignShadowDepth2}" >
-            <TextBlock Text="Podsumowanie" HorizontalAlignment="Center"    FontSize="30" ></TextBlock>
+            <TextBlock Text="Szczegóły zamówienia" HorizontalAlignment="Center"    FontSize="30"  Width="322" ></TextBlock>
         </materialDesign:ColorZone>
+        <Label Content="Dane klienta:" HorizontalAlignment="Left" Margin="10,84,0,0" FontSize="25" VerticalAlignment="Top" Height="38" Width="161"/>
+        <TextBlock Name="dane" HorizontalAlignment="Left" Margin="28,144,0,0" TextWrapping="Wrap" FontSize="20" VerticalAlignment="Top" Height="84" Width="550" Text="dane"/>
+        <DataGrid AutoGenerateColumns="False" x:Name="DGZamowieniePaczki" SelectionMode="Single"  CanUserAddRows="False" Margin="28,279,32,133">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding PCK_id}" IsReadOnly="True" />
+                <DataGridTextColumn Header="Rodzaj" Binding="{Binding RPCK_wielkosc}" IsReadOnly="True" />
+                <DataGridTextColumn Header="Zamowienie ID" Binding="{Binding PCK_zamowienie_id}" IsReadOnly="True" />
+                <DataGridTextColumn Header="Adres" Binding="{Binding ADR_miasto}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Ulica" Binding="{Binding ADR_ulica}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Cena" Binding="{Binding RPCK_cena}" IsReadOnly="True" />
+
+            </DataGrid.Columns>
+        </DataGrid>
+        <Label Content="Paczki zamówienia:" HorizontalAlignment="Left" Margin="10,233,0,0" FontSize="25" VerticalAlignment="Top" Height="38" Width="221"/>
+
     </Grid>
 </Window>

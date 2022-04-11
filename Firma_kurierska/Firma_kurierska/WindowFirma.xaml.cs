@@ -715,5 +715,11 @@ namespace Firma_kurierska
             sql.UsunZamowienie(id_WybranegoZamowienia);
             sql.WyswietlZamowienia(DGZamowienia);
         }
+
+        private void BtnZamowienieSzczegoly_Click(object sender, RoutedEventArgs e)
+        {
+            WindowZamowieniePodsumowanie zamowienieSzczegoly = new WindowZamowieniePodsumowanie(id_WybranegoZamowienia);
+            zamowienieSzczegoly.ShowDialog();
+        }
     }
 }

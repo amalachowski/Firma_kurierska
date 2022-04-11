@@ -603,16 +603,16 @@ namespace Firma_kurierska.Class
             
         }
 
-        public void DodajPaczki(int iloscPaczek) 
+        public void DodajPaczki(int iloscPaczek, int idNadawcy) 
         {
             MySqlConnection myconnection = new MySqlConnection(conect);
             MySqlDataAdapter adapter = new MySqlDataAdapter();
 
 
-            MySqlCommand cmd = new MySqlCommand("insert into Paczka set PCK_zamowienie_id=@id_zamowienia;",myconnection);
+            MySqlCommand cmd = new MySqlCommand("insert into Paczka set PCK_zamowienie_id=@id_zamowienia, PCK_adr_nadawcy_id=(SELECT KL_adres_id FROM sql11479040.Klienci where KL_id = @idKl);", myconnection);
 
             cmd.Parameters.AddWithValue("@id_zamowienia" ,id_zamowienia);
-
+            cmd.Parameters.AddWithValue("@idKl", idNadawcy);
 
             for (int i=0; i<iloscPaczek; i++)
             {
@@ -729,7 +729,61 @@ namespace Firma_kurierska.Class
 
 
         }
+        public void WyswietlPaczki(System.Windows.Controls.DataGrid dataGrid,int id_zamowienia)
+        {
 
+            MySqlConnection myconnection = new MySqlConnection(conect);
+            MySqlCommand cmd = new MySqlCommand("SELECT PCK_id , RPCK_wielkosc, PCK_zamowienie_id, ADR_miasto , ADR_ulica , RPCK_cena " +
+                "FROM Paczka" +
+                " left join Adres on Paczka.PCK_adr_id = Adres.ADR_id" +
+                " left join RodzajPaczki on  Paczka.PCK_rodzaj_id = RodzajPaczki.RPCK_id where PCK_zamowienie_id ='" + id_zamowienia + "' ; ", myconnection);
+
+            try
+            {
+                MySqlDataAdapter adapter = new MySqlDataAdapter();
+
+                DataTable dataTable = new DataTable();
+                BindingSource zrodlo = new BindingSource();
+
+                myconnection.Open();
+                adapter.SelectCommand = cmd;
+                adapter.Fill(dataTable);
+                zrodlo.DataSource = dataTable;
+                dataGrid.ItemsSource = zrodlo;
+
+                myconnection.Close();
+
+            }
+            catch (Exception e)
+            {
+                System.Windows.MessageBox.Show(e.Message);
+            }
+
+
+        }
+        public void WyswietlDane(System.Windows.Controls.TextBlock textblock, int id_zamowienia)
+        {
+            MySqlConnection myconnection = new MySqlConnection(conect);
+            MySqlCommand cmd = new MySqlCommand("SELECT concat( KL_imie,' ', KL_nazwisko,', ', ADR_miasto,' ul. ', ADR_ulica,' ', ADR_nr_ulicy,' m.', ADR_nr_lok) as dane from Klienci inner join Adres on KL_adres_id=ADR_id where KL_id=(SELECT ZAM_klient_id FROM Zamówienie where ZAM_id=@zamID);", myconnection);
+            try
+            {
+                myconnection.Open();
+                cmd.Parameters.AddWithValue("@zamID", id_zamowienia);
+                MySqlDataReader da = cmd.ExecuteReader();
+                while(da.Read())
+                {
+                    textblock.Text = da.GetValue(0).ToString();
+                }
+
+                myconnection.Close();
+
+            }
+            catch (Exception e)
+            {
+                System.Windows.MessageBox.Show(e.Message);
+            }
+
+        }
         public void WypLnijstatusZamowienia(System.Windows.Controls.ComboBox comboBox) 
         {
             MySqlConnection myconnection = new MySqlConnection(conect);

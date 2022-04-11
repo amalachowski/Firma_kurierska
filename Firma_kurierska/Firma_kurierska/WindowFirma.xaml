@@ -183,7 +183,7 @@
                                     <Button x:Name="BtnZamowienieZatwierdz" Grid.Row="4" Width="130" Content="Zatwierdź" HorizontalAlignment="Center" Margin="0,50,0,0" Click="BtnZamowienieZatwierdz_Click"></Button>
                                 </Grid>
                                 
-                                <Button x:Name="BtnZamowienieSzczegoly" Width="132" Content="Szczegóły" HorizontalAlignment="Left" Margin="44,250,0,0"/>
+                                <Button x:Name="BtnZamowienieSzczegoly" Width="132" Content="Szczegóły" HorizontalAlignment="Left" Margin="44,250,0,0" Click="BtnZamowienieSzczegoly_Click"/>
                             </StackPanel>
 
 

@@ -668,7 +668,7 @@ namespace Firma_kurierska
             SQLconnection sql = new SQLconnection();
             if (!string.IsNullOrEmpty(CBZamowienieZnizka.Text) && string.IsNullOrEmpty(CBZamowienieStatus.Text))
             {
-                if (sql.SprawdzStatusKlienta(id_WybranegoZamowienia))
+                if ((int)CBZamowienieZnizka.SelectedItem == 0 || sql.SprawdzStatusKlienta(id_WybranegoZamowienia))
                 {
 
                     sql.DodawanieZnizki(CBZamowienieZnizka, id_WybranegoZamowienia);
@@ -687,7 +687,7 @@ namespace Firma_kurierska
             }
             else 
             {
-                if (sql.SprawdzStatusKlienta(id_WybranegoZamowienia))
+                if ((int)CBZamowienieZnizka.SelectedItem == 0 || sql.SprawdzStatusKlienta(id_WybranegoZamowienia) )
                 {
 
                     sql.DodawanieZnizki(CBZamowienieZnizka, id_WybranegoZamowienia);

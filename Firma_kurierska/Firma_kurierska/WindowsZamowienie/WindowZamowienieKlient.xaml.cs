@@ -38,8 +38,14 @@ namespace Firma_kurierska.WindowsZamowienie
             if (CBZamowienieIloscPaczek.SelectedItem != null)
             {
                 sQLconnection.DodajZamowienie(id_nadawcy);
-                wybranaIloscPaczek = (int)CBZamowienieIloscPaczek.SelectedItem;
-                sQLconnection.DodajPaczki(wybranaIloscPaczek,id_nadawcy);
+                wybranaIloscPaczek = (int)CBZamowienieIloscPaczek.SelectedItem; // zapisywanie ilosci wysylanych paczek
+                if (wybranaIloscPaczek>=4) 
+                {
+                    sQLconnection.NadawanieVIPKlientomZPromocji(id_nadawcy); // nadawanie VIP klientom ktorzy wysylaja wiecej niz jedna paczke
+                
+                
+                }
+                sQLconnection.DodajPaczki(wybranaIloscPaczek,id_nadawcy); //dodawanie paczek do zamowienia
                 WindowZamowieniePaczki zamowieniePaczki = new WindowZamowieniePaczki();
                 
                 this.Close();

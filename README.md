@@ -10,8 +10,8 @@ Projekt aplikacji dla Firmy kurierskiej na zajęcia ADO.NET
 
 ### Kierownik
 <p>Login - kierownik
-<p>Haslo - Kierownik12@
+<p>Haslo - Kierownik123@
 
 ### Kasjer
 <p>Login - kasjer
-<p>Haslo - Kasjer12@
+<p>Haslo - Kasjer123@
